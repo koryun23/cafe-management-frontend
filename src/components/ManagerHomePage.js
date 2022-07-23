@@ -30,7 +30,8 @@ class ManagerHomePage extends React.Component {
             showAddUsersForm: false,
             showAddTablesForm: false,
             showAssignForm: false
-        })
+        });
+
     }
 
     handleAddUsersClick(event) {
@@ -40,6 +41,7 @@ class ManagerHomePage extends React.Component {
             showAddTablesForm: false,
             showAssignForm: false
         });
+
     }
 
     handleAddTablesClick(event) {
@@ -49,6 +51,7 @@ class ManagerHomePage extends React.Component {
             showAddUsersForm: false,
             showAssignForm: false
         });
+
     }
 
     handleAssignClick(event) {
@@ -58,9 +61,11 @@ class ManagerHomePage extends React.Component {
             showAddUsersForm: false,
             showAddTablesForm: false
         });
+
     }
 
     render() {
+        console.log(this.state);
         return (
             <div className='ManagerHomePage'>
                 <Menu items={this.menuItems}/>
@@ -84,6 +89,7 @@ function Form(props) {
         console.log("show assign");
         return <AssignForm />
     }
+    return <p>Home page</p>
 }
 
 export default ManagerHomePage;

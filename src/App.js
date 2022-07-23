@@ -18,13 +18,13 @@ function App() {
               <HomePage userType="MANAGER"/>
             </Route>
             <Route path="/users/register">
-              <ManagerHomePage />
+              <HomePage userType="MANAGER"/>
             </Route>
-            <Route path="tables/register">
-              <ManagerHomePage />
+            <Route path="/tables/register">
+              <HomePage userType="MANAGER"/>
             </Route>
-            <Route path="tables-to-waiters/assign">
-              <ManagerHomePage />
+            <Route path="/tables-to-waiters/assign">
+              <HomePage userType="MANAGER"/>
             </Route>
           </Switch>
         </div>

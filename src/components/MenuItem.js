@@ -10,6 +10,7 @@ class MenuItem extends React.Component {
     handleClick(event) {
         this.props.menuItem.onClick(event);
     }
+
     render() {
         const item = this.props.menuItem;
         return (
