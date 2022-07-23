@@ -36,7 +36,7 @@ class TableForm extends React.Component {
                         value={this.state.code}
                         onChange={this.handleCodeChange} 
                         label="Table Code" />
-                    <Submit onSubmit={this.handleSubmit} value="Add"/>
+                    <Submit onSubmit={this.handleSubmit} value="Add Table"/>
                 </form>
             </div>
         );

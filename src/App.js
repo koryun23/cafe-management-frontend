@@ -26,6 +26,9 @@ function App() {
             <Route path="/tables-to-waiters/assign">
               <HomePage userType="MANAGER"/>
             </Route>
+            <Route path="/products/register">
+              <HomePage userType="MANAGER"/>
+            </Route>
           </Switch>
         </div>
       </Router>

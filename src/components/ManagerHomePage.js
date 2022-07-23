@@ -3,6 +3,7 @@ import AssignForm from './AssignForm.js';
 import Menu from './Menu.js';
 import UserForm from './UserForm.js';
 import TableForm from './TableForm.js';
+import ProductsForm from './ProductsForm.js';
 
 class ManagerHomePage extends React.Component {
     constructor(props) {
@@ -11,16 +12,19 @@ class ManagerHomePage extends React.Component {
         this.handleAddUsersClick = this.handleAddUsersClick.bind(this);
         this.handleAddTablesClick = this.handleAddTablesClick.bind(this);
         this.handleAssignClick = this.handleAssignClick.bind(this);
+        this.handleAddProductsClick = this.handleAddProductsClick.bind(this);
         this.state = {
             showAddUsersForm : false,
             showAddTablesForm : false,
-            showAssignForm : false
+            showAssignForm : false,
+            showAddProductsForm: false
         };
         this.menuItems = [
             {path: '/home', text: 'Home', onClick: this.handleHomeClick},
             {path: '/users/register', text: 'Add Users', onClick: this.handleAddUsersClick},
             {path: '/tables/register', text: 'Add Tables', onClick: this.handleAddTablesClick},
-            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick}
+            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick},
+            {path: '/products/register', text: 'Add Products', onClick: this.handleAddProductsClick}
         ]
     }
 
@@ -29,7 +33,8 @@ class ManagerHomePage extends React.Component {
         this.setState({
             showAddUsersForm: false,
             showAddTablesForm: false,
-            showAssignForm: false
+            showAssignForm: false,
+            showAddProductsForm: false
         });
 
     }
@@ -39,7 +44,8 @@ class ManagerHomePage extends React.Component {
         this.setState({
             showAddUsersForm: true,
             showAddTablesForm: false,
-            showAssignForm: false
+            showAssignForm: false,
+            showAddProductsForm: false
         });
 
     }
@@ -49,7 +55,8 @@ class ManagerHomePage extends React.Component {
         this.setState({
             showAddTablesForm: true,
             showAddUsersForm: false,
-            showAssignForm: false
+            showAssignForm: false,
+            showAddProductsForm: false
         });
 
     }
@@ -59,9 +66,19 @@ class ManagerHomePage extends React.Component {
         this.setState({
             showAssignForm: true,
             showAddUsersForm: false,
-            showAddTablesForm: false
+            showAddTablesForm: false,
+            showAddProductsForm: false
         });
 
+    }
+
+    handleAddProductsClick(event) {
+        this.setState({
+            showAddUsersForm: false,
+            showAddTablesForm: false,
+            showAssignForm: false,
+            showAddProductsForm: true
+        });
     }
 
     render() {
@@ -88,6 +105,10 @@ function Form(props) {
     if(props.state.showAssignForm) {
         console.log("show assign");
         return <AssignForm />
+    }
+    if(props.state.showAddProductsForm) {
+        console.log("show add products");
+        return <ProductsForm />
     }
     return <p>Home page</p>
 }

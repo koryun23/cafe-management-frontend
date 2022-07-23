@@ -36,7 +36,7 @@ class AssignForm extends React.Component {
                         value={this.state.waiterUsername}
                         onChange={this.handleWaiterUsernameChange} 
                         label="Waiter Username" />
-                    <Submit onSubmit={this.handleSubmit} value="Add"/>
+                    <Submit onSubmit={this.handleSubmit} value="Assign"/>
                 </form>
             </div>
         );
