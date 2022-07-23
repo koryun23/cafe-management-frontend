@@ -4,6 +4,10 @@ import Menu from './Menu.js';
 class WaiterHomePage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            
+        };
+        this.menuItems = [];
     }
 
     render() {

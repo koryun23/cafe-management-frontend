@@ -2,7 +2,7 @@ import React from 'react';
 import Input from './Input.js';
 import Submit from './Submit.js';
 
-class ProductsForm extends React.Component {
+class ProductsRegistrationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,4 +56,4 @@ class ProductsForm extends React.Component {
     }
 }
 
-export default ProductsForm;
+export default ProductsRegistrationForm;

@@ -3,9 +3,9 @@ import AssignForm from './AssignForm.js';
 import Menu from './Menu.js';
 import UserForm from './UserForm.js';
 import TableForm from './TableForm.js';
-import ProductsForm from './ProductsForm.js';
+import ProductsRegistrationForm from './ProductsForm.js';
 
-class ManagerHomePage extends React.Component {
+class ManagerPage extends React.Component {
     constructor(props) {
         super(props);
         this.handleHomeClick = this.handleHomeClick.bind(this);
@@ -19,12 +19,30 @@ class ManagerHomePage extends React.Component {
             showAssignForm : false,
             showAddProductsForm: false
         };
+        
         this.menuItems = [
-            {path: '/home', text: 'Home', onClick: this.handleHomeClick},
-            {path: '/users/register', text: 'Add Users', onClick: this.handleAddUsersClick},
+            {path: '', text: 'Users'},
+            {path: '', text: 'Tables'},
+            {path: '', text: 'Products'}
+        ];
+
+        this.usersDropdownItems = [
+            {path: '/users/register', text: 'Add Users', onClick: this.handleAddUsersClick}
+        ];
+
+        this.tablesDropdownItems = [
             {path: '/tables/register', text: 'Add Tables', onClick: this.handleAddTablesClick},
-            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick},
+            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick}
+        ];
+
+        this.productsDropdownItems = [
             {path: '/products/register', text: 'Add Products', onClick: this.handleAddProductsClick}
+        ];
+
+        this.dropdownItems = [
+            this.usersDropdownItems,
+            this.tablesDropdownItems,
+            this.productsDropdownItems
         ]
     }
 
@@ -47,7 +65,6 @@ class ManagerHomePage extends React.Component {
             showAssignForm: false,
             showAddProductsForm: false
         });
-
     }
 
     handleAddTablesClick(event) {
@@ -58,7 +75,6 @@ class ManagerHomePage extends React.Component {
             showAssignForm: false,
             showAddProductsForm: false
         });
-
     }
 
     handleAssignClick(event) {
@@ -80,12 +96,11 @@ class ManagerHomePage extends React.Component {
             showAddProductsForm: true
         });
     }
-
     render() {
         console.log(this.state);
         return (
-            <div className='ManagerHomePage'>
-                <Menu items={this.menuItems}/>
+            <div className='ManagerPage'>
+                <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
                 <Form state={this.state} />
             </div>
         );
@@ -108,9 +123,31 @@ function Form(props) {
     }
     if(props.state.showAddProductsForm) {
         console.log("show add products");
-        return <ProductsForm />
+        return <ProductsRegistrationForm />;
     }
-    return <p>Home page</p>
+    return <h1>Welcome</h1>
 }
 
-export default ManagerHomePage;
+class Home extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (<Profile username="john11" 
+                        firstName="John" 
+                        lastName="Smith" 
+                        role="MANAGER" />);
+    }
+}
+
+function Profile(props) {
+    return (
+        <div className="user-add-form">
+            <h2>{props.role}</h2>
+            <h3>{props.username}</h3>
+            <p>{props.firstName + " " + props.lastName}</p>
+        </div>
+    );
+}
+export default ManagerPage;

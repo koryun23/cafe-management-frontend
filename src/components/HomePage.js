@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/HomePage.css'
-import ManagerHomePage from './ManagerHomePage.js';
+import ManagerPage from './ManagerPage.js';
 import WaiterHomePage from './WaiterHomePage.js';
 
 class HomePage extends React.Component {
@@ -9,7 +9,7 @@ class HomePage extends React.Component {
     }
 
     render() {
-        return this.props.userType === 'MANAGER' ? <ManagerHomePage /> : <WaiterHomePage/>
+        return this.props.userType === 'MANAGER' ? <ManagerPage /> : <WaiterHomePage/>
     }
 }
 

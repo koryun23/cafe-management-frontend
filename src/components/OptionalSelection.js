@@ -8,10 +8,10 @@ class OptionalSelection extends React.Component {
 
     render() {
         return (
-            <form>
+            <div>
                 {
                     this.props.options.map(option => (
-                        <div>
+                        <div key={option.index}>
                             <input value={option.value}
                                 type="checkbox"
                                 selected={option.isSelected}
@@ -22,7 +22,7 @@ class OptionalSelection extends React.Component {
                         </div>
                     ))
                 }
-            </form>
+            </div>
         );
     }
 }
