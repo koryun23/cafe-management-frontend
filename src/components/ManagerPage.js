@@ -6,6 +6,8 @@ import TableForm from './TableForm.js';
 import ProductsRegistrationForm from './ProductsForm.js';
 import ViewProducts from './ViewProducts.js';
 import BackgroundImage from './BackgroundImage.js';
+import '../css/ManagerPage.css';
+
 class ManagerPage extends React.Component {
     constructor(props) {
         super(props);
@@ -119,7 +121,7 @@ class ManagerPage extends React.Component {
         console.log(this.state);
         return (
             <div className='ManagerPage'>
-                <BackgroundImage />
+                {!isHomePage(this.state) && <BackgroundImage />}
                 <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
                 <Form state={this.state} />
             </div>
@@ -149,6 +151,7 @@ function Form(props) {
         return <ViewProducts />;
     }
     console.log("show home");
+    return <Home />
 }
 
 class Home extends React.Component {
@@ -157,20 +160,35 @@ class Home extends React.Component {
     }
 
     render() {
-        return (<Profile username="john11" 
-                        firstName="John" 
-                        lastName="Smith" 
-                        role="MANAGER" />);
+        return (
+            <div>
+                <div className="sidenav">
+                    <div className="manager-image"></div>
+                    <Profile firstName="John"
+                             lastName="Smith"
+                             username="john11"/>
+
+                </div>
+            </div>
+
+                );
     }
 }
 
 function Profile(props) {
     return (
-        <div className="user-add-form">
-            <h2>{props.role}</h2>
-            <h3>{props.username}</h3>
-            <p>{props.firstName + " " + props.lastName}</p>
+        <div className="profile">
+            <h3 className="username">{props.username}</h3>
+            <p className="full-name">{props.firstName + " " + props.lastName}</p>
         </div>
     );
+}
+
+function isHomePage(state) {
+    return !state.showAddProductsForm && 
+           !state.showAddTablesForm && 
+           !state.showAddUsersForm &&
+           !state.showAssignForm &&
+           !state.showViewProducts;
 }
 export default ManagerPage;
