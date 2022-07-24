@@ -4,7 +4,8 @@ import Menu from './Menu.js';
 import UserForm from './UserForm.js';
 import TableForm from './TableForm.js';
 import ProductsRegistrationForm from './ProductsForm.js';
-
+import ViewProducts from './ViewProducts.js';
+import BackgroundImage from './BackgroundImage.js';
 class ManagerPage extends React.Component {
     constructor(props) {
         super(props);
@@ -13,17 +14,19 @@ class ManagerPage extends React.Component {
         this.handleAddTablesClick = this.handleAddTablesClick.bind(this);
         this.handleAssignClick = this.handleAssignClick.bind(this);
         this.handleAddProductsClick = this.handleAddProductsClick.bind(this);
+        this.handleViewProductsClick = this.handleViewProductsClick.bind(this);
         this.state = {
             showAddUsersForm : false,
             showAddTablesForm : false,
             showAssignForm : false,
-            showAddProductsForm: false
+            showAddProductsForm: false,
+            showViewProducts: false
         };
         
         this.menuItems = [
             {path: '', text: 'Users'},
             {path: '', text: 'Tables'},
-            {path: '', text: 'Products'}
+            {path: '', text: 'Products'},
         ];
 
         this.usersDropdownItems = [
@@ -36,7 +39,8 @@ class ManagerPage extends React.Component {
         ];
 
         this.productsDropdownItems = [
-            {path: '/products/register', text: 'Add Products', onClick: this.handleAddProductsClick}
+            {path: '/products/register', text: 'Add Products', onClick: this.handleAddProductsClick},
+            {path: '/products', text: 'View Products', onClick: this.handleViewProductsClick}
         ];
 
         this.dropdownItems = [
@@ -52,7 +56,8 @@ class ManagerPage extends React.Component {
             showAddUsersForm: false,
             showAddTablesForm: false,
             showAssignForm: false,
-            showAddProductsForm: false
+            showAddProductsForm: false,
+            showViewProducts: false
         });
 
     }
@@ -63,7 +68,8 @@ class ManagerPage extends React.Component {
             showAddUsersForm: true,
             showAddTablesForm: false,
             showAssignForm: false,
-            showAddProductsForm: false
+            showAddProductsForm: false,
+            showViewProducts: false
         });
     }
 
@@ -73,7 +79,8 @@ class ManagerPage extends React.Component {
             showAddTablesForm: true,
             showAddUsersForm: false,
             showAssignForm: false,
-            showAddProductsForm: false
+            showAddProductsForm: false,
+            showViewProducts: false
         });
     }
 
@@ -83,7 +90,8 @@ class ManagerPage extends React.Component {
             showAssignForm: true,
             showAddUsersForm: false,
             showAddTablesForm: false,
-            showAddProductsForm: false
+            showAddProductsForm: false,
+            showViewProducts: false
         });
     }
 
@@ -92,20 +100,32 @@ class ManagerPage extends React.Component {
             showAddUsersForm: false,
             showAddTablesForm: false,
             showAssignForm: false,
-            showAddProductsForm: true
-        });
+            showAddProductsForm: true,
+            showViewProducts: false
+        })
     }
+
+    handleViewProductsClick(event) {
+        this.setState({
+            showAddUsersForm: false,
+            showAddTablesForm: false,
+            showAssignForm: false,
+            showAddProductsForm: false,
+            showViewProducts: true
+        })
+    }
+
     render() {
         console.log(this.state);
         return (
             <div className='ManagerPage'>
+                <BackgroundImage />
                 <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
                 <Form state={this.state} />
             </div>
         );
     }
 }
-
 
 function Form(props) {
     if(props.state.showAddTablesForm) {
@@ -123,6 +143,10 @@ function Form(props) {
     if(props.state.showAddProductsForm) {
         console.log("show add products");
         return <ProductsRegistrationForm />;
+    }
+    if(props.state.showViewProducts) {
+        console.log("show view products");
+        return <ViewProducts />;
     }
     console.log("show home");
 }

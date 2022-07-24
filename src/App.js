@@ -47,6 +47,9 @@ function App() {
             <Route path="/orders/update/*">
               <HomePage userType="WAITER"/>
             </Route>
+            <Route path="/products">
+              <HomePage userType="MANAGER"/>
+            </Route>
           </Switch>
         </div>
       </Router>
