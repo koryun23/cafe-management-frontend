@@ -85,7 +85,6 @@ class ManagerPage extends React.Component {
             showAddTablesForm: false,
             showAddProductsForm: false
         });
-
     }
 
     handleAddProductsClick(event) {
@@ -125,7 +124,7 @@ function Form(props) {
         console.log("show add products");
         return <ProductsRegistrationForm />;
     }
-    return <h1>Welcome</h1>
+    console.log("show home");
 }
 
 class Home extends React.Component {

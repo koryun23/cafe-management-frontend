@@ -15,10 +15,10 @@ function App() {
               <LoginPage />
             </Route>
             <Route path="/home">
-              <ManagerHomePage />
+              <HomePage userType="MANAGER"/>
             </Route>
             <Route path="/users/register">
-              <ManagerHomePage />
+              <HomePage userType="MANAGER"/>
             </Route>
             <Route path="/tables/register">
               <HomePage userType="MANAGER"/>

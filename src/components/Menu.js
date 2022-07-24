@@ -28,8 +28,13 @@ class Menu extends React.Component {
                                          key={item.text}>
                                 {
                                     this.props.dropdownItems[index].map((dropdownItem) => (
-                                        <NavDropdown.Item key={dropdownItem.path} href={dropdownItem.path} onClick={dropdownItem.onClick}>
-                                            {dropdownItem.text}
+                                        <NavDropdown.Item key={dropdownItem.path} 
+                                                          //href={dropdownItem.path} 
+                                                          onClick={dropdownItem.onClick}>
+                                                            <Link to={dropdownItem.path} className="link">
+                                                              {dropdownItem.text}
+
+                                                            </Link>
                                         </NavDropdown.Item>
                                     ))
                                 }
