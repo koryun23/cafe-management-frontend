@@ -7,6 +7,7 @@ import ProductsRegistrationForm from './ProductsForm.js';
 import ViewProducts from './ViewProducts.js';
 import BackgroundImage from './BackgroundImage.js';
 import ViewUsers from './ViewUsers.js';
+import {Link} from 'react-router-dom'; 
 import '../css/ManagerPage.css';
 
 class ManagerPage extends React.Component {
@@ -169,7 +170,9 @@ class ManagerPage extends React.Component {
             <div className='ManagerPage'>
                 {!isHomePage(this.state) && !this.state.showViewProducts && <BackgroundImage />}
                 <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
-                <Form state={this.state} />
+                <Form state={this.state} 
+                      onUsersClick={this.handleViewUsersClick} 
+                      onProductsClick={this.handleViewProductsClick}/>
             </div>
         );
     }
@@ -203,7 +206,9 @@ function Form(props) {
     console.log("show home");
     return <Home username="john11"
                  firstName="John"
-                 lastName="Smith"/>
+                 lastName="Smith"
+                 onUsersClick={props.onUsersClick} 
+                 onProductsClick={props.onProductsClick}/>
 }
 
 class Home extends React.Component {
@@ -222,10 +227,11 @@ class Home extends React.Component {
                 </div>
                 <div className="main align-items-center justify-content-center">
                     <h2>Welcome, {this.props.firstName}</h2>
-                    <p>What would you like to do?</p>
+                    <p>Below are some of the actions you can perform.</p>
                     <hr></hr>
                     <div className="box-container">
-                        <AllBoxes/>
+                        <AllBoxes onUsersClick={this.props.onUsersClick} 
+                                  onProductsClick={this.props.onProductsClick}/>
                     </div>
                 </div>
             </div>
@@ -234,11 +240,18 @@ class Home extends React.Component {
     }
 }
 
-function AllBoxes() {
+function AllBoxes(props) {
     return [
-        <Box text="USERS" imageClassName="user-image"/>,
-        <Box text="PRODUCTS" imageClassName="product-image"/>,
-        <Box text="TABLES" imageClassName="table-image"/>,
+        <Box text="USERS" 
+             imageClassName="user-image"
+             onClick={props.onUsersClick} 
+             path="/users"/>,
+        <Box text="PRODUCTS" 
+             imageClassName="product-image" 
+             onClick={props.onProductsClick} 
+             path="/products"/>,
+        <Box text="TABLES" 
+             imageClassName="table-image"/>
     ];
 }
 
@@ -247,9 +260,11 @@ function Box(props) {
         <div className="box">
             <div className={props.imageClassName}></div>
             <p className="box-description">{props.text}</p>
-            <button className="box-button">
+            <Link className="box-button"
+                    onClick={props.onClick} 
+                    to={props.path}>
                 View»
-            </button>
+            </Link>
         </div>
     );
 }

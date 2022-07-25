@@ -99,6 +99,12 @@
     background-color: rgb(170, 181, 93);
     color: white;
     border:0ch;
+    text-decoration: none;
+    text-align: center;
+}
+
+.box-button:hover {
+    color: white;
 }
 
 .box-description {
