@@ -75,12 +75,48 @@
     display: inline-block;
     height:200px;
     width: 300px;
-    background-color: rgb(209, 212, 124);
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 
+}
+
+.box-yellow {
+    background-color: rgb(209, 212, 124);
+}
+
+.box-button-yellow {
+    background-color:rgb(170, 181, 93)
+}
+
+.box-red {
+    background-color:rgba(255, 0, 0, 0.25)
+}
+
+.box-button-red {
+    background-color:rgb(222, 159, 159)
+}
+
+.box-green {
+    background-color:rgb(108, 211, 125)
+}
+
+.box-button-green {
+    background-color:rgb(98, 163, 110)
+}
+.box-button {
+    width: 300px;
+    position: absolute;
+    bottom: -10px;
+    color: white;
+    border:0ch;
+    text-decoration: none;
+    text-align: center;
+}
+
+.box-button:hover {
+    color: white;
 }
 
 .main {
@@ -92,20 +128,7 @@
     justify-content: center;
 }
 
-.box-button {
-    width: 300px;
-    position: absolute;
-    bottom: -10px;
-    background-color: rgb(170, 181, 93);
-    color: white;
-    border:0ch;
-    text-decoration: none;
-    text-align: center;
-}
 
-.box-button:hover {
-    color: white;
-}
 
 .box-description {
     color: white;

@@ -245,22 +245,25 @@ function AllBoxes(props) {
         <Box text="USERS" 
              imageClassName="user-image"
              onClick={props.onUsersClick} 
-             path="/users"/>,
+             path="/users" 
+             color="yellow"/>,
         <Box text="PRODUCTS" 
              imageClassName="product-image" 
              onClick={props.onProductsClick} 
-             path="/products"/>,
+             path="/products" 
+             color="green"/>,
         <Box text="TABLES" 
-             imageClassName="table-image"/>
+             imageClassName="table-image" 
+             color="red"/>
     ];
 }
 
 function Box(props) {
     return (
-        <div className="box">
+        <div className={"box box-" + props.color}>
             <div className={props.imageClassName}></div>
             <p className="box-description">{props.text}</p>
-            <Link className="box-button"
+            <Link className={"box-button box-button-" + props.color}
                     onClick={props.onClick} 
                     to={props.path}>
                 View»
