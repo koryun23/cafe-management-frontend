@@ -6,9 +6,11 @@ import TableForm from './TableForm.js';
 import ProductsRegistrationForm from './ProductsForm.js';
 import ViewProducts from './ViewProducts.js';
 import BackgroundImage from './BackgroundImage.js';
+import ViewUsers from './ViewUsers.js';
 import '../css/ManagerPage.css';
 
 class ManagerPage extends React.Component {
+
     constructor(props) {
         super(props);
         this.handleHomeClick = this.handleHomeClick.bind(this);
@@ -17,12 +19,17 @@ class ManagerPage extends React.Component {
         this.handleAssignClick = this.handleAssignClick.bind(this);
         this.handleAddProductsClick = this.handleAddProductsClick.bind(this);
         this.handleViewProductsClick = this.handleViewProductsClick.bind(this);
+        this.handleViewUsersClick = this.handleViewUsersClick.bind(this);
         this.state = {
             showAddUsersForm : false,
             showAddTablesForm : false,
             showAssignForm : false,
             showAddProductsForm: false,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: true,
+            showProductsBox: true,
+            showTablesBox: true
         };
         
         this.menuItems = [
@@ -32,7 +39,8 @@ class ManagerPage extends React.Component {
         ];
 
         this.usersDropdownItems = [
-            {path: '/users/register', text: 'Add Users', onClick: this.handleAddUsersClick}
+            {path: '/users/register', text: 'Add Users', onClick: this.handleAddUsersClick},
+            {path: '/users', text: 'View Users', onClick: this.handleViewUsersClick}
         ];
 
         this.tablesDropdownItems = [
@@ -59,7 +67,11 @@ class ManagerPage extends React.Component {
             showAddTablesForm: false,
             showAssignForm: false,
             showAddProductsForm: false,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: true,
+            showProductsBox: true,
+            showTablesBox: true
         });
 
     }
@@ -71,7 +83,11 @@ class ManagerPage extends React.Component {
             showAddTablesForm: false,
             showAssignForm: false,
             showAddProductsForm: false,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
         });
     }
 
@@ -82,7 +98,11 @@ class ManagerPage extends React.Component {
             showAddUsersForm: false,
             showAssignForm: false,
             showAddProductsForm: false,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
         });
     }
 
@@ -93,7 +113,11 @@ class ManagerPage extends React.Component {
             showAddUsersForm: false,
             showAddTablesForm: false,
             showAddProductsForm: false,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
         });
     }
 
@@ -103,7 +127,11 @@ class ManagerPage extends React.Component {
             showAddTablesForm: false,
             showAssignForm: false,
             showAddProductsForm: true,
-            showViewProducts: false
+            showViewProducts: false,
+            showViewUsers: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
         })
     }
 
@@ -113,15 +141,33 @@ class ManagerPage extends React.Component {
             showAddTablesForm: false,
             showAssignForm: false,
             showAddProductsForm: false,
-            showViewProducts: true
+            showViewProducts: true,
+            showViewUsers: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
         })
+    }
+
+    handleViewUsersClick(event) {
+        this.setState({
+            showAddUsersForm: false,
+            showAddTablesForm: false,
+            showAssignForm: false,
+            showAddProductsForm: false,
+            showViewProducts: false,
+            showViewUsers: true,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
+        });
     }
 
     render() {
         console.log(this.state);
         return (
             <div className='ManagerPage'>
-                {!isHomePage(this.state) && <BackgroundImage />}
+                {!isHomePage(this.state) && !this.state.showViewProducts && <BackgroundImage />}
                 <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
                 <Form state={this.state} />
             </div>
@@ -150,8 +196,14 @@ function Form(props) {
         console.log("show view products");
         return <ViewProducts />;
     }
+    if(props.state.showViewUsers) {
+        console.log("show view users");
+        return <ViewUsers />;
+    }
     console.log("show home");
-    return <Home />
+    return <Home username="john11"
+                 firstName="John"
+                 lastName="Smith"/>
 }
 
 class Home extends React.Component {
@@ -161,18 +213,45 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="">
                 <div className="sidenav">
                     <div className="manager-image"></div>
-                    <Profile firstName="John"
-                             lastName="Smith"
-                             username="john11"/>
-
+                    <Profile firstName={this.props.firstName}
+                             lastName={this.props.lastName}
+                             username={this.props.username}/>
+                </div>
+                <div className="main align-items-center justify-content-center">
+                    <h2>Welcome, {this.props.firstName}</h2>
+                    <p>What would you like to do?</p>
+                    <hr></hr>
+                    <div className="box-container">
+                        <AllBoxes/>
+                    </div>
                 </div>
             </div>
 
-                );
+        );
     }
+}
+
+function AllBoxes() {
+    return [
+        <Box text="USERS" imageClassName="user-image"/>,
+        <Box text="PRODUCTS" imageClassName="product-image"/>,
+        <Box text="TABLES" imageClassName="table-image"/>,
+    ];
+}
+
+function Box(props) {
+    return (
+        <div className="box">
+            <div className={props.imageClassName}></div>
+            <p className="box-description">{props.text}</p>
+            <button className="box-button">
+                View»
+            </button>
+        </div>
+    );
 }
 
 function Profile(props) {
@@ -191,4 +270,5 @@ function isHomePage(state) {
            !state.showAssignForm &&
            !state.showViewProducts;
 }
+
 export default ManagerPage;

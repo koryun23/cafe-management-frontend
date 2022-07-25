@@ -16,7 +16,7 @@ class Menu extends React.Component {
         return (
             <Navbar variant="dark" bg="dark" expand="lg">
               <Container fluid>
-                <Navbar.Brand href="/home" onClick={this.props.onHomeClick}>Cafe Management   </Navbar.Brand>
+                <Navbar.Brand href="/home" onClick={this.props.onHomeClick}>Cafe Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-dark-example" />
                 <Navbar.Collapse id="navbar-dark-example">
                   <Nav>

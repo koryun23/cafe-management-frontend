@@ -50,6 +50,9 @@ function App() {
             <Route path="/products">
               <HomePage userType="MANAGER"/>
             </Route>
+            <Route path="/users">
+              <HomePage userType="MANAGER"/>
+            </Route>
           </Switch>
         </div>
       </Router>
