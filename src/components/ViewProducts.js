@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/ViewProduct.css';
 import Submit from './Submit.js';
+import {FaBeer} from 'react-icons/fa';
 
 class ViewProducts extends React.Component {
     
@@ -34,15 +35,12 @@ class ViewProducts extends React.Component {
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <input type="submit"
-                                   value="Update"
-                                   onClick={this.handleUpdateClick} 
-                                   className="btn btn-primary"/>
-                            <br/>
-                            <input type="submit"
-                                   value="Delete "
-                                   onClick={this.handleDeleteClick} 
-                                   className="btn btn-danger"/>                                   
+                            <button text="Update" className="update-button">
+                                Update
+                            </button>
+                            <button className="delete-button">
+                                Delete<i className="fa fa-trash"></i>
+                            </button>
                         </div>
                     ))
                 }
