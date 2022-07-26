@@ -36,6 +36,16 @@
     margin-right: 5%;
 }
 
+.waiter-image {
+    background-image: url("../img/waiter-1.png");
+    background-size: contain;
+    display: block;
+    height: 80px;
+    width: 80px;
+    z-index: -1;
+    margin-left: 5%;
+    margin-right: 5%;
+}
 .user-image {
     background-image: url("../img/user-1.png");
     background-size: contain;
