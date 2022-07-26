@@ -32,6 +32,7 @@ class ViewProducts extends React.Component {
                 {
                     this.state.products.map((product) => (
                         <div className="product-box">
+                            <div className="product-image"> </div>
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
