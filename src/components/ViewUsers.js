@@ -3,6 +3,11 @@ import React from 'react';
 class ViewUsers extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            users: [
+                
+            ]
+        }
     }
 
     render() {
