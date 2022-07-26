@@ -21,12 +21,6 @@ class ViewUsers extends React.Component {
                             <div className={user.role.toLowerCase()+"-image"}></div>
                             <h3>{user.username}</h3>
                             <p>{user.firstName + " " + user.secondName}</p>
-                            <button text="Update" className="update-button">
-                                Update
-                            </button>
-                            <button className="delete-button">
-                                Delete<i className="fa fa-trash"></i>
-                            </button>
                         </div>
                     ))
                 }
