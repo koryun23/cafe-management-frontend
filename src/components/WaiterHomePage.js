@@ -7,11 +7,28 @@ class WaiterHomePage extends React.Component {
         this.state = {
             
         };
-        this.menuItems = [];
+        this.menuItems = [
+            {path: '', text: 'Orders'}
+        ];
+        this.orderDropdownItems = [
+            {path: '/orders/register', text: 'Register Orders', onClick: ''}
+        ];
+
+        this.dropdownItems = [
+            this.orderDropdownItems
+        ];
     }
 
+    handleRegisterOrdersClick(event) {
+
+    }
+    
     render() {
-        return <h1>Waiter home page</h1>
+        return (
+            <div>
+                <Menu items={this.menuItems} dropdownItems={this.dropdownItems}/>
+            </div>
+        );
     }
 }
 
