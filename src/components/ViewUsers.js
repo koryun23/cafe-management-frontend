@@ -19,8 +19,8 @@ class ViewUsers extends React.Component {
                     this.state.users.map(user => (
                         <div className="user-box">
                             <div className={user.role.toLowerCase()+"-image"}></div>
-                            <h3>{user.username}</h3>
-                            <p>{user.firstName + " " + user.secondName}</p>
+                            <h3 className="user-username">{user.username}</h3>
+                            <p className="user-full-name">{user.firstName + " " + user.secondName}</p>
                         </div>
                     ))
                 }

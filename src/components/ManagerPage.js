@@ -7,6 +7,7 @@ import ProductsRegistrationForm from './ProductsForm.js';
 import ViewProducts from './ViewProducts.js';
 import BackgroundImage from './BackgroundImage.js';
 import ViewUsers from './ViewUsers.js';
+import ViewTables from './ViewTables.js';
 import {Link} from 'react-router-dom'; 
 import '../css/ManagerPage.css';
 
@@ -21,6 +22,7 @@ class ManagerPage extends React.Component {
         this.handleAddProductsClick = this.handleAddProductsClick.bind(this);
         this.handleViewProductsClick = this.handleViewProductsClick.bind(this);
         this.handleViewUsersClick = this.handleViewUsersClick.bind(this);
+        this.handleViewTablesClick = this.handleViewTablesClick.bind(this);
         this.state = {
             showAddUsersForm : false,
             showAddTablesForm : false,
@@ -28,6 +30,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: true,
             showProductsBox: true,
             showTablesBox: true
@@ -46,7 +49,8 @@ class ManagerPage extends React.Component {
 
         this.tablesDropdownItems = [
             {path: '/tables/register', text: 'Add Tables', onClick: this.handleAddTablesClick},
-            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick}
+            {path: '/tables-to-waiters/assign', text: 'Assign', onClick: this.handleAssignClick},
+            {path: '/tables', text: 'View Tables', onClick: this.handleViewTablesClick}
         ];
 
         this.productsDropdownItems = [
@@ -70,6 +74,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: true,
             showProductsBox: true,
             showTablesBox: true
@@ -86,6 +91,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -101,6 +107,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -116,6 +123,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false, 
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -130,6 +138,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: true,
             showViewProducts: false,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -144,6 +153,7 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: true,
             showViewUsers: false,
+            showViewTables: false,
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -158,6 +168,22 @@ class ManagerPage extends React.Component {
             showAddProductsForm: false,
             showViewProducts: false,
             showViewUsers: true,
+            showViewTables: false,
+            showUsersBox: false,
+            showProductsBox: false,
+            showTablesBox: false
+        });
+    }
+
+    handleViewTablesClick() {
+        this.setState({
+            showAddUsersForm: false,
+            showAddTablesForm: false,
+            showAssignForm: false,
+            showAddProductsForm: false,
+            showViewProducts: false,
+            showViewUsers: false,
+            showViewTables: true,
             showUsersBox: false,
             showProductsBox: false,
             showTablesBox: false
@@ -172,7 +198,8 @@ class ManagerPage extends React.Component {
                 <Menu items={this.menuItems} dropdownItems={this.dropdownItems} onHomeClick={this.handleHomeClick}/>
                 <Form state={this.state} 
                       onUsersClick={this.handleViewUsersClick} 
-                      onProductsClick={this.handleViewProductsClick}/>
+                      onProductsClick={this.handleViewProductsClick} 
+                      onTablesClick={this.handleViewTablesClick}/>
             </div>
         );
     }
@@ -203,12 +230,17 @@ function Form(props) {
         console.log("show view users");
         return <ViewUsers />;
     }
+    if(props.state.showViewTables) {
+        console.log("show view tables");
+        return <ViewTables/>
+    }
     console.log("show home");
     return <Home username="john11"
                  firstName="John"
                  lastName="Smith"
                  onUsersClick={props.onUsersClick} 
-                 onProductsClick={props.onProductsClick}/>
+                 onProductsClick={props.onProductsClick} 
+                 onTablesClick={props.onTablesClick}/>
 }
 
 class Home extends React.Component {
@@ -231,7 +263,8 @@ class Home extends React.Component {
                     <hr></hr>
                     <div className="box-container">
                         <AllBoxes onUsersClick={this.props.onUsersClick} 
-                                  onProductsClick={this.props.onProductsClick}/>
+                                  onProductsClick={this.props.onProductsClick} 
+                                  onTablesClick={this.props.onTablesClick}/>
                     </div>
                 </div>
             </div>
@@ -254,7 +287,9 @@ function AllBoxes(props) {
              color="green"/>,
         <Box text="TABLES" 
              imageClassName="table-image" 
-             color="red"/>
+             color="red" 
+             onClick={props.onTablesClick}
+             path="/tables"/>
     ];
 }
 
