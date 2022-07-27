@@ -2,6 +2,7 @@ import React from 'react';
 import "../css/ManagerPage.css";
 import ManagerMenu from './ManagerMenu';
 import ProfileSidenav from './ProfileSidenav.js';
+import Box from './Box.js';
 
 class ManagerHomePage extends React.Component {
     constructor(props) {
@@ -35,32 +36,20 @@ function AllBoxes(props) {
         <Box text="USERS" 
              imageClassName="user-image"
              path="/users" 
-             color="yellow"/>,
+             color="yellow"
+             buttonText="View»" />,
         <Box text="PRODUCTS" 
              imageClassName="product-image" 
              path="/products" 
-             color="green"/>,
+             color="green"
+             buttonText="View»" />,
         <Box text="TABLES" 
              imageClassName="table-image" 
              color="red" 
-             path="/tables"/>
+             path="/tables"
+             buttonText="View»" />
     ];
 }
-
-function Box(props) {
-    return (
-        <div className={"box box-" + props.color}>
-            <div className={props.imageClassName}></div>
-            <p className="box-description">{props.text}</p>
-            <a className={"box-button box-button-" + props.color}
-                    href={props.path}>
-                View»
-            </a>
-            
-        </div>
-    );
-}
-
 
 
 export default ManagerHomePage;

@@ -66,53 +66,7 @@
     margin-right: 5%;
 }
 
-.box {
-    display: inline-block;
-    height:200px;
-    width: 300px;
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 
-}
-
-.box-yellow {
-    background-color: rgb(209, 212, 124);
-}
-
-.box-button-yellow {
-    background-color:rgb(170, 181, 93)
-}
-
-.box-red {
-    background-color:rgb(207, 95, 95)
-}
-
-.box-button-red {
-    background-color:rgb(162, 77, 77)
-}
-
-.box-green {
-    background-color:rgb(108, 211, 125)
-}
-
-.box-button-green {
-    background-color:rgb(98, 163, 110)
-}
-.box-button {
-    width: 300px;
-    position: absolute;
-    bottom: -10px;
-    color: white;
-    border:0ch;
-    text-decoration: none;
-    text-align: center;
-}
-
-.box-button:hover {
-    color: white;
-}
 
 .main {
     position: relative;
@@ -125,8 +79,3 @@
 
 
 
-.box-description {
-    color: white;
-    font-size: 40px;
-    text-align: center;
-}
