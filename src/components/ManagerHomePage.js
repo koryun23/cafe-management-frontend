@@ -1,6 +1,8 @@
 import React from 'react';
 import "../css/ManagerPage.css";
 import ManagerMenu from './ManagerMenu';
+import ProfileSidenav from './ProfileSidenav.js';
+
 class ManagerHomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -10,12 +12,10 @@ class ManagerHomePage extends React.Component {
         return (
             <div className="">
                 <ManagerMenu />
-                <div className="sidenav">
-                    <div className="manager-image"></div>
-                    <Profile firstName={this.props.firstName}
-                             lastName={this.props.lastName}
-                             username={this.props.username}/>
-                </div>
+                <ProfileSidenav username="john11"
+                                firstName="John"
+                                lastName="Smith" 
+                                userRole="MANAGER"/>
                 <div className="main align-items-center justify-content-center">
                     <h2>Welcome, {this.props.firstName}</h2>
                     <p>Below are some of the actions you can perform.</p>
@@ -61,13 +61,6 @@ function Box(props) {
     );
 }
 
-function Profile(props) {
-    return (
-        <div className="profile">
-            <h3 className="username">{props.username}</h3>
-            <p className="full-name">{props.firstName + " " + props.lastName}</p>
-        </div>
-    );
-}
+
 
 export default ManagerHomePage;

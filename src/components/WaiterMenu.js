@@ -4,16 +4,8 @@ import Menu from './Menu.js';
 class WaiterMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.menuItems = [
-            {path: '', text: 'Orders'}
-        ]
-
-        this.orderDropdownItems = [
-            {path: '/orders', text: 'See orders'}
-        ]
-        this.dropdownItems = [
-            this.orderDropdownItems
-        ]
+        this.menuItems = []
+        this.dropdownItems = [this.assignedTablesDropdownItems]
     }
 
     render() {

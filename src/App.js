@@ -28,7 +28,7 @@ function App() {
                 <HomePage firstName="John" 
                       lastName="Smith"
                       username="john11" 
-                      userRole="MANAGER"/>
+                      userRole="WAITER"/>
             </Route>
             <Route path="/users/register">
                 <BackgroundImage />

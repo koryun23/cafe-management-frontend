@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from './Menu.js';
 import WaiterMenu from './WaiterMenu.js';
-
+import ProfileSidenav from './ProfileSidenav.js';
 class WaiterHomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,10 @@ class WaiterHomePage extends React.Component {
         return (
             <div>
                 <WaiterMenu />
-                <h1>Waiter home page</h1>
+                <ProfileSidenav username="mary21"
+                                firstName="Mary"
+                                lastName="Smith"
+                                userRole="WAITER"/>
             </div>
         );
     }
