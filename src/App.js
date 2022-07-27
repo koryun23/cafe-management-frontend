@@ -3,8 +3,17 @@ import './App.css';
 import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import ManagerHomePage from './components/ManagerPage';
-
+import ManagerPage from './components/ManagerPage';
+import ManagerMenu from './components/ManagerMenu';
+import Home from './components/ManagerHomePage'
+import UserForm from './components/UserForm';
+import BackgroundImage from './components/BackgroundImage';
+import TableForm from './components/TableForm';
+import AssignForm from './components/AssignForm';
+import ProductsRegistrationForm from './components/ProductsForm';
+import ViewProducts from './components/ViewProducts';
+import ViewUsers from './components/ViewUsers.js';
+import ViewTables from './components/ViewTables';
 function App() {
   return (
     <div>
@@ -15,22 +24,33 @@ function App() {
               <LoginPage />
             </Route>
             <Route path="/home">
-              <HomePage userType="MANAGER"/>
+                <ManagerMenu />
+                <Home firstName="John" 
+                      lastName="Smith"
+                      username="john11"/>
             </Route>
             <Route path="/users/register">
-              <HomePage userType="MANAGER"/>
+                <BackgroundImage />
+                <ManagerMenu />
+                <UserForm />
             </Route>
             <Route path="/tables/register">
-              <HomePage userType="MANAGER"/>
+                <BackgroundImage />
+                <ManagerMenu />
+                <TableForm />
             </Route>
             <Route path="/tables-to-waiters/assign">
-              <HomePage userType="MANAGER"/>
+                <BackgroundImage />
+                <ManagerMenu />
+                <AssignForm />
             </Route>
             <Route path="/products/register">
-              <HomePage userType="MANAGER"/>
+                <BackgroundImage />
+                <ManagerMenu />
+                <ProductsRegistrationForm />
             </Route>
             <Route path="/products/update/*">
-              <HomePage userType="MANAGER"/>
+                <h1>Update page not ready yet</h1>
             </Route>
             <Route path="/tables-to-waiters">
               <HomePage userType="WAITER"/>
@@ -48,10 +68,16 @@ function App() {
               <HomePage userType="WAITER"/>
             </Route>
             <Route path="/products">
-              <HomePage userType="MANAGER"/>
+              <ManagerMenu />
+              <ViewProducts />
             </Route>
             <Route path="/users">
-              <HomePage userType="MANAGER"/>
+              <ManagerMenu />
+              <ViewUsers />
+            </Route>
+            <Route path="/tables">
+              <ManagerMenu />
+              <ViewTables />
             </Route>
           </Switch>
         </div>

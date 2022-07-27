@@ -16,7 +16,7 @@ class Menu extends React.Component {
         return (
             <Navbar variant="dark" bg="dark" expand="lg">
               <Container fluid>
-                <Navbar.Brand href="/home" onClick={this.props.onHomeClick}>Cafe Management</Navbar.Brand>
+                <Navbar.Brand href="/home">Cafe Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-dark-example" />
                 <Navbar.Collapse id="navbar-dark-example">
                   <Nav>
@@ -28,10 +28,10 @@ class Menu extends React.Component {
                                          key={item.text}>
                                 {
                                     this.props.dropdownItems[index].map((dropdownItem) => (
-                                        <NavDropdown.Item key={dropdownItem.text} >
-                                                            <Link to={dropdownItem.path} className="link" onClick={dropdownItem.onClick}>
+                                        <NavDropdown.Item key={dropdownItem.text} 
+                                                          href={dropdownItem.path}>
                                                               {dropdownItem.text}
-                                                            </Link>
+                                                            
                                         </NavDropdown.Item>
                                     ))
                                 }
