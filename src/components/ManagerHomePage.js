@@ -20,9 +20,7 @@ class Home extends React.Component {
                     <p>Below are some of the actions you can perform.</p>
                     <hr></hr>
                     <div className="box-container">
-                        <AllBoxes onUsersClick={this.props.onUsersClick} 
-                                  onProductsClick={this.props.onProductsClick} 
-                                  onTablesClick={this.props.onTablesClick}/>
+                        <AllBoxes />
                     </div>
                 </div>
             </div>
@@ -35,18 +33,15 @@ function AllBoxes(props) {
     return [
         <Box text="USERS" 
              imageClassName="user-image"
-             onClick={props.onUsersClick} 
              path="/users" 
              color="yellow"/>,
         <Box text="PRODUCTS" 
              imageClassName="product-image" 
-             onClick={props.onProductsClick} 
              path="/products" 
              color="green"/>,
         <Box text="TABLES" 
              imageClassName="table-image" 
              color="red" 
-             onClick={props.onTablesClick}
              path="/tables"/>
     ];
 }
@@ -56,11 +51,11 @@ function Box(props) {
         <div className={"box box-" + props.color}>
             <div className={props.imageClassName}></div>
             <p className="box-description">{props.text}</p>
-            <Link className={"box-button box-button-" + props.color}
-                    onClick={props.onClick} 
-                    to={props.path}>
+            <a className={"box-button box-button-" + props.color}
+                    href={props.path}>
                 View»
-            </Link>
+            </a>
+            
         </div>
     );
 }
