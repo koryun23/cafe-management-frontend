@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu.js';
+import WaiterMenu from './WaiterMenu.js';
 
 class WaiterHomePage extends React.Component {
     constructor(props) {
@@ -7,26 +8,14 @@ class WaiterHomePage extends React.Component {
         this.state = {
             
         };
-        this.menuItems = [
-            {path: '', text: 'Orders'}
-        ];
-        this.orderDropdownItems = [
-            {path: '/orders/register', text: 'Register Orders', onClick: ''}
-        ];
-
-        this.dropdownItems = [
-            this.orderDropdownItems
-        ];
-    }
-
-    handleRegisterOrdersClick(event) {
 
     }
-    
+
     render() {
         return (
             <div>
-                <Menu items={this.menuItems} dropdownItems={this.dropdownItems}/>
+                <WaiterMenu />
+                <h1>Waiter home page</h1>
             </div>
         );
     }

@@ -3,7 +3,6 @@ import './App.css';
 import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import ManagerPage from './components/ManagerPage';
 import ManagerMenu from './components/ManagerMenu';
 import Home from './components/ManagerHomePage'
 import UserForm from './components/UserForm';
@@ -14,6 +13,8 @@ import ProductsRegistrationForm from './components/ProductsForm';
 import ViewProducts from './components/ViewProducts';
 import ViewUsers from './components/ViewUsers.js';
 import ViewTables from './components/ViewTables';
+import WaiterMenu from './components/WaiterMenu.js';
+
 function App() {
   return (
     <div>
@@ -24,10 +25,10 @@ function App() {
               <LoginPage />
             </Route>
             <Route path="/home">
-                <ManagerMenu />
-                <Home firstName="John" 
+                <HomePage firstName="John" 
                       lastName="Smith"
-                      username="john11"/>
+                      username="john11" 
+                      userRole="MANAGER"/>
             </Route>
             <Route path="/users/register">
                 <BackgroundImage />

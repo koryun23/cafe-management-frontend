@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-
-class Home extends React.Component {
+import "../css/ManagerPage.css";
+import ManagerMenu from './ManagerMenu';
+class ManagerHomePage extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -9,6 +9,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className="">
+                <ManagerMenu />
                 <div className="sidenav">
                     <div className="manager-image"></div>
                     <Profile firstName={this.props.firstName}
@@ -69,12 +70,4 @@ function Profile(props) {
     );
 }
 
-function isHomePage(state) {
-    return !state.showAddProductsForm && 
-           !state.showAddTablesForm && 
-           !state.showAddUsersForm &&
-           !state.showAssignForm &&
-           !state.showViewProducts;
-}
-
-export default Home;
+export default ManagerHomePage;
