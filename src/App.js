@@ -14,6 +14,7 @@ import ViewProducts from './components/ViewProducts';
 import ViewUsers from './components/ViewUsers.js';
 import ViewTables from './components/ViewTables';
 import WaiterMenu from './components/WaiterMenu.js';
+import WaiterHomePage from './components/WaiterHomePage';
 
 function App() {
   return (
@@ -55,6 +56,9 @@ function App() {
             </Route>
             <Route path="/tables-to-waiters">
               <HomePage userType="WAITER"/>
+            </Route>
+            <Route path="/orders">
+              <WaiterHomePage />
             </Route>
             <Route path="/orders/register/*">
               <HomePage userType="WAITER" />

@@ -6,3 +6,13 @@
     align-content: center;
     justify-content: center;
 }
+
+.order-image {
+    background-image: url("../img/order-1.png");
+    background-size: contain;
+    display: block;
+    height: 80px;
+    width: 80px;
+    z-index: -1;
+    margin-left: 33%;
+}
