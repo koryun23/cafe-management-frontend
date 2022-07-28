@@ -1,0 +1,15 @@
+.add-order-button {
+    display: inline-block;
+    height: 100px;
+    height: 40px;
+    padding: 10px;
+    background-color: lightgreen;
+    color: white;
+    border: 0ch;
+    text-decoration: none;
+}
+
+.add-order-button:hover {
+    color: white;
+    background-color: green;
+}

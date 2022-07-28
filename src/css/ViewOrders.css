@@ -1,0 +1,24 @@
+.order-box {
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    width: 200px;
+    height: 240x;
+}
+
+.add-product-in-order {
+    display: inline-block;
+    height: 40px;
+    width: 110px;
+    background-color: lightgreen;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.add-product-in-order:hover {
+    color: white;
+    background-color: green;
+}

@@ -15,7 +15,8 @@ import ViewUsers from './components/ViewUsers.js';
 import ViewTables from './components/ViewTables';
 import WaiterMenu from './components/WaiterMenu.js';
 import WaiterHomePage from './components/WaiterHomePage';
-
+import ViewTablesAssignedToWaiter from './components/ViewTablesAssignedToWaiter.js';
+import ViewOrders from './components/ViewOrders';
 function App() {
   return (
     <div>
@@ -55,13 +56,15 @@ function App() {
                 <h1>Update page not ready yet</h1>
             </Route>
             <Route path="/tables-to-waiters">
-              <HomePage userType="WAITER"/>
-            </Route>
-            <Route path="/orders">
-              <WaiterHomePage />
+              <WaiterMenu />
+              <ViewTablesAssignedToWaiter />
             </Route>
             <Route path="/orders/register/*">
               <HomePage userType="WAITER" />
+            </Route>
+            <Route path="/orders">
+              <WaiterMenu />
+              <ViewOrders />
             </Route>
             <Route path="/products-in-order/register/*">
               <HomePage userType="WAITER"/>

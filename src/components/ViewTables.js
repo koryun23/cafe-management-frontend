@@ -6,9 +6,9 @@ class ViewTables extends React.Component {
         super(props);
         this.state = {
             tables: [
-                {code: "qwerty", numberOfSeats: 5},
-                {code: "abcd", numberOfSeats: 3},
-                {code: "asdf123", numberOfSeats: 4}
+                {code: "qwerty", numberOfSeats: 5, id: 1},
+                {code: "abcd", numberOfSeats: 3, id: 2},
+                {code: "asdf123", numberOfSeats: 4, id: 3}
             ]
         };
     }
@@ -20,8 +20,9 @@ class ViewTables extends React.Component {
                     this.state.tables.map(table => (
                         <div className="table-box">
                             <div className="table-image"></div>
-                            <p className="table-code">CODE: {table.code}</p>
-                            <p className="table-seats">SEATS: {table.numberOfSeats}</p>
+                            <b><p className="table-code">CODE: {table.code}</p></b>
+                            <b><p className="table-seats">SEATS: {table.numberOfSeats}</p></b>
+                            <b><p className="table-id">ID: {table.id}</p></b>
                         </div>
                     ))
                 }
