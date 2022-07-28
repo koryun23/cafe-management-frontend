@@ -18,6 +18,7 @@ import WaiterHomePage from './components/WaiterHomePage';
 import ViewTablesAssignedToWaiter from './components/ViewTablesAssignedToWaiter.js';
 import ViewOrders from './components/ViewOrders';
 import OrdersRegister from './components/OrdersRegister';
+import OrderUpdateForm from './components/OrderUpdateForm';
 function App() {
   return (
     <div>
@@ -64,6 +65,11 @@ function App() {
               <WaiterMenu />
               <OrdersRegister />
             </Route>
+            <Route path="/orders/update/*">
+              <BackgroundImage />
+              <WaiterMenu />
+              <OrderUpdateForm />
+            </Route>
             <Route path="/orders">
               <WaiterMenu />
               <ViewOrders />
@@ -72,9 +78,6 @@ function App() {
               <HomePage userType="WAITER"/>
             </Route>
             <Route path="/products-in-order/update/*">
-              <HomePage userType="WAITER"/>
-            </Route>
-            <Route path="/orders/update/*">
               <HomePage userType="WAITER"/>
             </Route>
             <Route path="/products">
