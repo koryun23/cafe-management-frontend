@@ -17,6 +17,7 @@ import WaiterMenu from './components/WaiterMenu.js';
 import WaiterHomePage from './components/WaiterHomePage';
 import ViewTablesAssignedToWaiter from './components/ViewTablesAssignedToWaiter.js';
 import ViewOrders from './components/ViewOrders';
+import OrdersRegister from './components/OrdersRegister';
 function App() {
   return (
     <div>
@@ -60,7 +61,8 @@ function App() {
               <ViewTablesAssignedToWaiter />
             </Route>
             <Route path="/orders/register/*">
-              <HomePage userType="WAITER" />
+              <WaiterMenu />
+              <OrdersRegister />
             </Route>
             <Route path="/orders">
               <WaiterMenu />

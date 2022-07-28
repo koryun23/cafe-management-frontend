@@ -11,14 +11,47 @@
 .add-product-in-order {
     display: inline-block;
     height: 40px;
-    width: 110px;
+    width: 130px;
     background-color: lightgreen;
     padding: 10px;
     text-decoration: none;
     color: white;
+    margin: 5px;
 }
 
 .add-product-in-order:hover {
     color: white;
     background-color: green;
+}
+
+.update-order {
+    color: white;
+    background-color: lightblue;
+    text-decoration: none;
+    display: inline-block;
+    height: 40px;
+    width: 130px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.update-order:hover {
+    color: white;
+    background-color: blue;
+}
+
+.products-in-order-view {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    height: 40px;
+    width: 130px;
+    padding: 10px;
+    margin: 5px;
+    background-color: red;
+}
+
+.products-in-order-view:hover {
+    color: white;
+    background-color: darkred;
 }

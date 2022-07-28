@@ -1,0 +1,40 @@
+.red {
+    background: rgb(224, 87, 87);
+}
+
+.green {
+    background: lightgreen;
+}
+.user-add-box{
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    left: 0;
+    position: fixed;
+    margin-left: 560px;
+    margin-right: 560px;
+    right: 0;
+    z-index: 2;
+    padding: 10px;
+    height: 80%;
+    top: 90px;
+
+}
+
+.response {
+    text-align: center;
+    margin-top: 20%;
+}
+
+.response-box {
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    height: 30%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    margin-left: 600px;
+    margin-right: 600px;
+    top: 100px;
+}

@@ -21,12 +21,20 @@ class ViewOrders extends React.Component {
                         <div className="order-box" key={order.tableId.toString()}>
                             <div className="order-image"></div>
                             <b><i><p>Table Id: {order.tableId}</p></i></b>
-                                <b><i><p>WaiterUsername: {order.waiterUsername}</p></i></b>
+                                <b><i><p>Waiter: {order.waiterUsername}</p></i></b>
                                 <b><i><p>Status: {order.status}</p></i></b>
                                 <b><i><p>Date: {order.date}</p></i></b>
+                                <a className="update-order"
+                                   href={"/orders/update/" + order.orderId}>
+                                    Update Order
+                                </a>
                                 <a className="add-product-in-order"
                                    href={"/products-in-order/register/" + order.orderId} >
                                     Add Product
+                                </a>
+                                <a className="products-in-order-view" 
+                                   href={"/products-in-order/" + order.orderId}>
+                                    View Products
                                 </a>
                         </div>
                     ))
