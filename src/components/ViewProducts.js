@@ -9,9 +9,9 @@ class ViewProducts extends React.Component {
         super(props);
         this.state = {
             products: [
-                {productName: "Product1", productAmount: 50, productPrice: 150},
-                {productName: "Product2", productAmount: 25, productPrice: 200},
-                {productName: "Product3", productAmount: 20, productPrice: 850},
+                {productName: "Product 1", productAmount: 50, productPrice: 150},
+                {productName: "Product 2", productAmount: 25, productPrice: 200},
+                {productName: "Product 3", productAmount: 20, productPrice: 850},
             ]
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
@@ -36,12 +36,12 @@ class ViewProducts extends React.Component {
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <button text="Update" className="update-button">
+                            <a className="update-button" href={"/products/update/" + product.productName.toLowerCase().replace(/\s/g, '_')}>
                                 Update
-                            </button>
-                            <button className="delete-button">
+                            </a>
+                            <a className="delete-button" href="/products/">
                                 Delete<i className="fa fa-trash"></i>
-                            </button>
+                            </a>
                         </div>
                     ))
                 }

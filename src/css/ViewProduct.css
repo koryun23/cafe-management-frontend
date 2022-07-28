@@ -15,12 +15,24 @@
     padding: 10px;
     color: white;
     border: 0ch;
+    text-decoration: none;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+    color: white;
 }
 
 .update-button {
-    background-color: blue;
+    background-color: lightblue;
     color:white;
     border: 0ch;
     padding: 10px;
-    margin-right: 10px
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.update-button:hover {
+    background-color: blue;
+    color: white;
 }

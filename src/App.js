@@ -22,6 +22,7 @@ import OrderUpdateForm from './components/OrderUpdateForm';
 import ViewProductsInOrder from './components/ViewProductsInOrder';
 import ProductInOrderRegistrationForm from './components/ProductInOrderRegistrationForm';
 import Input from './components/Input';
+import ProductsUpdate from './components/ProductsUpdate';
 
 function App() {
   return (
@@ -58,8 +59,9 @@ function App() {
                 <ManagerMenu />
                 <ProductsRegistrationForm />
             </Route>
-            <Route path="/products/update/*">
-                <h1>Update page not ready yet</h1>
+            <Route path="/products/update/:originalName" children={<ProductsUpdate />}>
+                <ManagerMenu />
+                <ProductsUpdate /> 
             </Route>
             <Route path="/products">
               <ManagerMenu />
