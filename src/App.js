@@ -19,6 +19,7 @@ import ViewTablesAssignedToWaiter from './components/ViewTablesAssignedToWaiter.
 import ViewOrders from './components/ViewOrders';
 import OrdersRegister from './components/OrdersRegister';
 import OrderUpdateForm from './components/OrderUpdateForm';
+import ViewProductsInOrder from './components/ViewProductsInOrder';
 function App() {
   return (
     <div>
@@ -57,6 +58,18 @@ function App() {
             <Route path="/products/update/*">
                 <h1>Update page not ready yet</h1>
             </Route>
+            <Route path="/products">
+              <ManagerMenu />
+              <ViewProducts />
+            </Route>
+            <Route path="/users">
+              <ManagerMenu />
+              <ViewUsers />
+            </Route>
+            <Route path="/tables">
+              <ManagerMenu />
+              <ViewTables />
+            </Route>
             <Route path="/tables-to-waiters">
               <WaiterMenu />
               <ViewTablesAssignedToWaiter />
@@ -80,17 +93,9 @@ function App() {
             <Route path="/products-in-order/update/*">
               <HomePage userType="WAITER"/>
             </Route>
-            <Route path="/products">
-              <ManagerMenu />
-              <ViewProducts />
-            </Route>
-            <Route path="/users">
-              <ManagerMenu />
-              <ViewUsers />
-            </Route>
-            <Route path="/tables">
-              <ManagerMenu />
-              <ViewTables />
+            <Route path="/products-in-order/*">
+              <WaiterMenu />
+              <ViewProductsInOrder />
             </Route>
           </Switch>
         </div>

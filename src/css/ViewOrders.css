@@ -9,11 +9,9 @@
 }
 
 .add-product-in-order {
-    display: inline-block;
-    height: 40px;
-    width: 130px;
+    display: flex;
     background-color: lightgreen;
-    padding: 10px;
+    padding: 5px;
     text-decoration: none;
     color: white;
     margin: 5px;
@@ -25,13 +23,11 @@
 }
 
 .update-order {
+    display: flex;
     color: white;
     background-color: lightblue;
     text-decoration: none;
-    display: inline-block;
-    height: 40px;
-    width: 130px;
-    padding: 10px;
+    padding: 5px;
     margin: 5px;
 }
 
@@ -43,10 +39,8 @@
 .products-in-order-view {
     color: white;
     text-decoration: none;
-    display: inline-block;
-    height: 40px;
-    width: 130px;
-    padding: 10px;
+    display: flex;
+    padding: 5px;
     margin: 5px;
     background-color: red;
 }

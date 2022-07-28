@@ -11,18 +11,16 @@
 }
 
 .delete-button {
-    width:80px;
-    height:30px;
     background-color: red;
+    padding: 10px;
     color: white;
     border: 0ch;
 }
 
 .update-button {
-    width: 80px;
-    height: 30px;
     background-color: blue;
     color:white;
     border: 0ch;
+    padding: 10px;
     margin-right: 10px
 }
