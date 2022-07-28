@@ -1,18 +1,18 @@
 import React from 'react';
-import Input from './Input.js';
-import Submit from './Submit.js';
-
-class ProductsRegistrationForm extends React.Component {
+import Input from './Input';
+import Submit from './Submit';
+class ProductInOrderRegistrationForm extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             productName: '',
-            productPrice: '',
-            productAmount: ''
+            productAmount: '',
+            waiterUsername: this.props.waiterUsername
         }
         this.handleProductNameChange = this.handleProductNameChange.bind(this);
         this.handleProductAmountChange = this.handleProductAmountChange.bind(this);
-        this.handleProductPriceChange = this.handleProductPriceChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleProductNameChange(name) {
@@ -23,13 +23,17 @@ class ProductsRegistrationForm extends React.Component {
         this.setState({productAmount: [amount]});
     }
 
-    handleProductPriceChange(price) {
-        this.setState({productPrice: [price]});
+    handleSubmit(event) {
+        console.log(this.state);
+        this.setState({
+            productName: '',
+            productAmount: '',
+            waiterUsername: this.props.waiterUsername
+        });
     }
-
     render() {
         return (
-            <div className='user-add-form'>
+            <div className="user-add-form"> 
                 <form className="form-group">
                     <Input type="text"
                         name="product-name"
@@ -37,12 +41,6 @@ class ProductsRegistrationForm extends React.Component {
                         value={this.state.productName}
                         onChange={this.handleProductNameChange} 
                         label="Product Name" />
-                    <Input type="number"
-                        name="product-price"
-                        placeholder="Product Price"
-                        value={this.state.productPrice}
-                        onChange={this.handleProductPriceChange} 
-                        label="Product Price" />
                     <Input type="number"
                         name="product-amount"
                         placeholder="Product Amount"
@@ -56,6 +54,4 @@ class ProductsRegistrationForm extends React.Component {
     }
 }
 
-export default ProductsRegistrationForm;
-
-
+export default ProductInOrderRegistrationForm;

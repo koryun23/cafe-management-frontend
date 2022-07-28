@@ -5,6 +5,7 @@ class OrdersRegister extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            waiterUsername: this.props.waiterUsername,
             response: "Successfully registered an order",
             success: false
         }

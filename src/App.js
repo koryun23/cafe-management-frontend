@@ -20,6 +20,9 @@ import ViewOrders from './components/ViewOrders';
 import OrdersRegister from './components/OrdersRegister';
 import OrderUpdateForm from './components/OrderUpdateForm';
 import ViewProductsInOrder from './components/ViewProductsInOrder';
+import ProductInOrderRegistrationForm from './components/ProductInOrderRegistrationForm';
+import Input from './components/Input';
+
 function App() {
   return (
     <div>
@@ -76,7 +79,7 @@ function App() {
             </Route>
             <Route path="/orders/register/*">
               <WaiterMenu />
-              <OrdersRegister />
+              <OrdersRegister waiterUsername="john11"/>
             </Route>
             <Route path="/orders/update/*">
               <BackgroundImage />
@@ -88,7 +91,9 @@ function App() {
               <ViewOrders />
             </Route>
             <Route path="/products-in-order/register/*">
-              <HomePage userType="WAITER"/>
+              <BackgroundImage />
+              <WaiterMenu />
+              <ProductInOrderRegistrationForm waiterUsername="john11"/>
             </Route>
             <Route path="/products-in-order/update/*">
               <HomePage userType="WAITER"/>
