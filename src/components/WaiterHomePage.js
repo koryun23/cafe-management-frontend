@@ -44,7 +44,7 @@ function AllBoxes(props) {
         <Box imageClassName="order-image"
              text="ORDERS"
              path="/orders"
-             color="yellow"
+             color="green"
              buttonText="View»" />,
     ]
 }
