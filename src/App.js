@@ -78,6 +78,7 @@ function App() {
               <ViewTablesAssignedToWaiter />
             </Route>
             <Route path="/orders/register/*">
+              <BackgroundImage />
               <WaiterMenu />
               <OrdersRegister waiterUsername="john11"/>
             </Route>

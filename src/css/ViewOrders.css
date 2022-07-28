@@ -37,15 +37,15 @@
 }
 
 .products-in-order-view {
-    color: white;
+    color: black;
     text-decoration: none;
     display: flex;
     padding: 5px;
     margin: 5px;
-    background-color: red;
+    background-color: rgb(247, 255, 129);
 }
 
 .products-in-order-view:hover {
-    color: white;
-    background-color: darkred;
+    color: black;
+    background-color: rgb(165, 175, 25);
 }
