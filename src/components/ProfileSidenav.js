@@ -4,16 +4,30 @@ import '../css/ProfileSidenav.css';
 class ProfileSidenav extends React.Component {
     constructor(props) {
         super(props);
+        this.handleLogOut = this.handleLogOut.bind(this);
     } 
 
+    handleLogOut(event) {
+        localStorage.removeItem("token");
+    }
+    
     render() {
         return (
-            <div className="sidenav">
-                <div className={this.props.userRole.toLowerCase() + "-image"}></div>
-                <Profile firstName={this.props.firstName}
-                        lastName={this.props.lastName}
-                        username={this.props.username} />
-            </div>
+            <div>
+                <a href="/"
+                   onClick={this.handleLogOut}
+                   className="log-out">
+                    Log Out
+                </a>
+                <div className="sidenav">
+
+                    <div className={this.props.userRole.toLowerCase() + "-image"}></div>
+                        <Profile firstName={this.props.firstName}
+                            lastName={this.props.lastName}
+                            username={this.props.username} />
+                    </div>
+                </div>
+
         );
     }
 }

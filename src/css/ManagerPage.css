@@ -12,7 +12,7 @@
 
 .manager-image {
     background-image: url("../img/manager-1.webp");
-    background-size: contain;
+    background-size: cover;
     display: block;
     height: 80px;
     width: 80px;
@@ -23,7 +23,7 @@
 
 .waiter-image {
     background-image: url("../img/waiter-1.png");
-    background-size: contain;
+    background-size: cover;
     display: block;
     height: 80px;
     width: 80px;
@@ -33,7 +33,7 @@
 }
 .user-image {
     background-image: url("../img/user-1.png");
-    background-size: contain;
+    background-size: cover;
     display: block;
     height: 80px;
     width: 80px;
@@ -43,7 +43,7 @@
 
 .product-image {
     background-image: url("../img/product-1.png");
-    background-size: contain;
+    background-size: cover;
     display: block;
     height: 80px;
     width: 80px;
@@ -54,7 +54,7 @@
 
 .table-image {
     background-image: url("../img/table-1.jpg");
-    background-size: contain;
+    background-size: cover;
     display: block;
     height: 80px;
     width: 80px;

@@ -2,9 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import ManagerMenu from './components/ManagerMenu';
-import Home from './components/ManagerHomePage'
 import UserForm from './components/UserForm';
 import BackgroundImage from './components/BackgroundImage';
 import TableForm from './components/TableForm';
@@ -28,18 +27,22 @@ function App() {
   return (
     <div>
       <Router>
-        <div>
           <Switch>
+            <Route exact path="/">
+              {(((localStorage.token && <Redirect to="/home"/>) || 
+              (!localStorage.token && <Redirect to="/login"/>)))}
+            </Route>
+
             <Route path="/login">
-              <LoginPage />
+                {(!localStorage.token && <LoginPage/>)}
             </Route>
             <Route path="/home">
                 <HomePage firstName="John" 
-                      lastName="Smith"
+                      lastName="Smith" 
                       username="john11" 
-                      userRole="WAITER"/>
+                      userRole="MANAGER"/>
             </Route>
-            <Route path="/users/register">
+            <Route exact path="/users/register">
                 <BackgroundImage />
                 <ManagerMenu />
                 <UserForm />
@@ -106,10 +109,12 @@ function App() {
               <ViewProductsInOrder />
             </Route>
           </Switch>
-        </div>
       </Router>
     </div>
   );
 }
 
 export default App;
+
+
+// hooks

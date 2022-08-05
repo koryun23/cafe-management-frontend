@@ -10,6 +10,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
+        console.log("current page - Login Page");
         return (
             <div className="login-page justify-content-center">
                 <BackgroundImage />
@@ -17,6 +18,10 @@ class LoginPage extends React.Component {
                 <LoginBox />
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        console.log("Component did unmount");
     }
 }
 

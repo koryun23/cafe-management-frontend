@@ -12,3 +12,15 @@
     z-index:-1;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 }
+
+.log-out {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(35, 35, 35);
+    padding: 10px;
+}
+
+.log-out:hover {
+    color: white;
+    background-color: black;
+}

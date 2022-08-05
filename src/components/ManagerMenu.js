@@ -29,13 +29,16 @@ class ManagerMenu extends React.Component {
         this.dropdownItems = [
             this.usersDropdownItems,
             this.tablesDropdownItems,
-            this.productsDropdownItems
+            this.productsDropdownItems,
         ]
     }
 
     render() {
         return (
-            <Menu items={this.menuItems} dropdownItems={this.dropdownItems}/>
+            <div>
+                <Menu items={this.menuItems} dropdownItems={this.dropdownItems}/>
+
+            </div>
         );
     }
 }
