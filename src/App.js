@@ -34,13 +34,15 @@ function App() {
             </Route>
 
             <Route path="/login">
-                {(!localStorage.token && <LoginPage/>)}
+                {/*(!localStorage.token && <LoginPage/>) || <Redirect to="/home"/>*/}
+                {localStorage.token ? <Redirect to="/home"/> : <LoginPage />}
             </Route>
             <Route path="/home">
-                <HomePage firstName="John" 
+              <HomePage firstName="John" 
                       lastName="Smith" 
                       username="john11" 
                       userRole="MANAGER"/>
+                
             </Route>
             <Route exact path="/users/register">
                 <BackgroundImage />

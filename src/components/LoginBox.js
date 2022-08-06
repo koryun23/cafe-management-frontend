@@ -61,9 +61,7 @@ class LoginBox extends React.Component {
 
     render() {
         if(this.state.auth) {
-            return <Auth username={this.state.username}
-                         firstName={this.state.firstName} 
-                         lastName={this.state.lastName}/> 
+            return <Redirect to="/home"/> 
         }
         return (
             <div className="login-box align-items-center">

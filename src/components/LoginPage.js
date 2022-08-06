@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import '../css/Login.css';
 import BackgroundImage from './BackgroundImage.js';
 import LoginBox from './LoginBox.js';
@@ -11,6 +12,10 @@ class LoginPage extends React.Component {
 
     render() {
         console.log("current page - Login Page");
+        if(localStorage.getItem("token")) {
+            
+            return <Redirect to="/home" />;
+        }
         return (
             <div className="login-page justify-content-center">
                 <BackgroundImage />
