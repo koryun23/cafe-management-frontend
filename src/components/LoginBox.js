@@ -44,7 +44,7 @@ class LoginBox extends React.Component {
         response.then(res => {
             console.log(res.data);
             if(res.status == 200) {
-                localStorage.setItem("token", res.headers.token);
+                localStorage.setItem("token", res.data.token);
                 localStorage.setItem("username", res.data.username);
                 localStorage.setItem("firstName", res.data.firstName);
                 localStorage.setItem("lastName", res.data.secondName);

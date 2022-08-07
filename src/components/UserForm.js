@@ -3,6 +3,10 @@ import Input from './Input.js';
 import OptionalSelection from './OptionalSelection.js';
 import Submit from './Submit.js';
 import CloseButton from './CloseButton.js';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+
+const API_URL = "http://localhost:8080/";
 
 class UserForm extends React.Component {
     
@@ -26,19 +30,31 @@ class UserForm extends React.Component {
     }
 
     handleUsernameChange(username) {
-        this.setState({username: [username]});
+        this.setState({username: username});
     }
 
     handlePasswordChange(password) {
-        this.setState({password: [password]});
+        this.setState({password: password});
     }
     handleFirstNameChange(firstName) {
-        this.setState({firstName: [firstName]});
+        this.setState({firstName: firstName});
     }
     handleSecondNameChange(secondName) {
-        this.setState({secondName: [secondName]});
+        this.setState({secondName: secondName});
     }
     handleSubmit(event) {
+        event.preventDefault();
+        console.log("Bearer " + localStorage.getItem("token"));
+        const userRegistration = axios.post(API_URL + "users/register", {
+            username: this.state.username,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            secondName: this.state.secondName,
+            roleList: this.state.roleList
+        }, {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}});
+        userRegistration.then(res => {
+            console.log(res.data);
+        });
         console.log(this.state);
     }
     handleClose(event) {
@@ -71,6 +87,10 @@ class UserForm extends React.Component {
     }
 
     render() {
+        if(!localStorage.getItem("token")) {
+            return <Redirect to="/login"/>
+        }
+        console.log(localStorage.getItem("token"))
         return (
             <div className='user-add-form'>
                 <form>

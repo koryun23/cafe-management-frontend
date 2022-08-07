@@ -10,6 +10,7 @@ class ManagerHomePage extends React.Component {
     }
 
     render() {
+        console.log(localStorage.token);
         return (
             <div className="">
                 <ManagerMenu />

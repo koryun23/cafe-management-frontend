@@ -8,12 +8,13 @@ class ProfileSidenav extends React.Component {
     } 
 
     handleLogOut(event) {
-        // localStorage.removeItem("token");
-        // localStorage.removeItem("username");
-        // localStorage.removeItem("firstName");
-        // localStorage.removeItem("lastName");
-        // localStorage.removeItem("role");
-        localStorage.clear();
+        console.log(localStorage.token);
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("role");
+        //localStorage.clear();
     }
     
     render() {
