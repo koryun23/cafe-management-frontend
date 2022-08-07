@@ -44,7 +44,6 @@ class LoginBox extends React.Component {
         response.then(res => {
             console.log(res.data);
             if(res.status == 200) {
-                //localStorage.setItem("token", res.headers.token);
                 localStorage.setItem("token", res.headers.token);
                 localStorage.setItem("username", res.data.username);
                 localStorage.setItem("firstName", res.data.firstName);
@@ -56,9 +55,6 @@ class LoginBox extends React.Component {
                                token: res.data.token, 
                                role: res.data.role}, 
                 () => {
-
-                    // const keys = [this.state.token, this.state.username, this.state.firstName, this.state.lastName, this.state.role[0]]
-                    // localStorage.setItem("user", JSON.stringify(keys));
                     console.log(this.state)
                 });
             }
@@ -78,28 +74,7 @@ class LoginBox extends React.Component {
                 </form>
             </div>   
         );
-        // if(this.state.auth) {
-        //     return <Redirect to="/home" /> ;
-        // }
-        // return (
-        //     <div className="login-box align-items-center">
-        //         <form className="login-form">
-        //             <UsernameInput onUsernameChange={this.handleUsernameInput} value={this.state.username}/>
-        //             <PasswordInput onPasswordChange={this.handlePasswordInput} value={this.state.password}/>
-        //             <Submit onSubmit={this.handleSubmit} value="Log in"/>
-        //         </form>
-        //     </div>   
-        // );
     }
-}
-
-function Auth(props) {
-    return <Redirect to="/home"/>
-    //props.history.push("/home");
-    // return <HomePage username={props.username}
-    //                  firstName={props.firstName} 
-    //                  lastName={props.lastName} 
-    //                  userRole="MANAGER"/>
 }
 
 export default LoginBox;

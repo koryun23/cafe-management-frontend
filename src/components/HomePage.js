@@ -9,7 +9,7 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const token = localStorage.token;
+        const token = localStorage.getItem("token");
         if(!token) {
             return <Redirect to="/login"/>
         }

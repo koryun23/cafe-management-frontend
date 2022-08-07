@@ -8,11 +8,12 @@ class ProfileSidenav extends React.Component {
     } 
 
     handleLogOut(event) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
-        localStorage.removeItem("firstName");
-        localStorage.removeItem("lastName");
-        localStorage.removeItem("role");
+        // localStorage.removeItem("token");
+        // localStorage.removeItem("username");
+        // localStorage.removeItem("firstName");
+        // localStorage.removeItem("lastName");
+        // localStorage.removeItem("role");
+        localStorage.clear();
     }
     
     render() {
@@ -27,10 +28,10 @@ class ProfileSidenav extends React.Component {
 
                     <div className={this.props.userRole.toLowerCase() + "-image"}></div>
                         <Profile firstName={this.props.firstName}
-                            lastName={this.props.lastName}
-                            username={this.props.username} />
-                    </div>
+                                 lastName={this.props.lastName}
+                                 username={this.props.username} />
                 </div>
+            </div>
 
         );
     }

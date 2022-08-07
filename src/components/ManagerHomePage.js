@@ -13,9 +13,9 @@ class ManagerHomePage extends React.Component {
         return (
             <div className="">
                 <ManagerMenu />
-                <ProfileSidenav username="john11"
-                                firstName="John"
-                                lastName="Smith" 
+                <ProfileSidenav username={this.props.username}
+                                firstName={this.props.firstName}
+                                lastName={this.props.lastName}
                                 userRole="MANAGER"/>
                 <div className="main align-items-center justify-content-center">
                     <h2>Welcome, {this.props.firstName}</h2>
