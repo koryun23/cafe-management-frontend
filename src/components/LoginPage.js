@@ -11,9 +11,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        console.log("current page - Login Page");
-        if(localStorage.getItem("token")) {
-            
+        if(localStorage.token) {
             return <Redirect to="/home" />;
         }
         return (
@@ -23,10 +21,6 @@ class LoginPage extends React.Component {
                 <LoginBox />
             </div>
         );
-    }
-
-    componentWillUnmount() {
-        console.log("Component did unmount");
     }
 }
 

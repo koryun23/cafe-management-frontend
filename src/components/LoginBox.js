@@ -27,13 +27,6 @@ class LoginBox extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillUnmount() {
-        console.log("Login box did unmount");
-    }
-
-    componentDidMount() {
-        console.log("Login box did mount");
-    }
     handleUsernameInput(username) {
         this.setState({username : username});
     }
@@ -50,11 +43,24 @@ class LoginBox extends React.Component {
         });
         response.then(res => {
             console.log(res.data);
-            localStorage.setItem("token", res.headers.token);
             if(res.status == 200) {
-                this.setState({auth: true, firstName: res.data.firstName, lastName: res.data.secondName, token: res.data.token, role: res.data.role}, () => (
+                //localStorage.setItem("token", res.headers.token);
+                localStorage.setItem("token", res.headers.token);
+                localStorage.setItem("username", res.data.username);
+                localStorage.setItem("firstName", res.data.firstName);
+                localStorage.setItem("lastName", res.data.secondName);
+                localStorage.setItem("role", res.data.role[0]);
+                this.setState({auth: true, 
+                               firstName: res.data.firstName, 
+                               lastName: res.data.secondName, 
+                               token: res.data.token, 
+                               role: res.data.role}, 
+                () => {
+
+                    // const keys = [this.state.token, this.state.username, this.state.firstName, this.state.lastName, this.state.role[0]]
+                    // localStorage.setItem("user", JSON.stringify(keys));
                     console.log(this.state)
-                ));
+                });
             }
         });
     }

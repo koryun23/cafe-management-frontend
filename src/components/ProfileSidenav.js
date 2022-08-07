@@ -9,6 +9,10 @@ class ProfileSidenav extends React.Component {
 
     handleLogOut(event) {
         localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("role");
     }
     
     render() {

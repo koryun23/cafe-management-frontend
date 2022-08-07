@@ -9,17 +9,23 @@ class HomePage extends React.Component {
     }
 
     render() {
-        if(!localStorage.getItem("token")) {
+        const token = localStorage.token;
+        if(!token) {
             return <Redirect to="/login"/>
         }
-        if(this.props.userRole === 'MANAGER') {
-            return <ManagerHomePage username={this.props.username}
-                                    firstName={this.props.firstName} 
-                                    lastName={this.props.lastName}/>
+        console.log(token);
+        const username = localStorage.username;
+        const firstName = localStorage.firstName;
+        const lastName = localStorage.lastName;
+        const role = localStorage.role;
+        if(role === 'MANAGER') {
+            return <ManagerHomePage username={username}
+                                    firstName={firstName} 
+                                    lastName={lastName}/>
         }
-        return <WaiterHomePage username={this.props.username}
-                               firstName={this.props.firstName} 
-                               lastName={this.props.lastName}/>
+        return <WaiterHomePage username={username}
+                               firstName={firstName}
+                               lastName={lastName}/>
     }
 }
 

@@ -29,20 +29,14 @@ function App() {
       <Router>
           <Switch>
             <Route exact path="/">
-              {(((localStorage.token && <Redirect to="/home"/>) || 
-              (!localStorage.token && <Redirect to="/login"/>)))}
+              {localStorage.token ? <Redirect to="/home"/> : <Redirect to="/login"/>}
             </Route>
 
             <Route path="/login">
-                {/*(!localStorage.token && <LoginPage/>) || <Redirect to="/home"/>*/}
-                {localStorage.token ? <Redirect to="/home"/> : <LoginPage />}
+                <LoginPage />
             </Route>
             <Route path="/home">
-              <HomePage firstName="John" 
-                      lastName="Smith" 
-                      username="john11" 
-                      userRole="MANAGER"/>
-                
+              <HomePage />
             </Route>
             <Route exact path="/users/register">
                 <BackgroundImage />
