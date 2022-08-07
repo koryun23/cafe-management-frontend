@@ -19,17 +19,18 @@ class ProfileSidenav extends React.Component {
     render() {
         return (
             <div>
-                <a href="/"
-                   onClick={this.handleLogOut}
-                   className="log-out">
-                    Log Out
-                </a>
+
                 <div className="sidenav">
 
                     <div className={this.props.userRole.toLowerCase() + "-image"}></div>
-                        <Profile firstName={this.props.firstName}
-                                 lastName={this.props.lastName}
-                                 username={this.props.username} />
+                    <Profile firstName={this.props.firstName}
+                             lastName={this.props.lastName}
+                             username={this.props.username} />
+                    <a href="/"
+                       onClick={this.handleLogOut}
+                       className="log-out">
+                        Log Out
+                    </a>
                 </div>
             </div>
 
