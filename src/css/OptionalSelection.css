@@ -17,3 +17,8 @@
     height: 80%;
     top: 90px;
 }
+
+.blur {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+}

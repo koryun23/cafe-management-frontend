@@ -29,8 +29,8 @@
     background-image: url("../img/cafe-1.jpg");
     background-size: cover;
     display: block;
-    filter: blur(16px);
-    -webkit-filter: blur(16px);
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
     height: 800px;
     left: 0;
     right: 0;

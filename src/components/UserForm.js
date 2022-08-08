@@ -3,6 +3,7 @@ import Input from './Input.js';
 import OptionalSelection from './OptionalSelection.js';
 import Submit from './Submit.js';
 import CloseButton from './CloseButton.js';
+import ErrorMessage from './ErrorMessage.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -17,7 +18,9 @@ class UserForm extends React.Component {
             password: "",
             firstName: "",
             secondName: "",
-            roleList: []
+            roleList: [],
+            registered: false,
+            errorMessages: []
         }
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -54,8 +57,12 @@ class UserForm extends React.Component {
         }, {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}});
         userRegistration.then(res => {
             console.log(res.data);
-        });
-        console.log(this.state);
+            this.setState({registered: true});
+        }).catch(res => {
+            if(res.status != 200) {
+                this.setState({errorMessages: res.response.data.errors});
+            }
+        })
     }
     handleClose(event) {
         this.setState({
@@ -63,7 +70,9 @@ class UserForm extends React.Component {
             password: "",
             firstName: "",
             secondName: "",
-            roleList: []
+            roleList: [],
+            errorMessages: [],
+            registered: false
         });
     }
     handleRoleChange(event) {
@@ -91,41 +100,49 @@ class UserForm extends React.Component {
             return <Redirect to="/login"/>
         }
         console.log(localStorage.getItem("token"))
+        if(this.state.registered) {
+            return <Redirect to="/home"/>
+        }
         return (
-            <div className='user-add-form'>
-                <form>
-                    <Input type="text"
-                        name="username"
-                        placeholder="Username"
-                        value={this.state.username}
-                        onChange={this.handleUsernameChange} 
-                        label="Username" />
-                    <Input type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onChange={this.handlePasswordChange} 
-                        label="Password" />
-                    <Input type="text"
-                        name="firstName"
-                        placeholder="First name"
-                        value={this.state.firstName}
-                        onChange={this.handleFirstNameChange} 
-                        label="First Name" />
-                    <Input type="text"
-                        name="secondName"
-                        placeholder="Second name" 
-                        value={this.state.secondName}
-                        onChange={this.handleSecondNameChange}
-                        label="Second name" />
-                    <OptionalSelection options={
-                        [
-                            {value: "MANAGER", text: "Manager", selected: false, onChange: this.handleRoleChange, index: 0}, 
-                            {value: "WAITER", text: "Waiter", selected: false, onChange: this.handleRoleChange, index: 1}]
-                        } />
-                    <Submit onSubmit={this.handleSubmit} value="Add"/>
-                </form>
+            <div>
+                <div className='user-add-form'>
+                    <form className={this.state.errorMessages.length > 0 ? "blur" : ""}>
+                        <Input type="text"
+                            name="username"
+                            placeholder="Username"
+                            value={this.state.username}
+                            onChange={this.handleUsernameChange} 
+                            label="Username" />
+                        <Input type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={this.state.password}
+                            onChange={this.handlePasswordChange} 
+                            label="Password" />
+                        <Input type="text"
+                            name="firstName"
+                            placeholder="First name"
+                            value={this.state.firstName}
+                            onChange={this.handleFirstNameChange} 
+                            label="First Name" />
+                        <Input type="text"
+                            name="secondName"
+                            placeholder="Second name" 
+                            value={this.state.secondName}
+                            onChange={this.handleSecondNameChange}
+                            label="Second name" />
+                        <OptionalSelection options={
+                            [
+                                {value: "MANAGER", text: "Manager", selected: false, onChange: this.handleRoleChange, index: 0}, 
+                                {value: "WAITER", text: "Waiter", selected: false, onChange: this.handleRoleChange, index: 1}]
+                            } />
+                        <Submit onSubmit={this.handleSubmit} value="Add"/>
+                    </form>
+                    
+                    {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleClose}/>}
+                </div>
             </div>
+            
             
         );
     }
