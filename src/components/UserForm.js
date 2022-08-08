@@ -47,14 +47,15 @@ class UserForm extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log("Bearer " + localStorage.getItem("token"));
+        const authorization = "Bearer " + localStorage.getItem("token");
+        console.log(authorization);
         const userRegistration = axios.post(API_URL + "users/register", {
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
             secondName: this.state.secondName,
             roleList: this.state.roleList
-        }, {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}});
+        }, {headers: {"Authorization": authorization, "Content-Type": "application/json"}});
         userRegistration.then(res => {
             console.log(res.data);
             this.setState({registered: true});
