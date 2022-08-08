@@ -2,22 +2,39 @@ import React from 'react';
 import '../css/ViewProduct.css';
 import Submit from './Submit.js';
 import {FaBeer} from 'react-icons/fa';
+import axios from 'axios';
 
+const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            products: [
-                {productName: "Product 1", productAmount: 50, productPrice: 150},
-                {productName: "Product 2", productAmount: 25, productPrice: 200},
-                {productName: "Product 3", productAmount: 20, productPrice: 850},
-            ]
+            products: []
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
     }
 
+    componentDidMount() {
+        const auth = "Bearer " + localStorage.getItem("token");
+        const getProducts = axios.get(API_URL + "products", {
+            headers: {
+                "Authorization" : auth,
+                "Content-Type" : "application/json"
+            },
+            data: {}
+        });
+        getProducts.then(res => {
+            console.log(res.data);
+            const fetchedProducts = res.data.productRetrievalResponseDtoList.map(product => (
+                {productName: product.name, productAmount: product.amount, productPrice: product.price}
+            ))
+            this.setState({products: fetchedProducts});
+        }).catch(error => {
+            console.log(error);
+        });
+    }
     handleUpdateClick(event) {
 
     }

@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage.js';
 import Input from './Input.js';
 import Submit from './Submit.js';
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://localhost:7000/";
 
 class ProductsRegistrationForm extends React.Component {
     constructor(props) {
@@ -71,6 +72,9 @@ class ProductsRegistrationForm extends React.Component {
     } 
 
     render() {
+        if(this.state.registered) {
+            return <Redirect to="/home"/>
+        }
         console.log(this.state.errorMessages);
         return (
             <div className='user-add-form'>

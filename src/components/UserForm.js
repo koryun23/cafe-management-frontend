@@ -7,7 +7,7 @@ import ErrorMessage from './ErrorMessage.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://localhost:7000/";
 
 class UserForm extends React.Component {
     
@@ -32,6 +32,15 @@ class UserForm extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    static validateCredentials(creds) {
+        return !(creds.username == "" || 
+                 creds.password == "" || 
+                 creds.firstName == "" ||
+                 creds.secondName == "" ||
+                 creds.roleList == [] ||
+                 creds.errorMessages == [] )
+    }
+
     handleUsernameChange(username) {
         this.setState({username: username});
     }
@@ -47,6 +56,11 @@ class UserForm extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
+        console.log(this.state);
+        if(!UserForm.validateCredentials(this.state)) {
+            this.setState({errorMessages: ["All the fields are required"]});
+            return;
+        }
         const authorization = "Bearer " + localStorage.getItem("token");
         console.log(authorization);
         const userRegistration = axios.post(API_URL + "users/register", {
