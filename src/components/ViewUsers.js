@@ -8,11 +8,7 @@ class ViewUsers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [
-                {username: "john11", firstName: "John", secondName: "Smith", role: "MANAGER"},
-                {username: "mary21", firstName: "Mary", secondName: "Williams", role: "WAITER"},
-                {username: "emily31", firstName: "Emily", secondName: "Smith", role: "WAITER"}
-            ]
+            users: []
         }
     }
 
