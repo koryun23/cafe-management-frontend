@@ -15,12 +15,15 @@
 }
 
 .close {
-    width: 100%;
+    width: 95%;
     height: 15%;
     border: 0ch;
     background-color: rgb(112, 90, 255);
     border-radius: 40px;
     padding: 5px;
+    bottom: 10px;
+    position: absolute;
+    overflow: hidden;
 }
 
 
