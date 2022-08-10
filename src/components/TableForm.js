@@ -50,11 +50,8 @@ class TableForm extends React.Component {
         }).catch(res => {
             console.log(res);
             console.log(this.state);
-            if(res.status != 200) {
-                this.setState({errorMessages: res.response.data.errors})
-            }
+            this.setState({errorMessages: res.response.data.errors})
         })
-
     }
 
     handleClose(event) {
