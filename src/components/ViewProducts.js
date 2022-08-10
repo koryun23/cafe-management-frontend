@@ -28,7 +28,7 @@ class ViewProducts extends React.Component {
         getProducts.then(res => {
             console.log(res.data);
             const fetchedProducts = res.data.productRetrievalResponseDtoList.map(product => (
-                {productName: product.name, productAmount: product.amount, productPrice: product.price}
+                {productId: product.id, productName: product.name, productAmount: product.amount, productPrice: product.price}
             ))
             this.setState({products: fetchedProducts});
         }).catch(error => {
@@ -53,7 +53,7 @@ class ViewProducts extends React.Component {
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <a className="update-button" href={"/products/update/" + product.productName.toLowerCase().replace(/\s/g, '_')}>
+                            <a className="update-button" href={"/products/update/" + product.productId}>
                                 Update
                             </a>
                             <a className="delete-button" href="/products/">
