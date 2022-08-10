@@ -29,7 +29,7 @@ class ViewProducts extends React.Component {
         getProducts.then(res => {
             console.log(res.data);
             const fetchedProducts = res.data.productRetrievalResponseDtoList.map(product => (
-                {productId: product.id, productName: product.name, productAmount: product.amount, productPrice: product.price}
+                {productName: product.name, productAmount: product.amount, productPrice: product.price, productId: product.id}
             ))
             this.setState({products: fetchedProducts});
         }).catch(error => {
@@ -40,8 +40,25 @@ class ViewProducts extends React.Component {
 
     }
 
-    handleDeleteClick(event) {
-
+    handleDeleteClick(id) {
+        const auth = "Bearer " + localStorage.getItem("token");
+        const url = API_URL + "products/delete/" + id;
+        const data = {};
+        const headers = {
+            "Authorization" : auth,
+            "Content-Type" : "application/json",
+        }
+        const config = {
+            method: 'delete',
+            url: url,
+            headers: headers,
+            data: data,
+        }
+        axios(config).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err.response);
+        });
     }
 
     render() {
@@ -50,15 +67,15 @@ class ViewProducts extends React.Component {
                 <BackgroundImage/>
                 {
                     this.state.products.map((product) => (
-                        <div className="product-box">
+                        <div className="product-box" key={product.productId.toString()}>
                             <div className="product-image"> </div>
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <a className="update-button" href={"/products/update/" + product.productId}>
+                            <a className="update-button" href={"/products/update/" + product.productName.toLowerCase().replace(/\s/g, '_')}>
                                 Update
                             </a>
-                            <a className="delete-button" href="/products/">
+                            <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
                                 Delete<i className="fa fa-trash"></i>
                             </a>
                         </div>
