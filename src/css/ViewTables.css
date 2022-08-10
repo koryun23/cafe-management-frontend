@@ -7,3 +7,15 @@
     width: 200px;
     height: 240x;
 }
+
+.assign-button {
+    padding: 10px;
+    background-color: green;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.assign-button:hover {
+    background-color: rgb(98, 161, 98);
+    color: white;
+}

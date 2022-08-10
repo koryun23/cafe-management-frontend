@@ -49,6 +49,10 @@ class ViewTables extends React.Component {
                             <b><p className="table-seats">SEATS: {table.numberOfSeats}</p></b>
                             <b><p className="table-status">STATUS: {table.status}</p></b>
                             <b><p className="table-id">ID: {table.id}</p></b>
+                            {/* {
+                                table.status === "FREE" &&
+                                <a href="/tables-to-waiters/assign" className="assign-button">Assign to Waiter</a>
+                            }    */}
                         </div>
                     ))
                 }
