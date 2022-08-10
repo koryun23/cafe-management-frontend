@@ -3,6 +3,7 @@ import '../css/ViewProduct.css';
 import Submit from './Submit.js';
 import {FaBeer} from 'react-icons/fa';
 import axios from 'axios';
+import BackgroundImage from './BackgroundImage';
 
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
@@ -46,6 +47,7 @@ class ViewProducts extends React.Component {
     render() {
         return (
             <div className="products">
+                <BackgroundImage/>
                 {
                     this.state.products.map((product) => (
                         <div className="product-box">

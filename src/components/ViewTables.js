@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import '../css/ViewTables.css';
+import BackgroundImage from './BackgroundImage';
 
 const API_URL = "http://localhost:7000/";
 
@@ -41,6 +42,7 @@ class ViewTables extends React.Component {
     render() {
         return (
             <div>
+                <BackgroundImage />
                 {
                     this.state.tables.map(table => (
                         <div className="table-box">

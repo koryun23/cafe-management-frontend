@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/ViewUsers.css';
 import axios from 'axios';
+import BackgroundImage from './BackgroundImage';
 
 const API_URL = "http://localhost:7000/";
 
@@ -35,6 +36,7 @@ class ViewUsers extends React.Component {
     render() {
         return (
             <div>
+                <BackgroundImage />
                 {
                     this.state.users.map(user => (
                         <div className="user-box">
