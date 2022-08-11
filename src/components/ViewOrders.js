@@ -53,6 +53,7 @@ class ViewOrders extends React.Component {
         localStorage.setItem("orderId", id);
     }
     render() {
+        console.log(this.state);
         return (
             <div>
                 <BackgroundImage />
@@ -63,8 +64,8 @@ class ViewOrders extends React.Component {
                             <form className="form-data">
                                 <input className="input-data" type="text" name="table-id" value={order.tableId}/>
                                 <input className="input-data" type="text" name="order-status" value={order.status}/>
-                                <input className="input-data" type="text" name="waiter-username" value={order.waiterUsername} readonly/>
-                                <input className="input-data" type="text" name="created-at" value={order.date} readonly />
+                                <input className="input-data" type="text" name="waiter-username" value={order.waiterUsername} readOnly/>
+                                <input className="input-data" type="text" name="created-at" value={order.date} readOnly />
                             </form>
                             {/* <b><i><p>Table Id: {order.tableId}</p></i></b>
                                 <b><i><p>Waiter: {order.waiterUsername}</p></i></b>

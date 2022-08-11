@@ -8,18 +8,13 @@ class ViewProductsInOrder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productsInOrder: [
-                {productName: 'Product1', orderId: 1, amount: 5, status: "ACTIVE"},
-                {productName: 'Product2', orderId: 1, amount: 3, status: "ACTIVE"},
-                {productName: 'Product3', orderId: 2, amount: 5, status: "ACTIVE"}
-            ],
-            orderId: ""
+            productsInOrder: [],
         };
     }
 
     componentDidMount() {
-        this.setState({orderId: localStorage.getItem("orderId")});
         const auth = "Bearer " + localStorage.getItem("token");
+        console.log(API_URL + "products-in-order/" + this.state.orderId);
         axios.get(API_URL + "products-in-order/" + localStorage.getItem("orderId"), {
             headers: {
                 "Authorization" : auth,
@@ -39,6 +34,10 @@ class ViewProductsInOrder extends React.Component {
         }).catch(err => {
             console.log(err);
         }); 
+    }
+
+    componentWillUnmount() {
+        localStorage.removeItem("orderId");
     }
 
     render() {
