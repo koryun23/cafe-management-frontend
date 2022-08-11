@@ -49,10 +49,16 @@ class ViewOrders extends React.Component {
                     this.state.orders.map(order => (
                         <div className="order-box" key={order.tableId.toString()}>
                             <div className="order-image"></div>
-                            <b><i><p>Table Id: {order.tableId}</p></i></b>
+                            <form className="form-data">
+                                <input className="input-data" type="text" name="table-id" value={order.tableId}/>
+                                <input className="input-data" type="text" name="order-status" value={order.status}/>
+                                <input className="input-data" type="text" name="waiter-username" value={order.waiterUsername} readonly/>
+                                <input className="input-data" type="text" name="created-at" value={order.date} readonly />
+                            </form>
+                            {/* <b><i><p>Table Id: {order.tableId}</p></i></b>
                                 <b><i><p>Waiter: {order.waiterUsername}</p></i></b>
                                 <b><i><p>Status: {order.status}</p></i></b>
-                                <b><i><p>Date: {order.date}</p></i></b>
+                                <b><i><p>Date: {order.date}</p></i></b> */}
                                 <a className="update-order"
                                    href={"/orders/update/" + order.orderId}>
                                     Update Order

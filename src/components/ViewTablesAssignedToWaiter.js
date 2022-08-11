@@ -55,30 +55,29 @@ class ViewTablesAssignedToWaiter extends React.Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <div>
+                {
+                    this.state.registeredOrder && <ErrorMessage message="Successfully registered an order" onClose={this.setState({registeredOrder: false})}/>}
+                    {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/> 
+                }
                 <BackgroundImage />
                 {
                     this.state.assignedTables.map(assignedTable => (
-                        <div className={this.state.errorMessages.length == 0 ? "table-box" : "table-box blur"} key={assignedTable.tableId.toString()}>
+                        <div className={this.state.errorMessages.length == 0 && !this.state.registeredOrder ? "table-box" : "table-box blur"} key={assignedTable.tableId.toString()}>
                             <div className="table-image"></div>
                             <b><i><p className="table-code">ID: {assignedTable.tableId}</p></i></b>
                             <b><i><p className="table-assigned-at">ASSIGNED: {assignedTable.assignedAt}</p></i></b>
                             <button onClick={() => this.handleAddOrderClick(assignedTable.tableId)} 
                                 className="add-order-button" 
-                                //href={"/orders/register/" + assignedTable.tableId}
                                 key={assignedTable.tableId} >
                                 Add Order
                             </button>
                         </div>
                     ))
                 }
-                {
-                    this.state.registeredOrder && <Message message="Successfully registered an order" onClose={this.setState({registeredOrder: false})}/>
-                }
-                {
-                    this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/> 
-                }
+                
             </div>
         );
     }

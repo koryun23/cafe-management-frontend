@@ -9,6 +9,17 @@
     background-color: rgba(255, 255, 255, 0.35);
 }
 
+.form-data {
+    overflow: hidden;
+}
+
+.input-data {
+
+}
+
+.input-data:active {
+    border: blue;
+}
 .add-product-in-order {
     display: flex;
     background-color: lightgreen;
