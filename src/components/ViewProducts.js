@@ -41,24 +41,21 @@ class ViewProducts extends React.Component {
     }
 
     handleDeleteClick(id) {
+        console.log(id);
         const auth = "Bearer " + localStorage.getItem("token");
-        const url = API_URL + "products/delete/" + id;
-        const data = {};
-        const headers = {
-            "Authorization" : auth,
-            "Content-Type" : "application/json",
-        }
-        const config = {
-            method: 'delete',
-            url: url,
-            headers: headers,
-            data: data,
-        }
-        axios(config).then(res => {
+        
+        axios.delete(API_URL + "products/delete/" + id, {
+            headers: {
+                "Authorization" : auth,
+                "Content-Type" : "application/json"
+            },
+            data : {}
+        }).then(res => {
             console.log(res.data);
         }).catch(err => {
-            console.log(err.response);
+            console.log(err);
         });
+
     }
 
     render() {
