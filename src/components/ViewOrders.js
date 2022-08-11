@@ -1,3 +1,4 @@
+import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers';
 import axios from 'axios';
 import React from 'react';
 import '../css/ViewOrders.css';
@@ -16,6 +17,9 @@ class ViewOrders extends React.Component {
                 {orderId: 3, tableId: 3, waiterUsername: "john11", status: "OPEN", date: new Date().toString()},
             ]
         }
+
+        this.handleAddProductInOrderClick = this.handleAddProductInOrderClick.bind(this);
+        this.handleViewProductsInOrderClick = this.handleViewProductsInOrderClick.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +45,13 @@ class ViewOrders extends React.Component {
         });
     }
 
+    handleAddProductInOrderClick(id) {
+        localStorage.setItem("orderId", id);
+    }
+
+    handleViewProductsInOrderClick(id) {
+        localStorage.setItem("orderId", id);
+    }
     render() {
         return (
             <div>
@@ -64,11 +75,13 @@ class ViewOrders extends React.Component {
                                     Update Order
                                 </a>
                                 <a className="add-product-in-order"
-                                   href={"/products-in-order/register/" + order.orderId} >
+                                   href={"/products-in-order/register/" + order.orderId} 
+                                   onClick={() => this.handleAddProductInOrderClick(order.orderId)}>
                                     Add Product
                                 </a>
                                 <a className="products-in-order-view" 
-                                   href={"/products-in-order/" + order.orderId}>
+                                   href={"/products-in-order/" + order.orderId}
+                                   onClick={() => this.handleViewProductsInOrderClick(order.orderId)}>
                                     View Products
                                 </a>
                         </div>
