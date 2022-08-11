@@ -58,7 +58,7 @@ function App() {
                 <ManagerMenu />
                 <ProductsRegistrationForm />
             </Route>
-            <Route path="/products/update/:originalName" children={<ProductsUpdate />}>
+            <Route path="/products/update/:id" >
                 <ManagerMenu />
                 <ProductsUpdate /> 
             </Route>

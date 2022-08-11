@@ -1,5 +1,10 @@
+import axios from 'axios';
 import React from 'react';
 import '../css/ViewOrders.css';
+import BackgroundImage from './BackgroundImage';
+
+const API_URL = "http://localhost:7000/";
+
 
 class ViewOrders extends React.Component {
     constructor(props) {
@@ -13,9 +18,33 @@ class ViewOrders extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const auth = "Bearer " + localStorage.getItem("token");
+        axios.get(API_URL + "orders", {
+            headers: {
+                "Authorization" : auth,
+                "Content-Type" : "application/json"
+            },
+            data: {}
+        }).then(res => {
+            this.setState({orders: res.data.orderRetrievalResponseDtoList.map(order => (
+                {
+                    orderId: order.orderId,
+                    tableId: order.tableId,
+                    waiterUsername: order.waiterUsername,
+                    status: order.orderStatus,
+                    date: order.createdAt
+                }
+            ))});
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
     render() {
         return (
             <div>
+                <BackgroundImage />
                 {
                     this.state.orders.map(order => (
                         <div className="order-box" key={order.tableId.toString()}>

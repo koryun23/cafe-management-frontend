@@ -36,8 +36,10 @@ class ViewProducts extends React.Component {
             console.log(error);
         });
     }
-    handleUpdateClick(event) {
-
+    handleUpdateClick(name, amount, price) {
+        localStorage.setItem("productName", name);
+        localStorage.setItem("productAmount", amount);
+        localStorage.setItem("productPrice", price);
     }
 
     handleDeleteClick(id) {
@@ -69,7 +71,8 @@ class ViewProducts extends React.Component {
                             <h2 className="name">{product.productName}</h2>
                             <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
                             <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <a className="update-button" href={"/products/update/" + product.productName.toLowerCase().replace(/\s/g, '_')}>
+                            <i><b><p className="price">ID: {product.productId}</p></b></i>
+                            <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
                                 Update
                             </a>
                             <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>

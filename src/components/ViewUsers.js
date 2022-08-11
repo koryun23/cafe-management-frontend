@@ -25,7 +25,7 @@ class ViewUsers extends React.Component {
         getUsers.then(res => {
             console.log(res.data.userList)
             const fetchedUsers = res.data.userList.map(user => (
-                {username: user.username, firstName: user.firstName, secondName: user.secondName, role: user.roleList[0].toLowerCase()}
+                {username: user.username, firstName: user.firstName, secondName: user.secondName, roles: user.roleList}
             ))
             this.setState({users: fetchedUsers});
         }).catch(error => {
@@ -39,11 +39,14 @@ class ViewUsers extends React.Component {
                 <BackgroundImage />
                 {
                     this.state.users.map(user => (
-                        <div className="user-box">
-                            <div className={user.role+"-image"}></div>
-                            <h3 className="user-username">{user.username}</h3>
-                            <p className="user-full-name">{user.firstName + " " + user.secondName}</p>
-                        </div>
+                        user.roles.map(role => (
+                            <div className="user-box">
+                                <div className={role.toLowerCase()+"-image"}></div>
+                                <h3 className="user-username">{user.username}</h3>
+                                <p className="user-full-name">{user.firstName + " " + user.secondName}</p>
+                            </div>
+                        ))
+
                     ))
                 }
             </div>
