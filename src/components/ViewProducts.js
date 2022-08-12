@@ -66,32 +66,34 @@ class ViewProducts extends React.Component {
         return (
             <div className="main-div">
                 <table>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th className="last-row"></th>
-                    </tr>
-                {
-                    this.state.products.map((product) => (
+                    <tbody>
                         <tr>
-                            <td>{product.productId}</td>
-                            <td>{product.productName}</td>
-                            <td>{product.productAmount}</td>
-                            <td>{product.productPrice}</td>
-                            <td className="last-row">
-                                <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
-                                    {<FontAwesomeIcon icon={faEdit}/>}
-                                </a>
-                                <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
-                                    {<FontAwesomeIcon icon={faTrash}/>}
-                                </a>
-                            </td>
-
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Price</th>
+                            <th className="last-row"></th>
                         </tr>
-                    ))
-                }
+                    {
+                        this.state.products.map((product) => (
+                            <tr>
+                                <td>{product.productId}</td>
+                                <td>{product.productName}</td>
+                                <td>{product.productAmount}</td>
+                                <td>{product.productPrice}</td>
+                                <td className="last-row">
+                                    <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
+                                        {<FontAwesomeIcon icon={faEdit}/>}
+                                    </a>
+                                    <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
+                                        {<FontAwesomeIcon icon={faTrash}/>}
+                                    </a>
+                                </td>
+
+                            </tr>
+                        ))
+                    }
+                    </tbody>
                 </table>
             </div>
         );
