@@ -53,7 +53,7 @@ tr:hover {
 
 .main-div {
     background-image: linear-gradient(to bottom right,rgb(255, 158, 145), rgb(28, 15, 205));
-    height: calc(100vh - 56px);
+    height: calc(100vh - 67px);
     width: 100%;
     padding: 50px;
     bottom: 0;

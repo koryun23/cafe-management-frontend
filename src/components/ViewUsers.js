@@ -34,6 +34,14 @@ class ViewUsers extends React.Component {
     }
 
     render() {
+        if(this.state.users.length == 0) {
+            return (
+                <div className='main-div'>
+                    <h2 className="h2">Oops!</h2>
+                    <p className='p'>No Data found.</p>
+                </div>
+            );
+        }
         return (
             <div className="main-div">
                 <BackgroundImage />
