@@ -41,23 +41,34 @@ class ViewTables extends React.Component {
 
     render() {
         return (
-            <div>
-                <BackgroundImage />
+            <div className='main-div'>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Seats</th>
+                        <th>Status</th>
+                    </tr>
                 {
                     this.state.tables.map(table => (
-                        <div className="table-box">
-                            <div className="table-image"></div>
-                            <b><p className="table-code">CODE: {table.code}</p></b>
-                            <b><p className="table-seats">SEATS: {table.numberOfSeats}</p></b>
-                            <b><p className="table-status">STATUS: {table.status}</p></b>
-                            <b><p className="table-id">ID: {table.id}</p></b>
-                            {/* {
-                                table.status === "FREE" &&
-                                <a href="/tables-to-waiters/assign" className="assign-button">Assign to Waiter</a>
-                            }    */}
-                        </div>
+                        <tr>
+                            <td>{table.id}</td>
+                            <td>{table.code}</td>
+                            <td>{table.numberOfSeats}</td>
+                            <td>{table.status}</td>
+                        </tr>
+                        // <div className="table-box">
+                        //     <div className="table-image"></div>
+                        //     <b><p className="table-code">CODE: {table.code}</p></b>
+                        //     <b><p className="table-seats">SEATS: {table.numberOfSeats}</p></b>
+                        //     <b><p className="table-status">STATUS: {table.status}</p></b>
+                        //     <b><p className="table-id">ID: {table.id}</p></b>
+
+                        // </div>
                     ))
                 }
+                </table>
+
             </div>
         );
     }
