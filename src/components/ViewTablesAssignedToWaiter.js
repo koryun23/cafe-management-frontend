@@ -4,6 +4,9 @@ import axios from 'axios';
 import BackgroundImage from './BackgroundImage';
 import ErrorMessage from './ErrorMessage';
 import Message from './Message';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+
 const API_URL = "http://localhost:7000/";
 
 class ViewTablesAssignedToWaiter extends React.Component {
@@ -29,7 +32,11 @@ class ViewTablesAssignedToWaiter extends React.Component {
             this.setState(
                 {
                     assignedTables : res.data.cafeTableAssignedToWaiterList.map(table => (
-                        {tableId: table.cafeTableId, waiter: table.waiterUsername, assignedAt: table.assignedAt}
+                        {   
+                            tableId: table.cafeTableId, 
+                            waiter: table.waiterUsername, 
+                            assignedAt: new Date(table.assignedAt)
+                        }
                     ))
                 }
             );
@@ -57,26 +64,32 @@ class ViewTablesAssignedToWaiter extends React.Component {
     render() {
         console.log(this.state);
         return (
-            <div>
+            <div className='main-div'>
                 {
-                    this.state.registeredOrder && <ErrorMessage message="Successfully registered an order" onClose={this.setState({registeredOrder: false})}/>}
+                    this.state.registeredOrder && <Message message="Successfully registered an order" onClose={() => this.setState({registeredOrder: false})}/>}
                     {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/> 
                 }
-                <BackgroundImage />
-                {
-                    this.state.assignedTables.map(assignedTable => (
-                        <div className={this.state.errorMessages.length == 0 && !this.state.registeredOrder ? "table-box" : "table-box blur"} key={assignedTable.tableId.toString()}>
-                            <div className="table-image"></div>
-                            <b><i><p className="table-code">ID: {assignedTable.tableId}</p></i></b>
-                            <b><i><p className="table-assigned-at">ASSIGNED: {assignedTable.assignedAt}</p></i></b>
-                            <button onClick={() => this.handleAddOrderClick(assignedTable.tableId)} 
-                                className="add-order-button" 
-                                key={assignedTable.tableId} >
-                                Add Order
-                            </button>
-                        </div>
-                    ))
-                }
+                <table className={this.state.errorMessages.length == 0 && !this.state.registeredOrder ? "" : "blur"}>
+                    <tr>
+                        <th>Table Id</th>
+                        <th>Assigned At</th>
+                        <th></th>
+                    </tr>
+                    {
+                        this.state.assignedTables.map(assignedTable => (
+                            <tr key={assignedTable.tableId.toString()}>
+                                <td>{assignedTable.tableId}</td>
+                                <td>{assignedTable.assignedAt.toLocaleString()}</td>
+                                <button onClick={() => this.handleAddOrderClick(assignedTable.tableId)} 
+                                    className="add-order-button" 
+                                    key={assignedTable.tableId} >
+                                    {<FontAwesomeIcon icon={faAdd}/>} Order
+                                </button>
+                            </tr>
+                        ))
+                    }
+                </table>
+
                 
             </div>
         );
