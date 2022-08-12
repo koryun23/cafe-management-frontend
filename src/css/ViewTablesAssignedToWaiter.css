@@ -4,6 +4,10 @@
     color: white;
     border: 0ch;
     text-decoration: none;
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    margin: 5px;
 }
 
 .add-order-button:hover {
