@@ -4,7 +4,9 @@ import Submit from './Submit.js';
 import {FaBeer} from 'react-icons/fa';
 import axios from 'axios';
 import BackgroundImage from './BackgroundImage';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
     
@@ -62,25 +64,35 @@ class ViewProducts extends React.Component {
 
     render() {
         return (
-            <div className="products">
-                <BackgroundImage/>
+            <div className="main-div">
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th className="last-row"></th>
+                    </tr>
                 {
                     this.state.products.map((product) => (
-                        <div className="product-box" key={product.productId.toString()}>
-                            <div className="product-image"> </div>
-                            <h2 className="name">{product.productName}</h2>
-                            <i><b><p className="amount">AMOUNT: {product.productAmount}</p></b></i>
-                            <i><b><p className="price">PRICE: {product.productPrice}</p></b></i>
-                            <i><b><p className="price">ID: {product.productId}</p></b></i>
-                            <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
-                                Update
-                            </a>
-                            <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
-                                Delete<i className="fa fa-trash"></i>
-                            </a>
-                        </div>
+                        <tr>
+                            <td>{product.productId}</td>
+                            <td>{product.productName}</td>
+                            <td>{product.productAmount}</td>
+                            <td>{product.productPrice}</td>
+                            <td className="last-row">
+                                <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
+                                    {<FontAwesomeIcon icon={faEdit}/>}
+                                </a>
+                                <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
+                                    {<FontAwesomeIcon icon={faTrash}/>}
+                                </a>
+                            </td>
+
+                        </tr>
                     ))
                 }
+                </table>
             </div>
         );
     }
