@@ -14,3 +14,39 @@
 .user-full-name {
     font-size: 20px;
 }
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: rgb(59, 59, 59);
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: rgb(235, 235, 235);
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+tr:hover {
+    background-color: #dddddd;
+}
+
+.main-div {
+    background-image: linear-gradient(to bottom right,rgb(255, 158, 145), rgb(28, 15, 205));
+    height: calc(100vh - 56px);
+    width: 100%;
+    padding: 50px;
+    bottom: 0;
+    top: 0;
+}
