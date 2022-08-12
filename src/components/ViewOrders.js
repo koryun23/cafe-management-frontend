@@ -3,9 +3,12 @@ import axios from 'axios';
 import React from 'react';
 import '../css/ViewOrders.css';
 import BackgroundImage from './BackgroundImage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const API_URL = "http://localhost:7000/";
-
 
 class ViewOrders extends React.Component {
     constructor(props) {
@@ -37,7 +40,7 @@ class ViewOrders extends React.Component {
                     tableId: order.tableId,
                     waiterUsername: order.waiterUsername,
                     status: order.orderStatus,
-                    date: order.createdAt
+                    date: new Date(order.createdAt)
                 }
             ))});
         }).catch(err => {
@@ -55,39 +58,49 @@ class ViewOrders extends React.Component {
     render() {
         console.log(this.state);
         return (
-            <div>
-                <BackgroundImage />
+            <div className='main-div'>
+                <table>
+                    <tr>
+                        <th>Table Id</th>
+                        <th>Status</th>
+                        <th>Waiter</th>
+                        <th>Created At</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 {
                     this.state.orders.map(order => (
-                        <div className="order-box" key={order.tableId.toString()}>
-                            <div className="order-image"></div>
-                            <form className="form-data">
-                                <input className="input-data" type="text" name="table-id" value={order.tableId}/>
-                                <input className="input-data" type="text" name="order-status" value={order.status}/>
-                                <input className="input-data" type="text" name="waiter-username" value={order.waiterUsername} readOnly/>
-                                <input className="input-data" type="text" name="created-at" value={order.date} readOnly />
-                            </form>
-                            {/* <b><i><p>Table Id: {order.tableId}</p></i></b>
-                                <b><i><p>Waiter: {order.waiterUsername}</p></i></b>
-                                <b><i><p>Status: {order.status}</p></i></b>
-                                <b><i><p>Date: {order.date}</p></i></b> */}
-                                <a className="update-order"
-                                   href={"/orders/update/" + order.orderId}>
-                                    Update Order
-                                </a>
-                                <a className="add-product-in-order"
-                                   href={"/products-in-order/register/" + order.orderId} 
-                                   onClick={() => this.handleAddProductInOrderClick(order.orderId)}>
-                                    Add Product
-                                </a>
-                                <a className="products-in-order-view" 
-                                   href={"/products-in-order/" + order.orderId}
-                                   onClick={() => this.handleViewProductsInOrderClick(order.orderId)}>
-                                    View Products
-                                </a>
-                        </div>
+                            <tr>
+                                <td>{order.tableId}</td>
+                                <td>{order.status}</td>
+                                <td>{order.waiterUsername}</td>
+                                <td>{order.date.toLocaleString()}</td>
+                                <td>
+                                    <a className="update-order"
+                                        href={"/orders/update/" + order.orderId}>
+                                        {<FontAwesomeIcon icon={faEdit} size="lg"/>} Order
+                                    </a>
+                                </td>
+                                <td>
+                                    <a className="add-product-in-order"
+                                    href={"/products-in-order/register/" + order.orderId} 
+                                    onClick={() => this.handleAddProductInOrderClick(order.orderId)}>
+                                        {<FontAwesomeIcon icon={faAdd} size="lg"/>} Product
+                                    </a>
+                                </td>
+                                <td>
+                                    <a className="products-in-order-view" 
+                                    href={"/products-in-order/" + order.orderId}
+                                    onClick={() => this.handleViewProductsInOrderClick(order.orderId)}>
+                                        {<FontAwesomeIcon icon={faSearch} size="lg"/>} Products
+                                    </a>
+                                </td>
+                            </tr>
                     ))
                 }
+                </table>
+
             </div>
         );
     }

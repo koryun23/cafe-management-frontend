@@ -34,7 +34,7 @@ class OrderUpdateForm extends React.Component {
         this.setState({
             tableId: '',
             status: '',
-            waiterUsername: ''
+            waiterUsername: '',
         });
     }
 
