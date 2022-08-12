@@ -5,12 +5,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Menu extends React.Component {
     
     constructor(props) {
         super(props);
+        this.handleLogOut = this.handleLogOut.bind(this);
     }
+
+    handleLogOut(event) {
+      localStorage.clear();
+  }
 
     render() {
         return (
@@ -40,6 +47,11 @@ class Menu extends React.Component {
                     }
                   </Nav>
                 </Navbar.Collapse>
+                <a href="/"
+                       onClick={this.handleLogOut}
+                       className="log-out">
+                        {<FontAwesomeIcon icon={faSignOutAlt} size="2x"/>}
+                    </a>
               </Container>
             </Navbar>
           );

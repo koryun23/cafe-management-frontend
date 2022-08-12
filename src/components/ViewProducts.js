@@ -7,6 +7,7 @@ import BackgroundImage from './BackgroundImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
     
@@ -63,6 +64,14 @@ class ViewProducts extends React.Component {
     }
 
     render() {
+        if(this.state.products.length == 0) {
+            return (
+                <div className='main-div'>
+                    <h2 className="h2">Oops!</h2>
+                    <p className='p'>No Data found.</p>
+                </div>
+            );
+        }
         return (
             <div className="main-div">
                 <table>

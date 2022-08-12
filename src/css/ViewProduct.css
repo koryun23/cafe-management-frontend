@@ -43,14 +43,18 @@
 }
 
 .no-data {
-        background-image: url("../img/no-data-1.png");
-        background-size: cover;
+        background-image: url("../img/sad-face-1.webp");
+        background-size: contain;
         display: block;
-        height: 800px;
+        height: 30%;
         left: 0;
         right: 0;
+        top: 100px;
         position: fixed;
         z-index: -1;
+        background-repeat: no-repeat;
+        width: 30%;
+        margin: auto;
 }
 
 table {
@@ -89,4 +93,15 @@ tr:hover {
     padding: 50px;
     bottom: 0;
     top: 0;
+}
+
+.h2 {
+    text-align: center;
+    margin: auto;
+}
+
+.p {
+    color:rgb(53, 53, 53);
+    text-align: center;
+    margin: auto;
 }

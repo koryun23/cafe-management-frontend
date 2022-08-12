@@ -1,22 +1,14 @@
 import React from 'react';
 import '../css/ProfileSidenav.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
 
 class ProfileSidenav extends React.Component {
     constructor(props) {
         super(props);
-        this.handleLogOut = this.handleLogOut.bind(this);
     } 
 
-    handleLogOut(event) {
-        console.log(localStorage.token);
-        // localStorage.removeItem("token");
-        // localStorage.removeItem("username");
-        // localStorage.removeItem("firstName");
-        // localStorage.removeItem("lastName");
-        // localStorage.removeItem("role");
-        localStorage.clear();
-    }
-    
     render() {
         return (
             <div>
@@ -27,11 +19,6 @@ class ProfileSidenav extends React.Component {
                     <Profile firstName={this.props.firstName}
                              lastName={this.props.lastName}
                              username={this.props.username} />
-                    <a href="/"
-                       onClick={this.handleLogOut}
-                       className="log-out">
-                        Log Out
-                    </a>
                 </div>
             </div>
 
