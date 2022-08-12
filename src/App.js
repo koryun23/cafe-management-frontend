@@ -92,7 +92,7 @@ function App() {
               <WaiterMenu />
               <ViewOrders />
             </Route>
-            <Route path="/products-in-order/register/*">
+            <Route path="/products-in-order/register/:orderId">
               <BackgroundImage />
               <WaiterMenu />
               <ProductInOrderRegistrationForm waiterUsername="john11"/>
@@ -100,7 +100,7 @@ function App() {
             <Route path="/products-in-order/update/*">
               <HomePage userType="WAITER"/>
             </Route>
-            <Route path="/products-in-order/*">
+            <Route path="/products-in-order/:orderId">
               <WaiterMenu />
               <ViewProductsInOrder />
             </Route>

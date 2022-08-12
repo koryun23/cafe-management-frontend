@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import '../css/ViewProductsInOrder.css';
-
+import { withRouter } from 'react-router-dom';
 const API_URL = "http://localhost:7000/";
 
 class ViewProductsInOrder extends React.Component {
@@ -15,7 +15,7 @@ class ViewProductsInOrder extends React.Component {
     componentDidMount() {
         const auth = "Bearer " + localStorage.getItem("token");
         console.log(API_URL + "products-in-order/" + this.state.orderId);
-        axios.get(API_URL + "products-in-order/" + localStorage.getItem("orderId"), {
+        axios.get(API_URL + "products-in-order/" + this.props.match.params.orderId, {
             headers: {
                 "Authorization" : auth,
                 "Content-Type" : "application/json"
@@ -26,7 +26,7 @@ class ViewProductsInOrder extends React.Component {
             this.setState({productsInOrder : res.data.productInOrderRetrievalResponseDtos.map(productInOrder => (
                 {
                     productName: productInOrder.productName,
-                    orderId: this.state.orderId,
+                    orderId: this.props.match.params.orderId,
                     amount: productInOrder.amount,
                     status: productInOrder.productInOrderStatusType
                 }
@@ -41,6 +41,7 @@ class ViewProductsInOrder extends React.Component {
     }
 
     render() {
+        console.log(this.props.match.params.orderId);
         return (
             <div>
                 {
@@ -48,7 +49,7 @@ class ViewProductsInOrder extends React.Component {
                         <div className="product-in-order-box">
                             <div className="product-image"></div>
                             <h2 className="product-name">{product.productName}</h2>
-                            <b><i><p className="order-id">Order Id: {product.orderId}</p></i></b>
+                            <b><i><p className="order-id">Order Id: {this.props.match.params.orderId}</p></i></b>
                             <b><i><p className="status">Status: {product.status}</p></i></b>
                             <b><i><p className="amount">Amount: {product.amount}</p></i></b>
                             <a className="update-product-in-order"
@@ -63,4 +64,4 @@ class ViewProductsInOrder extends React.Component {
     }
 }
 
-export default ViewProductsInOrder;
+export default withRouter(ViewProductsInOrder);

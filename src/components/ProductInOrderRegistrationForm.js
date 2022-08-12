@@ -12,7 +12,7 @@ class ProductInOrderRegistrationForm extends React.Component {
         super(props);
         this.state = {
             productName: '',
-            productAmount: '',
+            productAmount: 0,
             waiterUsername: this.props.waiterUsername,
             registered: false,
             errorMessages: []
@@ -32,17 +32,21 @@ class ProductInOrderRegistrationForm extends React.Component {
 
     handleSubmit(event) {
         console.log(this.state);
+        console.log(localStorage.getItem("orderId"));
         const auth = "Bearer " + localStorage.getItem("token");
         axios.post(API_URL + "products-in-order/register/" + localStorage.getItem("orderId"), {
             productName: this.state.productName,
-            amount: this.state.productAmount
+            amount: this.state.productAmount,
+            orderId: localStorage.getItem("orderId")
         }, {headers: {
             "Authorization" : auth,
             "Content-Type" : "application/json"
         }}).then(res => {
             this.setState({registered: true});
+            localStorage.removeItem("orderId");
         }).catch(err => {
-            this.setState({errorMessages: err.response.data.errors});
+            console.log(err);
+            //this.setState({errorMessages: err.response.data.errors});
         });
         this.setState({
             productName: '',

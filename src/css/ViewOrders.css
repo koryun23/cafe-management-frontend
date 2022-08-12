@@ -26,7 +26,8 @@
     padding: 5px;
     text-decoration: none;
     color: black;
-    margin: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 .add-product-in-order:hover {
@@ -40,7 +41,8 @@
     background-color: lightblue;
     text-decoration: none;
     padding: 5px;
-    margin: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 .update-order:hover {
@@ -53,8 +55,9 @@
     text-decoration: none;
     display: flex;
     padding: 5px;
-    margin: 5px;
     background-color: rgb(247, 255, 129);
+    width: 30px;
+    height: 30px;
 }
 
 .products-in-order-view:hover {
@@ -98,4 +101,44 @@ tr:hover {
     padding: 50px;
     bottom: 0;
     top: 0;
+}
+
+.update-box {
+    z-index: 10;
+    position: fixed;
+    background: rgb(216, 216, 216);
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    left: 0;
+    margin-left: 570px;
+    margin-right: 570px;
+    right: 0;
+    padding: 10px;
+    height: 40%;
+    top: 200px;
+}
+
+label {
+    font-size: 20px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.update-confirm {
+    width: 95%;
+    height: 15%;
+    border: 0ch;
+    background-color: rgb(112, 90, 255);
+    border-radius: 40px;
+    padding: 5px;
+    bottom: 10px;
+    position: absolute;
+    overflow: hidden;
+    color: white;
+}
+
+.close-button {
+    border: 0ch;
+    margin-left: 90%;
 }

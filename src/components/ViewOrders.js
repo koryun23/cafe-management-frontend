@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import OrderUpdateForm from './OrderUpdateForm';
 
 const API_URL = "http://localhost:7000/";
 
@@ -14,15 +16,13 @@ class ViewOrders extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders : [
-                {orderId: 1, tableId: 1, waiterUsername: "john11", status: "OPEN", date: new Date().toString()},
-                {orderId: 2, tableId: 2, waiterUsername: "john11", status: "OPEN", date: new Date().toString()},
-                {orderId: 3, tableId: 3, waiterUsername: "john11", status: "OPEN", date: new Date().toString()},
-            ]
+            orders : [],
+            selectedOrder: {}
         }
 
         this.handleAddProductInOrderClick = this.handleAddProductInOrderClick.bind(this);
         this.handleViewProductsInOrderClick = this.handleViewProductsInOrderClick.bind(this);
+        this.handleConfirmUpdateClick = this.handleConfirmUpdateClick.bind(this);
     }
 
     componentDidMount() {
@@ -55,12 +55,24 @@ class ViewOrders extends React.Component {
     handleViewProductsInOrderClick(id) {
         localStorage.setItem("orderId", id);
     }
+
+    handleUpdateOrderClick(order) {
+        this.setState({showUpdateBox: true, selectedOrder: order});
+    }
+
+    handleConfirmUpdateClick(event) {
+        event.preventDefault();
+        const auth = "Bearer" + localStorage.getItem("token");
+        axios.put();
+    }
+
     render() {
         console.log(this.state);
         return (
             <div className='main-div'>
-                <table>
+                <table className={this.state.showUpdateBox ? "blur" : ""}>
                     <tr>
+                        <th>Order Id</th>
                         <th>Table Id</th>
                         <th>Status</th>
                         <th>Waiter</th>
@@ -72,35 +84,39 @@ class ViewOrders extends React.Component {
                 {
                     this.state.orders.map(order => (
                             <tr>
+                                <td>{order.orderId}</td>
                                 <td>{order.tableId}</td>
                                 <td>{order.status}</td>
                                 <td>{order.waiterUsername}</td>
                                 <td>{order.date.toLocaleString()}</td>
                                 <td>
                                     <a className="update-order"
-                                        href={"/orders/update/" + order.orderId}>
-                                        {<FontAwesomeIcon icon={faEdit} size="lg"/>} Order
+                                        onClick={() => this.handleUpdateOrderClick(order)}>
+                                        {<FontAwesomeIcon icon={faEdit} size="lg"/>}
                                     </a>
                                 </td>
                                 <td>
                                     <a className="add-product-in-order"
                                     href={"/products-in-order/register/" + order.orderId} 
                                     onClick={() => this.handleAddProductInOrderClick(order.orderId)}>
-                                        {<FontAwesomeIcon icon={faAdd} size="lg"/>} Product
+                                        {<FontAwesomeIcon icon={faAdd} size="lg"/>}
                                     </a>
                                 </td>
                                 <td>
                                     <a className="products-in-order-view" 
                                     href={"/products-in-order/" + order.orderId}
                                     onClick={() => this.handleViewProductsInOrderClick(order.orderId)}>
-                                        {<FontAwesomeIcon icon={faSearch} size="lg"/>} Products
+                                        {<FontAwesomeIcon icon={faSearch} size="lg"/>}
                                     </a>
                                 </td>
                             </tr>
                     ))
                 }
                 </table>
-
+                {
+                    this.state.showUpdateBox && 
+                    <OrderUpdateForm onClose={() => this.setState({showUpdateBox: false, selectedOrder: {}})} orderId={this.state.selectedOrder.orderId} tableId={this.state.selectedOrder.tableId} waiterUsername={this.state.waiterUsername} createdAt={this.state.createdAt}/>
+                }
             </div>
         );
     }
