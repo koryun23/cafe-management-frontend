@@ -29,7 +29,6 @@ class ChooseRole extends React.Component {
         localStorage.setItem("lastName", this.props.lastName);
         localStorage.setItem("role", this.state.role);
         this.setState({redirectToHomePage: true});
-        //localStorage.setItem("role", this.state.role);
     }
     render() {
         console.log(this.props.availableRoles);
@@ -48,16 +47,9 @@ class ChooseRole extends React.Component {
                 {
                     this.props.availableRoles.map(role => (
                         <div className='form-group'>
-                            {/* <label className="status-label">{role}</label> */}
                             <button style={{border: '0ch', backgroundColor: this.state.role!=role ? '#d8d8d8' : '#ffffff59', width: '100%'}} onClick={(event) => this.handleSelectionChange(event, role)}>
                                 <div className={role.toLowerCase()+"-image"} ></div>
                             </button>
-                            {/* <input style={{display: 'inline'}}
-                                type="radio"
-                                name={role}
-                                value={role}
-                                checked={this.state.role===role} 
-                                onChange={(event) => this.handleSelectionChange(event)} /> */}
                             <hr></hr>
                         </div>
                     ))
