@@ -3,7 +3,8 @@ import React from 'react';
 import ErrorMessage from './ErrorMessage';
 import Input from './Input';
 import Submit from './Submit';
-
+import { Redirect, withRouter } from 'react-router-dom';
+import Message from './Message';
 const API_URL = "http://localhost:7000/";
 
 class ProductInOrderRegistrationForm extends React.Component {
@@ -32,33 +33,27 @@ class ProductInOrderRegistrationForm extends React.Component {
 
     handleSubmit(event) {
         console.log(this.state);
-        console.log(localStorage.getItem("orderId"));
+        console.log(this.props.match.params.orderId);
         const auth = "Bearer " + localStorage.getItem("token");
-        axios.post(API_URL + "products-in-order/register/" + localStorage.getItem("orderId"), {
+        axios.post(API_URL + "products-in-order/register/" + this.props.match.params.orderId, {
             productName: this.state.productName,
             amount: this.state.productAmount,
-            orderId: localStorage.getItem("orderId")
+            orderId: this.props.match.params.orderId
         }, {headers: {
             "Authorization" : auth,
             "Content-Type" : "application/json"
         }}).then(res => {
-            this.setState({registered: true});
-            localStorage.removeItem("orderId");
+            this.setState({registered: true}, () => console.log(this.state));
         }).catch(err => {
             console.log(err);
+            this.setState({errorMessages: err.response.data.errors});
             //this.setState({errorMessages: err.response.data.errors});
         });
-        this.setState({
-            productName: '',
-            productAmount: '',
-            waiterUsername: this.props.waiterUsername
-        });
-        localStorage.removeItem("orderId");
     }
     render() {
         return (
             <div className="user-add-form"> 
-                <form className={this.state.errorMessages.length == 0 ? "form-group" : "form-group blur"}>
+                <form className={this.state.errorMessages.length == 0 || !this.state.registered ? "form-group" : "form-group blur"}>
                     <Input type="text"
                         name="product-name"
                         placeholder="Product Name"
@@ -74,9 +69,10 @@ class ProductInOrderRegistrationForm extends React.Component {
                     <Submit onSubmit={this.handleSubmit} value="Add Product"/>
                 </form>
                 {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/>}
+                {this.state.registered && <Message message={"Successfully registered a product in order"} onClose={() => this.setState({registered: false})}/>}
             </div>
         );
     }
 }
 
-export default ProductInOrderRegistrationForm;
+export default withRouter(ProductInOrderRegistrationForm);

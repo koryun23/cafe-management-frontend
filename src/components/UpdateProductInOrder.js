@@ -1,58 +1,63 @@
 import React from 'react';
-import Input from './Input.js';
-import Submit from './Submit.js';
+import Input from './Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 const API_URL = "http://localhost:7000/";
 
-class OrderUpdateForm extends React.Component {
+class UpdateProductInOrder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: 'OPEN',
+            status: "ACTIVE", 
+            updated: false,
+            errorMessages: []
         }
     }
 
-
     handleSelectionChange(event) {
-        this.setState({status : event.target.name});
+        this.setState({status: event.target.name});
     }
 
     handleConfirmUpdateClick(event) {
         event.preventDefault();
         const auth = "Bearer " + localStorage.getItem("token");
-        console.log(API_URL + "orders/update/" + this.props.orderId);
-        console.log(this.props.tableId);
-        console.log(this.state.status);
-        axios.put(API_URL + "orders/update/" + this.props.orderId, {
-                cafeTableId: this.props.tableId,
-                orderStatusType: this.state.status
-            }, {headers: {"Authorization" : auth, "Content-Type" : "application/json"}
-        }).then(res => {
-            console.log(res);
+        const data = {
+            productName: this.props.initialProduct.productName,
+            orderId: parseInt(this.props.initialProduct.orderId),
+            amount: parseInt(this.props.initialProduct.amount),
+            status: this.state.status
+        };
+        const url = API_URL + "products-in-order/update/" + this.props.initialProduct.id;
+        console.log(data);
+        console.log(url)
+        axios.put(url, data, {headers: {
+            "Authorization" : auth,
+            "Content-Type" : "application/json"
+        }}).then(res => {
+            console.log(res.data);
+            this.setState({updated: true});
             this.props.onClose();
         }).catch(err => {
             console.log(err);
-        })
+            this.setState({errorMessages: err.response.data.errors});
+        });
     }
 
     render() {
-        return (
+        return (    
             <div className='update-box'>
-                <button class="close-button" onClick={this.props.onClose}>
+                <button className="close-button" onClick={this.props.onClose}>
                     {<FontAwesomeIcon icon={faClose} size="lg"/>}
                 </button>
                 <div className="form-group">
-                    <label className="status-label">Open</label>
+                    <label className="status-label">Active</label>
                     <input type="radio"  
-                           name="OPEN" 
-                           value="Open" 
-                           checked={this.state.status==="OPEN"} 
+                           name="ACTIVE" 
+                           value="Active" 
+                           checked={this.state.status==="ACTIVE"} 
                            onChange={(event) => this.handleSelectionChange(event)}/>
                 </div>
                 <hr />
@@ -81,4 +86,4 @@ class OrderUpdateForm extends React.Component {
     }
 }
 
-export default OrderUpdateForm;
+export default withRouter(UpdateProductInOrder);

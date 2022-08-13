@@ -9,25 +9,15 @@
     background-color: rgba(255, 255, 255, 0.35);
 }
 
-.form-data {
-    overflow: hidden;
-}
 
-.input-data {
-
-}
-
-.input-data:active {
-    border: blue;
-}
 .add-product-in-order {
     display: flex;
     background-color: lightgreen;
-    padding: 5px;
+    padding: 10px;
     text-decoration: none;
     color: black;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .add-product-in-order:hover {
@@ -40,9 +30,9 @@
     color: black;
     background-color: lightblue;
     text-decoration: none;
-    padding: 5px;
-    width: 30px;
-    height: 30px;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
 }
 
 .update-order:hover {
@@ -54,10 +44,10 @@
     color: black;
     text-decoration: none;
     display: flex;
-    padding: 5px;
+    padding: 10px;
     background-color: rgb(247, 255, 129);
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .products-in-order-view:hover {
@@ -119,7 +109,7 @@ tr:hover {
     top: 200px;
 }
 
-label {
+.status-label {
     font-size: 20px;
     margin-right: 10px;
     margin-bottom: 5px;

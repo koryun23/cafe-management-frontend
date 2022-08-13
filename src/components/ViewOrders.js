@@ -9,7 +9,8 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import OrderUpdateForm from './OrderUpdateForm';
-
+import { withRouter, Redirect } from 'react-router-dom';
+import ErrorMessage from './ErrorMessage';
 const API_URL = "http://localhost:7000/";
 
 class ViewOrders extends React.Component {
@@ -17,12 +18,14 @@ class ViewOrders extends React.Component {
         super(props);
         this.state = {
             orders : [],
-            selectedOrder: {}
+            selectedOrder: {},
+            errorMessages: [],
+            redirectToAddProductPage: false,
+            redirectToViewProductsPage: false
         }
 
         this.handleAddProductInOrderClick = this.handleAddProductInOrderClick.bind(this);
         this.handleViewProductsInOrderClick = this.handleViewProductsInOrderClick.bind(this);
-        this.handleConfirmUpdateClick = this.handleConfirmUpdateClick.bind(this);
     }
 
     componentDidMount() {
@@ -48,26 +51,34 @@ class ViewOrders extends React.Component {
         });
     }
 
-    handleAddProductInOrderClick(id) {
-        localStorage.setItem("orderId", id);
+    handleAddProductInOrderClick(order) {
+        if(order.status !== "OPEN") {
+            this.setState({errorMessages: ["Cannot add product because the order is not OPEN"]});
+            return;
+        }
+        this.setState({redirectToAddProductPage: true, selectedOrder: order});
     }
 
-    handleViewProductsInOrderClick(id) {
-        localStorage.setItem("orderId", id);
+    handleViewProductsInOrderClick(order) {
+        this.setState({redirectToViewProductsPage : true, selectedOrder: order});
     }
 
     handleUpdateOrderClick(order) {
+        if(order.status !== "OPEN") {
+            this.setState({errorMessages: ["Cannot update product because the order is not OPEN"]});
+            return;
+        }
         this.setState({showUpdateBox: true, selectedOrder: order});
-    }
-
-    handleConfirmUpdateClick(event) {
-        event.preventDefault();
-        const auth = "Bearer" + localStorage.getItem("token");
-        axios.put();
     }
 
     render() {
         console.log(this.state);
+        if(this.state.redirectToAddProductPage) {
+            return <Redirect to={"/products-in-order/register/" + this.state.selectedOrder.orderId}/>
+        }
+        if(this.state.redirectToViewProductsPage) {
+            return <Redirect to={"products-in-order/" + this.state.selectedOrder.orderId}/>
+        }
         return (
             <div className='main-div'>
                 <table className={this.state.showUpdateBox ? "blur" : ""}>
@@ -97,15 +108,13 @@ class ViewOrders extends React.Component {
                                 </td>
                                 <td>
                                     <a className="add-product-in-order"
-                                    href={"/products-in-order/register/" + order.orderId} 
-                                    onClick={() => this.handleAddProductInOrderClick(order.orderId)}>
+                                    onClick={() => this.handleAddProductInOrderClick(order)}>
                                         {<FontAwesomeIcon icon={faAdd} size="lg"/>}
                                     </a>
                                 </td>
                                 <td>
                                     <a className="products-in-order-view" 
-                                    href={"/products-in-order/" + order.orderId}
-                                    onClick={() => this.handleViewProductsInOrderClick(order.orderId)}>
+                                    onClick={() => this.handleViewProductsInOrderClick(order)}>
                                         {<FontAwesomeIcon icon={faSearch} size="lg"/>}
                                     </a>
                                 </td>
@@ -117,9 +126,13 @@ class ViewOrders extends React.Component {
                     this.state.showUpdateBox && 
                     <OrderUpdateForm onClose={() => this.setState({showUpdateBox: false, selectedOrder: {}})} orderId={this.state.selectedOrder.orderId} tableId={this.state.selectedOrder.tableId} waiterUsername={this.state.waiterUsername} createdAt={this.state.createdAt}/>
                 }
+                {
+                    this.state.errorMessages.length > 0 &&
+                    <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/>
+                }
             </div>
         );
     }
 }
 
-export default ViewOrders;
+export default withRouter(ViewOrders);

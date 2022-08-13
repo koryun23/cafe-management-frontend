@@ -22,6 +22,7 @@ import ViewProductsInOrder from './components/ViewProductsInOrder';
 import ProductInOrderRegistrationForm from './components/ProductInOrderRegistrationForm';
 import Input from './components/Input';
 import ProductsUpdate from './components/ProductsUpdate';
+import UpdateProductInOrder from './components/UpdateProductInOrder';
 
 function App() {
   return (
@@ -81,9 +82,9 @@ function App() {
             <Route path="/orders/register/*">
               <BackgroundImage />
               <WaiterMenu />
-              <OrdersRegister waiterUsername="john11"/>
+              <OrdersRegister />
             </Route>
-            <Route path="/orders/update/*">
+            <Route path="/orders/update/:orderId">
               <BackgroundImage />
               <WaiterMenu />
               <OrderUpdateForm />
@@ -95,15 +96,18 @@ function App() {
             <Route path="/products-in-order/register/:orderId">
               <BackgroundImage />
               <WaiterMenu />
-              <ProductInOrderRegistrationForm waiterUsername="john11"/>
+              <ProductInOrderRegistrationForm />
             </Route>
-            <Route path="/products-in-order/update/*">
-              <HomePage userType="WAITER"/>
+            <Route path="/products-in-order/update/:productInOrderId">
+              <BackgroundImage />
+              <WaiterMenu />
+              <UpdateProductInOrder />
             </Route>
             <Route path="/products-in-order/:orderId">
               <WaiterMenu />
               <ViewProductsInOrder />
             </Route>
+
           </Switch>
       </Router>
     </div>
@@ -111,6 +115,3 @@ function App() {
 }
 
 export default App;
-
-
-// hooks

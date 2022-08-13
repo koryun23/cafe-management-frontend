@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React from 'react';
 import '../css/ViewProductsInOrder.css';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import ErrorMessage from './ErrorMessage';
+import UpdateProductInOrder from './UpdateProductInOrder';
 const API_URL = "http://localhost:7000/";
 
 class ViewProductsInOrder extends React.Component {
@@ -9,6 +13,9 @@ class ViewProductsInOrder extends React.Component {
         super(props);
         this.state = {
             productsInOrder: [],
+            showUpdateProductInOrderPage: false,
+            selectedProduct: {}, 
+            errorMessages: [],
         };
     }
 
@@ -25,6 +32,7 @@ class ViewProductsInOrder extends React.Component {
             console.log(res.data);
             this.setState({productsInOrder : res.data.productInOrderRetrievalResponseDtos.map(productInOrder => (
                 {
+                    id: productInOrder.productInOrderId,
                     productName: productInOrder.productName,
                     orderId: this.props.match.params.orderId,
                     amount: productInOrder.amount,
@@ -40,24 +48,55 @@ class ViewProductsInOrder extends React.Component {
         localStorage.removeItem("orderId");
     }
 
+    handleUpdateProductInOrderClick(product) {
+        if(product.status !== "ACTIVE") {
+            this.setState({errorMessages: ["Cannot update the product in order because it is not ACTIVE"]});
+            return;
+        }
+        this.setState({showUpdateProductInOrderPage: true, selectedProduct: product});
+    }
+
     render() {
         console.log(this.props.match.params.orderId);
+        // if(this.state.showUpdateProductInOrderPage) {
+        //     return <Redirect to={"products-in-order/update/" + this.state.selectedProduct.id}/>
+        // }
         return (
-            <div>
+            <div className="main-div">
+                <table className={this.state.errorMessages.length == 0 || this.state.showUpdateProductInOrderPage ? "" : "blur"}>
+                    <tr>
+                        <th>Product In Order Id</th>
+                        <th>Product Name</th>
+                        <th>Order Id</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
                 {
                     this.state.productsInOrder.map(product => (
-                        <div className="product-in-order-box">
-                            <div className="product-image"></div>
-                            <h2 className="product-name">{product.productName}</h2>
-                            <b><i><p className="order-id">Order Id: {this.props.match.params.orderId}</p></i></b>
-                            <b><i><p className="status">Status: {product.status}</p></i></b>
-                            <b><i><p className="amount">Amount: {product.amount}</p></i></b>
-                            <a className="update-product-in-order"
-                               href={"/products-in-order/update/" + product.orderId}>
-                                Update
-                            </a>
-                        </div>
+                        <tr>
+                            <td>{product.id}</td>
+                            <td>{product.productName}</td>
+                            <td>{this.props.match.params.orderId}</td>
+                            <td>{product.status}</td>
+                            <td>{product.amount}</td>
+                            <td>
+                                <a className="update-product-in-order"
+                                    onClick={() => this.handleUpdateProductInOrderClick(product)}>
+                                    {<FontAwesomeIcon icon={faEdit} size="lg"/>}
+                                </a>
+                            </td>
+                        </tr>
                     ))
+                }
+                </table>
+                {
+                    this.state.errorMessages.length > 0 &&
+                    <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})}/>
+                }
+                {
+                    this.state.showUpdateProductInOrderPage &&
+                    <UpdateProductInOrder onClose={() => this.setState({showUpdateProductInOrderPage: false})} initialProduct={this.state.selectedProduct} />
                 }
             </div>
         );
