@@ -7,6 +7,8 @@ import BackgroundImage from './BackgroundImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import ErrorMessage from './ErrorMessage';
+import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/to-have-accessible-description';
 
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
@@ -14,7 +16,8 @@ class ViewProducts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            errorMessages: []
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -58,12 +61,14 @@ class ViewProducts extends React.Component {
         }).then(res => {
             console.log(res.data);
         }).catch(err => {
+            this.setState({errors: err.response.data.errors});
             console.log(err);
         });
 
     }
 
     render() {
+        console.log(this.state.errorMessages);
         if(this.state.products.length == 0) {
             return (
                 <div className='main-div'>
@@ -74,7 +79,7 @@ class ViewProducts extends React.Component {
         }
         return (
             <div className="main-div">
-                <table>
+                <table className={this.state.errorMessages.length == 0 ? '' : 'blur'}>
                     <tbody>
                         <tr>
                             <th>Id</th>
@@ -104,6 +109,8 @@ class ViewProducts extends React.Component {
                     }
                     </tbody>
                 </table>
+                {this.state.errorMessages.length > 0 &&
+                <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})} />}
             </div>
         );
     }

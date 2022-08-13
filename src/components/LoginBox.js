@@ -76,8 +76,8 @@ class LoginBox extends React.Component {
 
             }
         }).catch(err => {
+            this.setState({errorMessages: ["One of the provided credentials is wrong"]})
             console.log(err);
-            this.setState({errorMessages: err.response.data.errors})
         });
     }
 
@@ -88,7 +88,7 @@ class LoginBox extends React.Component {
         return (
             <div className="login-box align-items-center">
                 <form className={this.state.showChooseRolePage ? "login-form blur" : "login-form"}>
-                    {this.state.errorMessages.length > 0 && <label className="login-error">One of the provided credentials is wrong</label>}
+                    {this.state.errorMessages.length > 0 && <label className="login-error">{this.state.errorMessages[0]}</label>}
                     <br></br>
                     <UsernameInput onUsernameChange={this.handleUsernameInput} value={this.state.username}/>
                     <PasswordInput onPasswordChange={this.handlePasswordInput} value={this.state.password}/>
