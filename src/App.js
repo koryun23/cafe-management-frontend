@@ -59,10 +59,10 @@ function App() {
                 <ManagerMenu />
                 <ProductsRegistrationForm />
             </Route>
-            <Route path="/products/update/:id" >
+            {/* <Route path="/products/update/:id" >
                 <ManagerMenu />
                 <ProductsUpdate /> 
-            </Route>
+            </Route> */}
             <Route path="/products">
               <ManagerMenu />
               <ViewProducts />

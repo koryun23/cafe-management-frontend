@@ -7,17 +7,16 @@ import BackgroundImage from './BackgroundImage';
 import axios from 'axios';
 import ErrorMessage from './ErrorMessage';
 import { Redirect } from 'react-router-dom';
+
 const API_URL = "http://localhost:7000/";
+
 function ProductsUpdate(props) {
 
     const {id} = useParams();
-    const productName = localStorage.getItem("productName");
-    const productAmount = localStorage.getItem("productAmount");
-    const productPrice = localStorage.getItem("productPrice");
     let [state = {
-        name: productName || "",
-        price: productPrice || "",
-        amount: productAmount || "",
+        name: "",
+        price: "",
+        amount: "",
         errorMessages: [],
         updated: false
     }, setState] = useState();
@@ -52,7 +51,7 @@ function ProductsUpdate(props) {
     const handleSubmit = () => {
         console.log(state);
         const auth = "Bearer " + localStorage.getItem("token");
-        axios.put(API_URL + "products/update/" + id, {
+        axios.put(API_URL + "products/update/" + props.product.productId, {
             id: id,
             name: state.name,
             price: state.price,
@@ -65,11 +64,9 @@ function ProductsUpdate(props) {
                 ...state, 
                 updated: true
             });
-            localStorage.removeItem("productName");
-            localStorage.removeItem("productAmount");
-            localStorage.removeItem("productPrice");
         }).catch(err => {
             console.log(err);
+            console.log(state);
             setState({
                 ...state, 
                 errorMessages: err.response.data.errors
@@ -77,38 +74,34 @@ function ProductsUpdate(props) {
         });
     }
     console.log(state);
-    if(state.updated) {
-        return <Redirect to="/home"/>
-    }
     return (
         <div>
-            <BackgroundImage/>
             <div className="user-add-form">
+                <br/>
+                <h3 style={{textAlign: 'center'}}>Product Id: {props.product.productId}</h3>
                 <form className={state.errorMessages.length == 0 ? "" : "blur"}>
-                    <h3 className="header">Product id: {id}</h3>
-
                     <Input type="text"
                             name="product-name"
                             placeholder="New Name"
                             value={state.name}
                             onChange={handleProductNameChange} 
-                            label={`New Name (${productName})`} />
+                            label={`New Name (${props.product.productName})`} />
                     <Input type="number"
                             name="product-price"
                             placeholder="New Price"
                             value={state.price}
                             onChange={handleProductPriceChange} 
-                            label={`New Price (${productPrice})`} />
+                            label={`New Price (${props.product.productPrice})`} />
                     <Input type="number"
                             name="product-amount"
                             placeholder="New Amount"
                             value={state.amount}
                             onChange={handleProductAmountChange} 
-                            label={`New Amount (${productAmount})`} />
+                            label={`New Amount (${props.product.productAmount})`} />
                     <Submit onSubmit={handleSubmit} value="Update Product"/>
                 </form>
                 {state.errorMessages.length > 0 && <ErrorMessage message={state.errorMessages[0]} onClose={handleClose}/>}
-
+                {state.updated && props.onUpdate()}
             </div>
         </div>
     );

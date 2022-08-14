@@ -9,6 +9,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import ErrorMessage from './ErrorMessage';
 import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/to-have-accessible-description';
+import ProductsUpdate from './ProductsUpdate';
 
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
@@ -17,7 +18,9 @@ class ViewProducts extends React.Component {
         super(props);
         this.state = {
             products: [],
-            errorMessages: []
+            errorMessages: [],
+            showUpdateForm: false,
+            selectedProduct: {}
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -42,10 +45,8 @@ class ViewProducts extends React.Component {
             console.log(error);
         });
     }
-    handleUpdateClick(name, amount, price) {
-        localStorage.setItem("productName", name);
-        localStorage.setItem("productAmount", amount);
-        localStorage.setItem("productPrice", price);
+    handleUpdateClick(product) {
+        this.setState({showUpdateForm: true, selectedProduct: product});
     }
 
     handleDeleteClick(id) {
@@ -79,7 +80,7 @@ class ViewProducts extends React.Component {
         }
         return (
             <div className="main-div">
-                <table className={this.state.errorMessages.length == 0 ? '' : 'blur'}>
+                <table className={this.state.errorMessages.length == 0 && !this.state.showUpdateForm ? '' : 'blur'}>
                     <tbody>
                         <tr>
                             <th>Id</th>
@@ -96,7 +97,7 @@ class ViewProducts extends React.Component {
                                 <td>{product.productAmount}</td>
                                 <td>{product.productPrice}</td>
                                 <td className="last-row">
-                                    <a className="update-button" href={"/products/update/" + product.productId} onClick={() => this.handleUpdateClick(product.productName, product.productAmount, product.productPrice)}>
+                                    <a className="update-button" onClick={() => this.handleUpdateClick(product)}>
                                         {<FontAwesomeIcon icon={faEdit}/>}
                                     </a>
                                     <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
@@ -111,6 +112,8 @@ class ViewProducts extends React.Component {
                 </table>
                 {this.state.errorMessages.length > 0 &&
                 <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})} />}
+                {this.state.showUpdateForm &&
+                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})}/>}
             </div>
         );
     }
