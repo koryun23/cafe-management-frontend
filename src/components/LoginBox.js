@@ -83,6 +83,7 @@ class LoginBox extends React.Component {
 
     render() {
         if(this.state.auth) {
+            this.props.onLogin(localStorage.getItem("role"));
             return <Redirect to="/home"/> 
         }
         return (

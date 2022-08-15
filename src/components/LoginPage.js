@@ -8,17 +8,19 @@ class LoginPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {authenticated: false, role: ""};
     }
 
     render() {
-        if(localStorage.token) {
-            return <Redirect to="/home" />;
+        if(this.state.authenticated) {
+            this.props.onLogin(this.state.role);
+            return <Redirect to="/home" />
         }
         return (
             <div className="login-page justify-content-center">
                 <BackgroundImage />
                 <SiteDescription />
-                <LoginBox />
+                <LoginBox onLogin={(role) => this.setState({authenticated: true, role: role})}/>
             </div>
         );
     }

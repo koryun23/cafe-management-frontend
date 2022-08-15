@@ -18,6 +18,7 @@ class HomePage extends React.Component {
         const firstName = localStorage.firstName;
         const lastName = localStorage.lastName;
         const role = localStorage.role;
+        
         if(role === 'MANAGER') {
             return <ManagerHomePage username={username}
                                     firstName={firstName} 

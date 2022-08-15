@@ -32,13 +32,12 @@ class UserForm extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
-    static validateCredentials(creds) {
-        return !(creds.username == "" || 
+    static invalidCredentials(creds) {
+        return (creds.username == "" || 
                  creds.password == "" || 
                  creds.firstName == "" ||
                  creds.secondName == "" ||
-                 creds.roleList == [] ||
-                 creds.errorMessages == [] )
+                 creds.roleList.length == 0 )
     }
 
     handleUsernameChange(username) {
@@ -57,7 +56,7 @@ class UserForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.state);
-        if(!UserForm.validateCredentials(this.state)) {
+        if(UserForm.invalidCredentials(this.state)) {
             this.setState({errorMessages: ["All the fields are required"]});
             return;
         }
@@ -81,13 +80,7 @@ class UserForm extends React.Component {
     }
     handleClose(event) {
         this.setState({
-            username: "",
-            password: "",
-            firstName: "",
-            secondName: "",
-            roleList: [],
             errorMessages: [],
-            registered: false
         });
     }
     handleRoleChange(event) {
@@ -127,25 +120,26 @@ class UserForm extends React.Component {
                             placeholder="Username"
                             value={this.state.username}
                             onChange={this.handleUsernameChange} 
-                            label="Username" />
+                            label="*Username" />
                         <Input type="password"
                             name="password"
                             placeholder="Password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange} 
-                            label="Password" />
+                            label="*Password" />
                         <Input type="text"
                             name="firstName"
                             placeholder="First name"
                             value={this.state.firstName}
                             onChange={this.handleFirstNameChange} 
-                            label="First Name" />
+                            label="*First Name" />
                         <Input type="text"
                             name="secondName"
                             placeholder="Second name" 
                             value={this.state.secondName}
                             onChange={this.handleSecondNameChange}
-                            label="Second name" />
+                            label="*Second name" />
+                        <label style={{paddingLeft: '20px'}}>*Role</label>
                         <OptionalSelection options={
                             [
                                 {value: "MANAGER", text: "Manager", selected: false, onChange: this.handleRoleChange, index: 0}, 

@@ -13,14 +13,20 @@ class ProductInOrderRegistrationForm extends React.Component {
         super(props);
         this.state = {
             productName: '',
-            productAmount: 0,
-            waiterUsername: this.props.waiterUsername,
+            productAmount: '',
             registered: false,
             errorMessages: []
         }
         this.handleProductNameChange = this.handleProductNameChange.bind(this);
         this.handleProductAmountChange = this.handleProductAmountChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    static invalidCreds(creds) {
+        return (
+            !creds.productName ||
+            !creds.productAmount
+        );
     }
 
     handleProductNameChange(name) {
@@ -32,6 +38,11 @@ class ProductInOrderRegistrationForm extends React.Component {
     }
 
     handleSubmit(event) {
+        event.preventDefault();
+        if(ProductInOrderRegistrationForm.invalidCreds(this.state)) {
+            this.setState({errorMessages: ["All fields are required"]});
+            return;
+        }
         console.log(this.state);
         console.log(this.props.match.params.orderId);
         const auth = "Bearer " + localStorage.getItem("token");

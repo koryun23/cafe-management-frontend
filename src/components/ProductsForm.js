@@ -24,6 +24,13 @@ class ProductsRegistrationForm extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    static invalidCreds(creds) {
+        return (
+            !creds.productName ||
+            !creds.productPrice ||
+            !creds.productAmount 
+        );
+    }
     handleProductNameChange(name) {
         this.setState({productName: name});
     }
@@ -38,6 +45,10 @@ class ProductsRegistrationForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if(ProductsRegistrationForm.invalidCreds(this.state)) {
+            this.setState({errorMessages: ["All fields are required"]});
+            return;
+        }
         const auth = "Bearer " + localStorage.getItem("token");
         const productRegistration = axios.post(API_URL + "products/register", {
                 name: this.state.productName,
@@ -63,10 +74,6 @@ class ProductsRegistrationForm extends React.Component {
 
     handleClose(event) {
         this.setState({
-            productName: '',
-            productPrice: '',
-            productAmount: '',
-            registered: false,
             errorMessages: []
         });
     } 
@@ -84,19 +91,19 @@ class ProductsRegistrationForm extends React.Component {
                         placeholder="Product Name"
                         value={this.state.productName}
                         onChange={this.handleProductNameChange} 
-                        label="Product Name" />
+                        label="*Product Name" />
                     <Input type="number"
                         name="product-price"
                         placeholder="Product Price"
                         value={this.state.productPrice}
                         onChange={this.handleProductPriceChange} 
-                        label="Product Price" />
+                        label="*Product Price" />
                     <Input type="number"
                         name="product-amount"
                         placeholder="Product Amount"
                         value={this.state.productAmount}
                         onChange={this.handleProductAmountChange} 
-                        label="Product Amount" />
+                        label="*Product Amount" />
                     <Submit onSubmit={this.handleSubmit} value="Add Product"/>
                 </form>
                 {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleClose}/>}

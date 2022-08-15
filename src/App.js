@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
-import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect, useHistory } from 'react-router-dom';
 import ManagerMenu from './components/ManagerMenu';
 import UserForm from './components/UserForm';
 import BackgroundImage from './components/BackgroundImage';
@@ -23,89 +23,160 @@ import ProductInOrderRegistrationForm from './components/ProductInOrderRegistrat
 import Input from './components/Input';
 import ProductsUpdate from './components/ProductsUpdate';
 import UpdateProductInOrder from './components/UpdateProductInOrder';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [role = localStorage.getItem("role"), setRole] = useState();
+  const history = useHistory();
+
+  useEffect(() => {
+    localStorage.setItem("role", role)
+  });
+
+  const logIn = (role) => setRole(role);
+  const logOut = () => setRole(null);
+
   return (
     <div>
       <Router>
           <Switch>
             <Route exact path="/">
-              {localStorage.token ? <Redirect to="/home"/> : <Redirect to="/login"/>}
+              {role ? <Redirect to="/home"/> : <Redirect to="/login"/>}
             </Route>
 
             <Route path="/login">
-                <LoginPage />
+                <LoginPage onLogin={logIn}/>
             </Route>
             <Route path="/home">
-              <HomePage />
+              {
+                role ? <HomePage /> : <LoginPage onLogin={logIn}/>
+              }
             </Route>
             <Route exact path="/users/register">
-                <BackgroundImage />
-                <ManagerMenu />
-                <UserForm />
+                {
+                  role === 'MANAGER' ? 
+                  <div>
+                    <BackgroundImage />
+                    <ManagerMenu />
+                    <UserForm />
+                  </div> : <Redirect to="/home" />
+                }
             </Route>
             <Route path="/tables/register">
-                <BackgroundImage />
-                <ManagerMenu />
-                <TableForm />
+                {
+                  role === 'MANAGER' ?
+                  <div>
+                    <BackgroundImage />
+                    <ManagerMenu />
+                    <TableForm />
+                  </div> : <Redirect to="/home"/>
+                }
             </Route>
             <Route path="/tables-to-waiters/assign">
-                <BackgroundImage />
-                <ManagerMenu />
-                <AssignForm />
+                {
+                  role === 'MANAGER' ?
+                  <div>
+                    <BackgroundImage />
+                    <ManagerMenu />
+                    <AssignForm />
+                  </div> : <Redirect to="/home"/>
+                }  
+
             </Route>
             <Route path="/products/register">
-                <BackgroundImage />
-                <ManagerMenu />
-                <ProductsRegistrationForm />
+                {
+                  role === 'MANAGER' ? 
+                  <div>
+                    <BackgroundImage />
+                    <ManagerMenu />
+                    <ProductsRegistrationForm />
+                  </div> : <Redirect to="/home"/>
+                }
             </Route>
-            {/* <Route path="/products/update/:id" >
-                <ManagerMenu />
-                <ProductsUpdate /> 
-            </Route> */}
             <Route path="/products">
-              <ManagerMenu />
-              <ViewProducts />
+              {
+                role === 'MANAGER' ? 
+                <div>
+                  <ManagerMenu />
+                  <ViewProducts /> 
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/users">
-              <ManagerMenu />
-              <ViewUsers />
+              {
+                role === 'MANAGER' ? 
+                <div>
+                  <ManagerMenu />
+                  <ViewUsers />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/tables">
-              <ManagerMenu />
-              <ViewTables />
+              {
+                role === 'MANAGER' ?
+                <div>
+                  <ManagerMenu />
+                  <ViewTables />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/tables-to-waiters">
-              <WaiterMenu />
-              <ViewTablesAssignedToWaiter />
-            </Route>
-            <Route path="/orders/register/*">
-              <BackgroundImage />
-              <WaiterMenu />
-              <OrdersRegister />
+              {
+                role === 'WAITER' ? 
+                <div>
+                  <WaiterMenu />
+                  <ViewTablesAssignedToWaiter />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/orders/update/:orderId">
-              <BackgroundImage />
-              <WaiterMenu />
-              <OrderUpdateForm />
+              {
+                role === 'WAITER' ?
+                <div>
+                  <BackgroundImage />
+                  <WaiterMenu />
+                  <OrderUpdateForm />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/orders">
-              <WaiterMenu />
-              <ViewOrders />
+              {
+                role === "WAITER" ?
+                <div>
+                  <WaiterMenu />
+                  <ViewOrders />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/products-in-order/register/:orderId">
-              <BackgroundImage />
-              <WaiterMenu />
-              <ProductInOrderRegistrationForm />
+              {
+                role === 'WAITER' ?
+                <div>
+                  <BackgroundImage />
+                  <WaiterMenu />
+                  <ProductInOrderRegistrationForm />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
             <Route path="/products-in-order/update/:productInOrderId">
-              <BackgroundImage />
-              <WaiterMenu />
-              <UpdateProductInOrder />
+              {
+                role === 'WAITER' ?
+                <div>
+                  <BackgroundImage />
+                  <WaiterMenu />
+                  <UpdateProductInOrder />
+                </div> : <Redirect to="/home" />
+              }
             </Route>
             <Route path="/products-in-order/:orderId">
-              <WaiterMenu />
-              <ViewProductsInOrder />
+              {
+                role === 'WAITER' ? 
+                <div>
+                  <WaiterMenu />
+                  <ViewProductsInOrder />
+                </div> : <Redirect to="/home"/>
+              }
             </Route>
 
           </Switch>

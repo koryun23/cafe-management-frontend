@@ -10,6 +10,13 @@ import { Redirect } from 'react-router-dom';
 
 const API_URL = "http://localhost:7000/";
 
+function invalidCreds(creds) {
+    return (
+        !creds.name ||
+        !creds.price ||
+        !creds.amount
+    );
+}
 function ProductsUpdate(props) {
 
     const {id} = useParams();
@@ -50,6 +57,13 @@ function ProductsUpdate(props) {
     }
     const handleSubmit = () => {
         console.log(state);
+        if(invalidCreds(state)) {
+            setState({
+                ...state,
+                errorMessages: ["All fields are required"]
+            });
+            return;
+        }
         const auth = "Bearer " + localStorage.getItem("token");
         axios.put(API_URL + "products/update/" + props.product.productId, {
             id: id,
@@ -85,19 +99,19 @@ function ProductsUpdate(props) {
                             placeholder="New Name"
                             value={state.name}
                             onChange={handleProductNameChange} 
-                            label={`New Name (${props.product.productName})`} />
+                            label={`*New Name (${props.product.productName})`} />
                     <Input type="number"
                             name="product-price"
                             placeholder="New Price"
                             value={state.price}
                             onChange={handleProductPriceChange} 
-                            label={`New Price (${props.product.productPrice})`} />
+                            label={`*New Price (${props.product.productPrice})`} />
                     <Input type="number"
                             name="product-amount"
                             placeholder="New Amount"
                             value={state.amount}
                             onChange={handleProductAmountChange} 
-                            label={`New Amount (${props.product.productAmount})`} />
+                            label={`*New Amount (${props.product.productAmount})`} />
                     <Submit onSubmit={handleSubmit} value="Update Product"/>
                 </form>
                 {state.errorMessages.length > 0 && <ErrorMessage message={state.errorMessages[0]} onClose={handleClose}/>}

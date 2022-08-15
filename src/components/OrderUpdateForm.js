@@ -18,7 +18,6 @@ class OrderUpdateForm extends React.Component {
         }
     }
 
-
     handleSelectionChange(event) {
         this.setState({status : event.target.name});
     }

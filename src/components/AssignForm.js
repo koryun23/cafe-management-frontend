@@ -21,6 +21,13 @@ class AssignForm extends React.Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    static invalidCreds(creds) {
+        return (
+            !creds.tableId ||
+            !creds.waiterUsername
+        );
+    }
+
     handleTableIdChange(id) {
         this.setState({tableId : id});
     }
@@ -31,6 +38,10 @@ class AssignForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if(AssignForm.invalidCreds(this.state)) {
+            this.setState({errorMessages: ["All fields are required"]});
+            return;
+        }
         const auth = "Bearer " + localStorage.getItem("token");
         const assignment = axios.post(API_URL + "tables-to-waiters/assign", 
                    {
