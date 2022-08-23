@@ -89,8 +89,6 @@ class ViewOrders extends React.Component {
                         <th>Waiter</th>
                         <th>Created At</th>
                         <th></th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 {
                     this.state.orders.map(order => (
@@ -105,14 +103,10 @@ class ViewOrders extends React.Component {
                                         onClick={() => this.handleUpdateOrderClick(order)}>
                                         {<FontAwesomeIcon icon={faEdit} size="lg"/>}
                                     </a>
-                                </td>
-                                <td>
                                     <a className="add-product-in-order"
                                     onClick={() => this.handleAddProductInOrderClick(order)}>
                                         {<FontAwesomeIcon icon={faAdd} size="lg"/>}
                                     </a>
-                                </td>
-                                <td>
                                     <a className="products-in-order-view" 
                                     onClick={() => this.handleViewProductsInOrderClick(order)}>
                                         {<FontAwesomeIcon icon={faSearch} size="lg"/>}

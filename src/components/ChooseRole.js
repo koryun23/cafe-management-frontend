@@ -29,6 +29,7 @@ class ChooseRole extends React.Component {
         localStorage.setItem("lastName", this.props.lastName);
         localStorage.setItem("role", this.state.role);
         this.setState({redirectToHomePage: true});
+        this.props.onLogin(this.state.role);
     }
     render() {
         console.log(this.props.availableRoles);

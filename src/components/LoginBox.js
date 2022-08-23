@@ -101,7 +101,8 @@ class LoginBox extends React.Component {
                             firstName={this.state.firstName}
                             lastName={this.state.lastName}
                             token={this.state.token}
-                            onClose={() => {this.setState({showChooseRolePage: false})}}/>}
+                            onClose={() => {this.setState({showChooseRolePage: false})}} 
+                            onLogin={this.props.onLogin}/>}
             </div>   
         );
     }

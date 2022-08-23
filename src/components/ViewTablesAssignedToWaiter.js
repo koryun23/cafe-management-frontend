@@ -80,11 +80,14 @@ class ViewTablesAssignedToWaiter extends React.Component {
                             <tr key={assignedTable.tableId.toString()}>
                                 <td>{assignedTable.tableId}</td>
                                 <td>{assignedTable.assignedAt.toLocaleString()}</td>
-                                <button onClick={() => this.handleAddOrderClick(assignedTable.tableId)} 
-                                    className="add-order-button" 
-                                    key={assignedTable.tableId} >
-                                    {<FontAwesomeIcon icon={faAdd}/>} Order
-                                </button>
+                                <td className='last-row'>
+                                    <button onClick={() => this.handleAddOrderClick(assignedTable.tableId)} 
+                                        className="add-order-button" 
+                                        key={assignedTable.tableId} >
+                                        {<FontAwesomeIcon icon={faAdd}/>} Order
+                                    </button>
+                                </td>
+
                             </tr>
                         ))
                     }

@@ -43,7 +43,7 @@ class OrderUpdateForm extends React.Component {
     render() {
         return (
             <div className='update-box'>
-                <button class="close-button" onClick={this.props.onClose}>
+                <button className="close-button" onClick={this.props.onClose}>
                     {<FontAwesomeIcon icon={faClose} size="lg"/>}
                 </button>
                 <div className="form-group">
