@@ -18,3 +18,21 @@
     margin-left: 5%;
     margin-right: 5%;
 }
+
+.image-button {
+    border: 0ch;
+    padding: 30px;
+    width: 100%;
+}
+
+.selected {
+    background-color: '#C0C0C0';
+}
+
+.non-selected {
+    background-color: rgb(216, 216, 216);
+}
+
+.float {
+    float: left;
+}

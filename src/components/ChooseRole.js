@@ -54,14 +54,13 @@ class ChooseRole extends React.Component {
                 {
                     this.props.availableRoles.map(role => (
                         <div className='form-group'>
-                            <button style={{border: '0ch', backgroundColor: this.state.role !== role ? '#d8d8d8' : '#C0C0C0', height: '100%', width: '100%', border: "0ch", padding: "30px"}} onClick={(event) => this.handleSelectionChange(event, role)}>
+                            <button className={this.state.role === role ? "selected image-button" : "non-selected image-button"} onClick={(event) => this.handleSelectionChange(event, role)}>
                                 <div className={role.toLowerCase()+"-image"} ></div>
                             </button>
                         </div>
                     ))
                 }       
                 </div>
-
 
                 <button className="update-confirm" onClick={(event) => this.handleConfirmLoginClick(event)} style={{height: '10%'}}>Log in</button>
             </div>
