@@ -1,8 +1,9 @@
 import React from 'react';
+import "../css/ChooseRole.css";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router-dom';
-
 class ChooseRole extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +15,11 @@ class ChooseRole extends React.Component {
     }
 
     handleSelectionChange(event, newRole) {
-        this.setState({role: newRole})
+        if(this.state.role === newRole) {
+            this.setState({role: ""});
+            return;
+        } 
+        this.setState({role: newRole, errorMessages: []})
     }
     
     handleConfirmLoginClick(event) {
@@ -31,27 +36,27 @@ class ChooseRole extends React.Component {
         this.setState({redirectToHomePage: true});
         this.props.onLogin(this.state.role);
     }
+
     render() {
         console.log(this.props.availableRoles);
         if(this.state.redirectToHomePage) {
             return <Redirect to="/home"/>
         }
         return (
-            <div className='update-box' style={{height: '500px', top: 150}}>
+            <div className='update-box' style={{height: '400px', top: 150}}>
                 <button className="close-button" onClick={this.props.onClose}>
                     {<FontAwesomeIcon icon={faClose} size="lg"/>}
                 </button>
                 <div>
-                    <h3 style={{textAlign: 'center'}}>Choose a role</h3>
+                    <h3 style={{textAlign: 'center'}}>Choose an Account Type</h3>
                     {this.state.errorMessages.length > 0 &&
                 <h6 style={{textAlign: 'center', color: 'red', fontSize: '15px'}}>*No role selected</h6>}
                 {
                     this.props.availableRoles.map(role => (
                         <div className='form-group'>
-                            <button style={{border: '0ch', backgroundColor: '#d8d8d8', height: '100%', width: '100%', border: this.state.role===role ? "3px solid blue" : "0ch"}} onClick={(event) => this.handleSelectionChange(event, role)}>
+                            <button style={{border: '0ch', backgroundColor: this.state.role !== role ? '#d8d8d8' : '#C0C0C0', height: '100%', width: '100%', border: "0ch", padding: "30px"}} onClick={(event) => this.handleSelectionChange(event, role)}>
                                 <div className={role.toLowerCase()+"-image"} ></div>
                             </button>
-                            <hr></hr>
                         </div>
                     ))
                 }       
