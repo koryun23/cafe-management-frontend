@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/ViewProduct.css';
 import Submit from './Submit.js';
 import {FaBeer} from 'react-icons/fa';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import BackgroundImage from './BackgroundImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,6 +25,7 @@ class ViewProducts extends React.Component {
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
     componentDidMount() {
@@ -68,6 +70,10 @@ class ViewProducts extends React.Component {
 
     }
 
+    onClose(event) {
+        event.preventDefault();
+        this.setState({showUpdateForm: false});
+    }
     render() {
         console.log(this.state.errorMessages);
         if(this.state.products.length == 0) {
@@ -113,7 +119,7 @@ class ViewProducts extends React.Component {
                 {this.state.errorMessages.length > 0 &&
                 <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})} />}
                 {this.state.showUpdateForm &&
-                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})}/>}
+                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})} onClose={this.onClose}/>}
             </div>
         );
     }

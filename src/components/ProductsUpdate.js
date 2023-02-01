@@ -7,6 +7,8 @@ import BackgroundImage from './BackgroundImage';
 import axios from 'axios';
 import ErrorMessage from './ErrorMessage';
 import { Redirect } from 'react-router-dom';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const API_URL = "http://localhost:7000/";
 
@@ -21,9 +23,9 @@ function ProductsUpdate(props) {
 
     const {id} = useParams();
     let [state = {
-        name: "",
-        price: "",
-        amount: "",
+        name: props.product.productName,
+        price: props.product.productPrice,
+        amount: props.product.productAmount,
         errorMessages: [],
         updated: false
     }, setState] = useState();
@@ -91,6 +93,9 @@ function ProductsUpdate(props) {
     return (
         <div>
             <div className="user-add-form">
+                <button className="close-button" onClick={props.onClose}>
+                    {<FontAwesomeIcon icon={faClose} size="lg"/>}
+                </button>
                 <br/>
                 <h3 style={{textAlign: 'center'}}>Product Id: {props.product.productId}</h3>
                 <form className={state.errorMessages.length == 0 ? "" : "blur"}>
