@@ -131,8 +131,10 @@ tr:hover {
 }
 
 .close-button {
+    position: fixed;
     border: 0ch;
     margin-left: 90%;
+    top: 0px;
 }
 
 .add-filter-button {

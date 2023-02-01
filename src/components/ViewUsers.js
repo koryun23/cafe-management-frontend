@@ -9,8 +9,11 @@ class ViewUsers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            showRoles: false,
+            selectedRoles: []
         }
+        this.handleViewRolesClick = this.handleViewRolesClick.bind(this);
     }
 
     componentDidMount() {
@@ -33,6 +36,10 @@ class ViewUsers extends React.Component {
         });
     }
 
+    handleViewRolesClick(user) {
+        console.log(user);
+        this.setState({showRoles: true, selectedRoles: user.roles});
+    }
     render() {
         if(this.state.users.length == 0) {
             return (
@@ -45,13 +52,13 @@ class ViewUsers extends React.Component {
         return (
             <div className="main-div">
                 <BackgroundImage />
+                
                 <table>
                     <tr>
                         <th>Username</th>
                         <th>First Name</th>
                         <th>Second Name</th>
-                        <th>Role 1</th>
-                        <th>Role 2</th>
+                        <th>Roles</th>
                     </tr>
                 {
                     this.state.users.map(user => (
@@ -59,8 +66,21 @@ class ViewUsers extends React.Component {
                             <td>{user.username}</td>
                             <td>{user.firstName}</td>
                             <td>{user.secondName}</td>
-                            <td>{user.roles[0]}</td>
-                            <td>{user.roles[1]}</td>
+                            <td>
+                                <div>
+                                    {
+                                        user.roles.map(role => 
+                                            <td>
+                                            {
+                                                <div className={role.toLowerCase() + "-image"}></div>
+                                            }
+                                            </td>
+                                        )
+        
+                                    }
+                                </div>
+                            </td>
+
                         </tr>
                     ))
                 }
