@@ -1,0 +1,44 @@
+.delete-confirm-box {
+    z-index: 10;
+    position: fixed;
+    background: rgb(216, 216, 216);
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    left: 0;
+    margin-left: 570px;
+    margin-right: 570px;
+    right: 0;
+    padding: 10px;
+    height: 60%;
+    top: 150px;
+}
+
+.confirmation-text {
+    text-align: center;
+}
+
+.product-price {
+    text-align: center;
+}
+
+.product-amount {
+    text-align: center;
+}
+
+.product-name {
+    text-align: center;
+}
+
+.custom-button {
+    width: 95%;
+    height: 15%;
+    border: 0ch;
+    background-color: rgb(163, 25, 25);
+    border-radius: 40px;
+    padding: 5px;
+    bottom: 10px;
+    position: absolute;
+    overflow: hidden;
+    color: white;
+}

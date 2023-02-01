@@ -11,6 +11,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import ErrorMessage from './ErrorMessage';
 import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/to-have-accessible-description';
 import ProductsUpdate from './ProductsUpdate';
+import DeleteConfirm from './DeleteConfirm';
 
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
@@ -21,11 +22,12 @@ class ViewProducts extends React.Component {
             products: [],
             errorMessages: [],
             showUpdateForm: false,
+            showDeleteConfirm: false,
             selectedProduct: {}
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
-        this.onClose = this.onClose.bind(this);
+        this.onUpdateFormClose = this.onUpdateFormClose.bind(this);
     }
 
     componentDidMount() {
@@ -51,29 +53,16 @@ class ViewProducts extends React.Component {
         this.setState({showUpdateForm: true, selectedProduct: product});
     }
 
-    handleDeleteClick(id) {
-        console.log(id);
-        const auth = "Bearer " + localStorage.getItem("token");
-        
-        axios.delete(API_URL + "products/delete/" + id, {
-            headers: {
-                "Authorization" : auth,
-                "Content-Type" : "application/json"
-            },
-            data : {}
-        }).then(res => {
-            console.log(res.data);
-        }).catch(err => {
-            this.setState({errors: err.response.data.errors});
-            console.log(err);
-        });
-
+    handleDeleteClick(product) {
+        this.setState({showDeleteConfirm: true, selectedProduct: product});
+        console.log(product.id);
     }
 
-    onClose(event) {
+    onUpdateFormClose(event) {
         event.preventDefault();
         this.setState({showUpdateForm: false});
     }
+
     render() {
         console.log(this.state.errorMessages);
         if(this.state.products.length == 0) {
@@ -86,7 +75,7 @@ class ViewProducts extends React.Component {
         }
         return (
             <div className="main-div">
-                <table className={this.state.errorMessages.length == 0 && !this.state.showUpdateForm ? '' : 'blur'}>
+                <table className={this.state.errorMessages.length == 0 && !this.state.showUpdateForm && !this.state.showDeleteConfirm ? '' : 'blur'}>
                     <tbody>
                         <tr>
                             <th>Id</th>
@@ -106,7 +95,7 @@ class ViewProducts extends React.Component {
                                     <a className="update-button" onClick={() => this.handleUpdateClick(product)}>
                                         {<FontAwesomeIcon icon={faEdit}/>}
                                     </a>
-                                    <a className="delete-button" href="/products/" onClick={() => this.handleDeleteClick(product.productId)}>
+                                    <a className="delete-button" onClick={() => this.handleDeleteClick(product)}>
                                         {<FontAwesomeIcon icon={faTrash}/>}
                                     </a>
                                 </td>
@@ -119,7 +108,9 @@ class ViewProducts extends React.Component {
                 {this.state.errorMessages.length > 0 &&
                 <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})} />}
                 {this.state.showUpdateForm &&
-                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})} onClose={this.onClose}/>}
+                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})} onUpdateFormClose={this.onUpdateFormClose}/>}
+                {this.state.showDeleteConfirm &&
+                <DeleteConfirm product={this.state.selectedProduct} onDelete={() => this.setState({showDeleteConfirm: false})} onCancelDeletion={() => this.setState({showDeleteConfirm: false})} />}
             </div>
         );
     }

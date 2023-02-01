@@ -93,7 +93,7 @@ function ProductsUpdate(props) {
     return (
         <div>
             <div className="user-add-form">
-                <button className="close-button" onClick={props.onClose}>
+                <button className="close-button" onClick={props.onUpdateFormClose}>
                     {<FontAwesomeIcon icon={faClose} size="lg"/>}
                 </button>
                 <br/>
