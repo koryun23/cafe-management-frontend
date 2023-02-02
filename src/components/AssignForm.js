@@ -4,6 +4,7 @@ import "../css/AssignForm.css";
 import ErrorMessage from './ErrorMessage.js';
 import Input from './Input.js';
 import Submit from './Submit.js';
+import ViewFreeTablesBox from './ViewFreeTablesBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaHandPointUp } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
@@ -15,9 +16,7 @@ class AssignForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tables: [],
-            waiters: [],
-            table: {}, 
+            selectedTables: [],
             waiter: {},
             assigned: false,
             errorMessages: [],
@@ -27,7 +26,9 @@ class AssignForm extends React.Component {
         this.onTableIdClick = this.onTableIdClick.bind(this);
         this.onWaiterUsernameClick = this.onWaiterUsernameClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.handleCloseError = this.handleCloseError.bind(this);
+        this.handleCloseTableChoice = this.handleCloseTableChoice.bind(this);
+        this.saveSelectedTables = this.saveSelectedTables.bind(this);
     }
 
     static invalidCreds(creds) {
@@ -38,27 +39,7 @@ class AssignForm extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchCafeTables();
-        this.fetchWaiters();
-    }
 
-    fetchCafeTables() {
-        const auth = "Bearer " + localStorage.getItem("token");
-        const tables = axios.get(API_URL + "tables", {
-                                headers: {
-                                    "Authorization" : auth,
-                                    "Content-Type" : "application/json"
-                                }, data: {}
-                            });
-        tables.then(res => {
-            this.setState({
-                tables: res.data.cafeTableRetrievalResponseDtoList.filter(table => table.status === 'FREE').map(table => (
-                    {id: table.id, code: table.code, numberOfSeats: table.seats, status: table.status}
-                ))
-            })
-        }).catch(err => {
-            console.log(err.data);
-        });
     }
 
     fetchWaiters() {
@@ -87,7 +68,8 @@ class AssignForm extends React.Component {
             return;
         }
         const auth = "Bearer " + localStorage.getItem("token");
-        const assignment = axios.post(API_URL + "tables-to-waiters/assign", 
+        this.state.selectedTables.forEach(table => {
+            const assignment = axios.post(API_URL + "tables-to-waiters/assign", 
                    {
                     cafeTableId: this.state.table.id,
                     waiterUsername: this.state.waiter.username
@@ -98,34 +80,45 @@ class AssignForm extends React.Component {
                         "Content-Type" : "application/json"
                     }
                    });
-        assignment.then(res => {
-            console.log(res.data);
-            this.setState({assigned: true});
-        }).catch(err => {
-            console.log(err);
-            this.setState({errorMessages: err.response.data.errors});
+            assignment.then(res => {
+                console.log(res.data);
+                this.setState({assigned: true});
+            }).catch(err => {
+                console.log(err);
+                this.setState({errorMessages: err.response.data.errors});
+            });
         });
+        
     }
 
-    handleClose() {
+    handleCloseError() {
         this.setState({errorMessages: []});
     }
 
-    onTableIdClick() {
-
+    handleCloseTableChoice() {
+        this.setState({showFreeTables: false});
+    }
+    onTableIdClick(event) {
+        event.preventDefault();
+        this.setState({showFreeTables: true});
     }
 
-    onWaiterUsernameClick() {
-
+    onWaiterUsernameClick(event) {
+        event.preventDefault();
+        this.setState({showWaiters: true})
     }
+
+    saveSelectedTables(tables) {
+        this.setState({selectedTables: tables});
+    }
+
     render() {
-        console.log(this.state.waiters);
-        console.log(this.state.tables);
+        console.log(this.state.selectedTables);
         if(this.state.assigned) {
             return <Redirect to="/home"/>
         }
         return (
-            <div className="assignment-box">
+            <div className={this.state.showFreeTables && this.state.showWaiters ? "assignment-box blur" : "assignment-box"}>
                 <h3 className="text">Assign Cafe Table to Waiter</h3>
                 <hr></hr>
                 <form className={this.state.errorMessages.length == 0 && !this.state.showFreeTables && !this.state.showWaiters ? "form-group" : "form-group blur"}>
@@ -134,10 +127,11 @@ class AssignForm extends React.Component {
                                 onClick={this.onTableIdClick}>
                                 {<FontAwesomeIcon icon={faCalendarCheck} size="lg"/>}
                         </button>
-                        <input type="number" 
+                        <input type="text" 
                             placeholder="Table Id"
-                            value={this.state.table.id}
+                            value={this.state.selectedTables.map(table => table.id)}
                             className="form-control custom-input"
+                            readOnly
                         />
                     </div>
 
@@ -151,12 +145,18 @@ class AssignForm extends React.Component {
                             placeholder="Waiter Username"
                             value={this.state.waiter.username}
                             className="form-control custom-input"
+                            readOnly
                         />
                     </div>
 
                     <hr></hr>
                     <button onClick={this.handleSubmit} className="custom-button-submit">Assign</button>
                 </form>
+                {this.state.showFreeTables && 
+                <ViewFreeTablesBox onCloseTableChoice={this.handleCloseTableChoice} 
+                                   onSaveSelectedTables={this.saveSelectedTables} 
+                                   selectedTables={this.state.selectedTables} />}
+                {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleCloseError}/>}
             </div>
         );
     }

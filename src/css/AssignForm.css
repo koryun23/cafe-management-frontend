@@ -18,9 +18,6 @@ table {
     background-color: rgb(112, 90, 255);
     border-radius: 40px;
     padding: 5px;
-    bottom: 10px;
-    position: absolute;
-    overflow: hidden;
     color: white;
 
 }
@@ -52,4 +49,9 @@ table {
 
 .box-row {
     display: flex;
+}
+
+.blur {
+    filter: blur(9%);
+    -webkit-filter: blur(9%);
 }
