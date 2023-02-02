@@ -2,7 +2,10 @@ import axios from 'axios';
 import React from 'react';
 import '../css/ViewTables.css';
 import BackgroundImage from './BackgroundImage';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaCheck } from 'react-icons/fa';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 const API_URL = "http://localhost:7000/";
 
 class ViewTables extends React.Component {
@@ -63,7 +66,12 @@ class ViewTables extends React.Component {
                             <td>{table.id}</td>
                             <td>{table.code}</td>
                             <td>{table.numberOfSeats}</td>
-                            <td>{table.status}</td>
+                            <td>
+                                {
+                                    (table.status == 'FREE' && <FontAwesomeIcon icon={faCheck} size="lg"/>) ||
+                                    (table.status == 'TAKEN' && <FontAwesomeIcon icon={faClose} size="lg" />)
+                                }
+                            </td>
                         </tr>
                         // <div className="table-box">
                         //     <div className="table-image"></div>
