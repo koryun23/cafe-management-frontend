@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "../css/ProductsUpdate.css";
 import { useParams } from 'react-router-dom';
 import Input from './Input';
 import Submit from './Submit';
@@ -23,9 +24,9 @@ function ProductsUpdate(props) {
 
     const {id} = useParams();
     let [state = {
-        name: props.product.productName,
-        price: props.product.productPrice,
-        amount: props.product.productAmount,
+        name: "",
+        price: "",
+        amount: "",
         errorMessages: [],
         updated: false
     }, setState] = useState();
@@ -57,7 +58,8 @@ function ProductsUpdate(props) {
             errorMessages: []
         })
     }
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log(state);
         if(invalidCreds(state)) {
             setState({
@@ -96,28 +98,44 @@ function ProductsUpdate(props) {
                 <button className="close-button" onClick={props.onUpdateFormClose}>
                     {<FontAwesomeIcon icon={faClose} size="lg"/>}
                 </button>
-                <br/>
-                <h3 style={{textAlign: 'center'}}>Product Id: {props.product.productId}</h3>
+                <hr></hr>
+                {/* <h5>Name: <b>{props.product.productName}</b></h5>
+                <h5>Amount: <b>{props.product.productAmount}</b></h5>
+                <h5>Price: <b>{props.product.productPrice}</b></h5> */}
+                <table className="selected-product-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <td>{props.product.productName}</td>
+                        <td>{props.product.productAmount}</td>
+                        <td>{props.product.productPrice}</td>
+                    </tr>
+                </table>
+                <hr></hr>
                 <form className={state.errorMessages.length == 0 ? "" : "blur"}>
                     <Input type="text"
                             name="product-name"
                             placeholder="New Name"
                             value={state.name}
                             onChange={handleProductNameChange} 
-                            label={`*New Name (${props.product.productName})`} />
+                            />
                     <Input type="number"
                             name="product-price"
                             placeholder="New Price"
                             value={state.price}
                             onChange={handleProductPriceChange} 
-                            label={`*New Price (${props.product.productPrice})`} />
+                            />
                     <Input type="number"
                             name="product-amount"
                             placeholder="New Amount"
                             value={state.amount}
                             onChange={handleProductAmountChange} 
-                            label={`*New Amount (${props.product.productAmount})`} />
-                    <Submit onSubmit={handleSubmit} value="Update Product"/>
+                            />
+                    {/* <Submit onSubmit={handleSubmit} value="Update Product"/> */}
+                    <button className="custom-button-update" onClick={(event) => handleSubmit(event)}>Update</button>
                 </form>
                 {state.errorMessages.length > 0 && <ErrorMessage message={state.errorMessages[0]} onClose={handleClose}/>}
                 {state.updated && props.onUpdate()}

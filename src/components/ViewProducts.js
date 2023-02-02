@@ -28,9 +28,10 @@ class ViewProducts extends React.Component {
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.onUpdateFormClose = this.onUpdateFormClose.bind(this);
+        this.onDeleteCancel = this.onDeleteCancel.bind(this);
     }
 
-    componentDidMount() {
+    fetch() {
         const auth = "Bearer " + localStorage.getItem("token");
         const getProducts = axios.get(API_URL + "products", {
             headers: {
@@ -49,6 +50,14 @@ class ViewProducts extends React.Component {
             console.log(error);
         });
     }
+    componentDidMount() {
+        this.fetch();
+    }
+
+    componentDidUpdate() {
+        this.fetch();
+    }
+
     handleUpdateClick(product) {
         this.setState({showUpdateForm: true, selectedProduct: product});
     }
@@ -61,6 +70,11 @@ class ViewProducts extends React.Component {
     onUpdateFormClose(event) {
         event.preventDefault();
         this.setState({showUpdateForm: false});
+    }
+
+    onDeleteCancel(event) {
+        event.preventDefault();
+        this.setState({showDeleteConfirm: false});
     }
 
     render() {
@@ -105,12 +119,20 @@ class ViewProducts extends React.Component {
                     }
                     </tbody>
                 </table>
+
                 {this.state.errorMessages.length > 0 &&
-                <ErrorMessage message={this.state.errorMessages[0]} onClose={() => this.setState({errorMessages: []})} />}
+                <ErrorMessage message={this.state.errorMessages[0]} 
+                              onClose={() => this.setState({errorMessages: []})} />}
+
                 {this.state.showUpdateForm &&
-                <ProductsUpdate product={this.state.selectedProduct} onUpdate={() => this.setState({showUpdateForm: false})} onUpdateFormClose={this.onUpdateFormClose}/>}
+                <ProductsUpdate product={this.state.selectedProduct} 
+                                onUpdate={() => this.setState({showUpdateForm: false})} 
+                                onUpdateFormClose={this.onUpdateFormClose}/>}
+
                 {this.state.showDeleteConfirm &&
-                <DeleteConfirm product={this.state.selectedProduct} onDelete={() => this.setState({showDeleteConfirm: false})} onCancelDeletion={() => this.setState({showDeleteConfirm: false})} />}
+                <DeleteConfirm product={this.state.selectedProduct} 
+                               onDelete={() => this.setState({showDeleteConfirm: false})} 
+                               onCancelDeletion={this.onDeleteCancel} />}
             </div>
         );
     }

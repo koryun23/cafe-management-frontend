@@ -12,6 +12,9 @@ class DeleteConfirm extends React.Component {
     constructor(props) {
         super(props);
         this.onDelete = this.onDelete.bind(this);
+        this.state = {
+            deleted: false
+        };
     }
 
     onDelete(event) {
@@ -27,6 +30,7 @@ class DeleteConfirm extends React.Component {
             data : {}
         }).then(res => {
             console.log(res.data);
+            this.setState({deleted: true});
         }).catch(err => {
             this.setState({errors: err.response.data.errors});
             console.log(err);
@@ -43,9 +47,21 @@ class DeleteConfirm extends React.Component {
                 <hr></hr>
                 <h4 class="confirmation-text">Are you sure you want to delete this item?</h4>
                 <hr></hr>
-                <h4 className="product-name">Name: <b>{this.props.product.productName}</b></h4>
+                {/* <h4 className="product-name">Name: <b>{this.props.product.productName}</b></h4>
                 <h4 className="product-amount">Amount: <b>{this.props.product.productAmount}</b></h4>
-                <h4 className="product-price">Price: <b>{this.props.product.productPrice}</b></h4>
+                <h4 className="product-price">Price: <b>{this.props.product.productPrice}</b></h4> */}
+                <table className="selected-product-table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <td>{this.props.product.productName}</td>
+                        <td>{this.props.product.productAmount}</td>
+                        <td>{this.props.product.productPrice}</td>
+                    </tr>
+                </table>
                 <hr></hr>
                 <button className="custom-button" onClick={(event) => this.onDelete(event)}>Yes, Delete</button>
             </div>
