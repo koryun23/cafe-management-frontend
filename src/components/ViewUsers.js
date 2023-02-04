@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/ViewUsers.css';
 import axios from 'axios';
 import BackgroundImage from './BackgroundImage';
+import RefreshTokenBox from './RefreshTokenBox';
 
 const API_URL = "http://localhost:7000/";
 
@@ -11,12 +12,18 @@ class ViewUsers extends React.Component {
         this.state = {
             users: [],
             showRoles: false,
-            selectedRoles: []
+            selectedRoles: [],
+            tokenIsExpired: false
         }
         this.handleViewRolesClick = this.handleViewRolesClick.bind(this);
+        this.refreshAndFetch = this.refreshAndFetch.bind(this);
     }
 
-    componentDidMount() {
+    refreshAndFetch() {
+        this.fetchUsers();
+        this.setState({tokenIsExpired: false});
+    }
+    fetchUsers() {
         console.log(localStorage.getItem("token"));
         const getUsers = axios.get(API_URL + "users", {
             headers: {
@@ -32,8 +39,15 @@ class ViewUsers extends React.Component {
             ))
             this.setState({users: fetchedUsers});
         }).catch(error => {
+            if(error.response && error.response.status == 401) {
+                console.log("setting token to expired");
+                this.setState({tokenIsExpired: true});
+            }
             console.log(error);
         });
+    }
+    componentDidMount() {
+        this.refreshAndFetch();
     }
 
     handleViewRolesClick(user) {
@@ -41,6 +55,9 @@ class ViewUsers extends React.Component {
         this.setState({showRoles: true, selectedRoles: user.roles});
     }
     render() {
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refreshAndFetch} />
+        }
         if(this.state.users.length == 0) {
             return (
                 <div className='main-div'>

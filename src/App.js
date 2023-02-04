@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 import LoginPage from './components/LoginPage.js';
 import HomePage from './components/HomePage.js';
@@ -24,6 +25,11 @@ import Input from './components/Input';
 import ProductsUpdate from './components/ProductsUpdate';
 import UpdateProductInOrder from './components/UpdateProductInOrder';
 import { useEffect, useState } from 'react';
+import RefreshTokenBox from './components/RefreshTokenBox';
+
+const API_URL = "http://localhost:7000/";
+
+
 
 function App() {
 
@@ -178,7 +184,6 @@ function App() {
                 </div> : <Redirect to="/home"/>
               }
             </Route>
-
           </Switch>
       </Router>
     </div>

@@ -21,6 +21,7 @@ class LoginBox extends React.Component {
                       firstName: "",
                       lastName: "",
                       token: "",
+                      expiresIn: "",
                       roles: [],
                       auth: false,
                       errorMessages: [],
@@ -45,11 +46,13 @@ class LoginBox extends React.Component {
                        firstName: "",
                        lastName: "",
                        token: "",
+                       expiresIn: "",
                        roles: [],
                        auth: false,
                        errorMessages: [],
                        showChooseRolePage: false});
     }
+
     handleSubmit(event) {
         event.preventDefault();
         axios.post(API_URL + "login", {
@@ -59,6 +62,7 @@ class LoginBox extends React.Component {
             console.log(res);
             this.setState({
                 token: res.data.token,
+                expiresIn: res.data.expiresIn,
                 username: res.data.username,
                 firstName: res.data.firstName,
                 lastName: res.data.secondName, 
@@ -68,12 +72,12 @@ class LoginBox extends React.Component {
                 this.setState({showChooseRolePage: true})
             } else {
                 localStorage.setItem("token", res.data.token);
+                localStorage.setItem("expiresIn", res.data.expiresIn);
                 localStorage.setItem("username", res.data.username);
                 localStorage.setItem("firstName", res.data.firstName);
                 localStorage.setItem("lastName", res.data.secondName);
                 localStorage.setItem("role", res.data.role[0]);
                 this.setState({auth: true}, () => console.log(this.state));
-
             }
         }).catch(err => {
             this.setState({errorMessages: ["One of the provided credentials is wrong"]})

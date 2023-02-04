@@ -5,6 +5,7 @@ import ErrorMessage from './ErrorMessage.js';
 import Input from './Input.js';
 import Submit from './Submit.js';
 import ViewFreeTablesBox from './ViewFreeTablesBox';
+import RefreshTokenBox from './RefreshTokenBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaHandPointUp } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
@@ -21,7 +22,8 @@ class AssignForm extends React.Component {
             assigned: false,
             errorMessages: [],
             showFreeTables: false,
-            showWaiters: false
+            showWaiters: false,
+            tokenIsExpired: false
         }
         this.onTableIdClick = this.onTableIdClick.bind(this);
         this.onWaiterUsernameClick = this.onWaiterUsernameClick.bind(this);
@@ -85,6 +87,9 @@ class AssignForm extends React.Component {
                 this.setState({assigned: true});
             }).catch(err => {
                 console.log(err);
+                if(err.response && err.response.status == 401) {
+                    this.setState({tokenIsExpired: true})
+                }
                 this.setState({errorMessages: err.response.data.errors});
             });
         });
@@ -152,6 +157,8 @@ class AssignForm extends React.Component {
                     <hr></hr>
                     <button onClick={this.handleSubmit} className="custom-button-submit">Assign</button>
                 </form>
+                {this.state.tokenIsExpired && 
+                <RefreshTokenBox onRefresh={() => this.setState({tokenIsExpired: false}) }/>}
                 {this.state.showFreeTables && 
                 <ViewFreeTablesBox onCloseTableChoice={this.handleCloseTableChoice} 
                                    onSaveSelectedTables={this.saveSelectedTables} 
