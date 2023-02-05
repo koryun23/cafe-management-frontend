@@ -1,10 +1,14 @@
 import axios from 'axios';
 import React from 'react';
+import "../css/TableForm.css";
 import Input from './Input.js';
 import Submit from './Submit';
 import ErrorMessage from './ErrorMessage.js';
 import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RefreshTokenBox from './RefreshTokenBox.js';
+import { faCode, faCouch, faIdBadge, faIdCard, faIdCardAlt, faPen, faPenAlt, faSoccerBall, faTable, faTableCellsLarge, faTableColumns, faTableTennis, faTableTennisPaddleBall } from '@fortawesome/free-solid-svg-icons';
+import { FaIdCardAlt } from 'react-icons/fa';
 const API_URL = "http://localhost:7000/";
 
 class TableForm extends React.Component {
@@ -80,21 +84,36 @@ class TableForm extends React.Component {
             return <RefreshTokenBox onRefresh={this.refresh}/>
         }
         return (
-            <div className='user-add-form'>
+            <div className='table-add-form'>
                 <form className={this.state.errorMessages.length == 0 ? "form-group" : "form-group blur"}>
-                    <Input type="number"
-                        name="seats"
-                        placeholder="Number of seats"
-                        value={this.state.seats}
-                        onChange={this.handleSeatsChange} 
-                        label="Seats" />
-                    <Input type="text"
-                        name="code"
-                        placeholder="Table code"
-                        value={this.state.code}
-                        onChange={this.handleCodeChange} 
-                        label="Table Code" />
-                    <Submit onSubmit={this.handleSubmit} value="Add Table"/>
+                    <div className="number-div">
+                        <div className='icon-table-form'>
+                            <FontAwesomeIcon icon={faCouch} size="lg"/>
+                        </div>
+                        <Input type="number"
+                            name="seats"
+                            placeholder="Number of seats"
+                            value={this.state.seats}
+                            onChange={this.handleSeatsChange} 
+                            />
+                    </div>
+                    <div className="code-div">
+                        <div className="icon-table-form">
+                            <FontAwesomeIcon icon={faIdCardAlt} size="lg"/>
+                        </div>
+                        <Input type="text"
+                            name="code"
+                            placeholder="Table code"
+                            value={this.state.code}
+                            onChange={this.handleCodeChange} 
+                            />
+                    </div>
+                    
+                    {/* <Submit onSubmit={this.handleSubmit} value="Add Table"/> */}
+                    <button className="custom-button-register"
+                            onClick={this.handleSubmit}>
+                        Register
+                    </button>
                 </form>
                 {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleClose}/>}
             </div>
