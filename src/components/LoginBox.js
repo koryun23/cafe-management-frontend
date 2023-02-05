@@ -96,7 +96,7 @@ class LoginBox extends React.Component {
         return (
             <div className="login-box align-items-center">
                 <form className={this.state.showChooseRolePage ? "login-form blur" : "login-form"}>
-                    {this.state.errorMessages.length > 0 && <label className="login-error">{this.state.errorMessages[0]}</label>}
+                    {this.state.errorMessages.length > 0 && <label className='login-error'>{this.state.errorMessages[0]}</label>}
                     <br></br>
                     <div className="username-div">
                         <div className="icon">

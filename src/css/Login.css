@@ -13,15 +13,15 @@
     border-radius: 3px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    left: 0;
+    right: 0;
     position: fixed;
-    margin-left: 35%;
-    margin-right: 35%;
+    margin-left: 37%;
+    margin-right: 37%;
     right: 0;
     z-index: 2;
-    padding: 10px;
+    /* padding: 10px; */
     height: 45%;
-    width: 30%;
+    width: 24%;
     top: 200px;
 }
 
@@ -55,10 +55,11 @@
     color: red;
     font-size: 15px;
     font-style: italic;
+
 }
 
 .custom-button-login {
-    width: 60%;
+    width: 40%;
     height: 12%;
     border: 0ch;
     background-color: rgb(112, 90, 255);
@@ -68,8 +69,8 @@
     bottom: 10px;
     position: absolute;
     font-size: 20px;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 
 .custom-username-input {
@@ -93,9 +94,8 @@
 .icon {
     float: left;
     height: 40px;
-    width: 40px;
+    width: 5px;
     background-color: rgba(0,0,0,0);
     border: 0ch;
     padding-top: 30px;
-    padding-left: 30px;
 }
