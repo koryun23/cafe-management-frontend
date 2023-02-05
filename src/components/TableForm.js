@@ -4,6 +4,7 @@ import Input from './Input.js';
 import Submit from './Submit';
 import ErrorMessage from './ErrorMessage.js';
 import { Redirect } from 'react-router-dom';
+import RefreshTokenBox from './RefreshTokenBox.js';
 const API_URL = "http://localhost:7000/";
 
 class TableForm extends React.Component {
@@ -13,11 +14,13 @@ class TableForm extends React.Component {
         this.handleCodeChange = this.handleCodeChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.refresh = this.refresh.bind(this);
         this.state = {
             seats: '', 
             code: '',
             registered: false,
-            errorMessages: []
+            errorMessages: [],
+            tokenIsExpired: false
         }
     }
 
@@ -33,12 +36,16 @@ class TableForm extends React.Component {
         this.setState({code: code});
     }
 
+    refresh() {
+        this.setState({tokenIsExpired: false});
+    }
     handleSubmit(event) {
         event.preventDefault();
         if(TableForm.invalidCreds(this.state)) {
             this.setState({errorMessages: ["All fields are required"]});
             return;
         }
+
         const auth = "Bearer " + localStorage.getItem("token");
         const tableRegistration = axios.post(API_URL + "tables/register", {
             numberOfSeats: this.state.seats,
@@ -47,10 +54,16 @@ class TableForm extends React.Component {
         tableRegistration.then(res => {
             console.log(res.data);
             this.setState({registered: true})
-        }).catch(res => {
-            console.log(res);
+        }).catch(err => {
+            console.log(err);
             console.log(this.state);
-            this.setState({errorMessages: res.response.data.errors})
+            if(err.response) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                } else if(err.response.status != 200){
+                    this.setState({errorMessages: err.response.data.errors});
+                }
+            }
         })
     }
 
@@ -62,6 +75,9 @@ class TableForm extends React.Component {
         console.log(this.state.errorMessages);
         if(this.state.registered) {
             return <Redirect to="/home"/>
+        }
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refresh}/>
         }
         return (
             <div className='user-add-form'>

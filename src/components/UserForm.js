@@ -195,12 +195,6 @@ class UserForm extends React.Component {
 
                         </div>
 
-                        {/* <OptionalSelection options={
-                            [
-                                {value: "MANAGER", text: "Manager", selected: true, onChange: this.handleRoleChange, index: 0}, 
-                                {value: "WAITER", text: "Waiter", selected: true, onChange: this.handleRoleChange, index: 1}]
-                            } /> */}
-                        {/* <Submit onSubmit={this.handleSubmit} value="Add"/> */}
                         <button className='custom-button-registration'
                                 onClick={this.handleSubmit}>
                             Register
