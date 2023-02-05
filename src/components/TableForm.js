@@ -85,6 +85,8 @@ class TableForm extends React.Component {
         }
         return (
             <div className='table-add-form'>
+                <h3 className="text">Register a Cafe Table</h3>
+                <hr></hr>
                 <form className={this.state.errorMessages.length == 0 ? "form-group" : "form-group blur"}>
                     <div className="number-div">
                         <div className='icon-table-form'>
@@ -92,7 +94,7 @@ class TableForm extends React.Component {
                         </div>
                         <Input type="number"
                             name="seats"
-                            placeholder="Number of seats"
+                            placeholder="Seats"
                             value={this.state.seats}
                             onChange={this.handleSeatsChange} 
                             />
@@ -103,7 +105,7 @@ class TableForm extends React.Component {
                         </div>
                         <Input type="text"
                             name="code"
-                            placeholder="Table code"
+                            placeholder="Code"
                             value={this.state.code}
                             onChange={this.handleCodeChange} 
                             />

@@ -1,5 +1,5 @@
 .custom-button-register {
-    width: 90%;
+    width: 60%;
     height: 10%;
     border: 0ch;
     background-color: rgb(112, 90, 255);
@@ -7,9 +7,11 @@
     padding: 5px;
     color: white;
     font-size: 20px;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 25%;
+    margin-left: 20%;
+    margin-right: 20%;
+    position: absolute;
+    overflow: hidden;
+    bottom: 10px;
 }
 
 .table-add-form {
@@ -22,24 +24,27 @@
     right: 0;
     z-index: 2;
     padding: 10px;
-    height: 50%;
+    height: 60%;
     top: 90px;
-    width: 20%;
-    margin-left: 40%;
-    margin-right: 40%;
+    width: 25%;
+    margin-left: 37.5%;
+    margin-right: 37.5%;
 }
 
 .number-div {
     display: flex;
+    width: 50%;
+    margin-left: 25%;
 }
 
 .code-div {
     display: flex;
+    width: 50%;
+    margin-left: 25%;
 }
 .icon-table-form {
     float: left;
     background-color: rgba(0,0,0,0);
     border: 0ch;
-    padding-top: 50px;
-    margin-left: 5px;
+    margin-top: 50px;
 }
