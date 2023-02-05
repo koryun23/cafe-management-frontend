@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/RefreshTokenBox.css";
 import axios from "axios";
+import BackgroundImage from "./BackgroundImage";
 
 const API_URL = "http://localhost:7000/";
 
@@ -40,12 +41,16 @@ class RefreshTokenBox extends React.Component {
     render() {
         console.log("refresh token box");
         return (
-            <div className="refresh-token-box">
-                <h3 className="text">Session expired</h3>
-                <p className="text">Please confirm the session renewal.</p>
-                <button className="custom-button-refresh"
-                        onClick={this.onFetchRefreshToken}>Confirm</button>
+            <div>
+                <BackgroundImage />
+                <div className="refresh-token-box">
+                    <h3 className="text">Session expired</h3>
+                    <p className="text">Please confirm the session renewal.</p>
+                    <button className="custom-button-refresh"
+                            onClick={this.onFetchRefreshToken}>Confirm</button>
+                </div>
             </div>
+
         );
     }
 }

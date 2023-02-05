@@ -6,6 +6,7 @@ import CloseButton from './CloseButton.js';
 import ErrorMessage from './ErrorMessage.js';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import RefreshTokenBox from './RefreshTokenBox.js';
 
 const API_URL = "http://localhost:7000/";
 
@@ -20,7 +21,8 @@ class UserForm extends React.Component {
             secondName: "",
             roleList: [],
             registered: false,
-            errorMessages: []
+            errorMessages: [],
+            tokenIsExpired: false
         }
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -30,6 +32,7 @@ class UserForm extends React.Component {
         this.handleRoleChange = this.handleRoleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.registerAndRefresh = this.registerAndRefresh.bind(this);
     }
 
     static invalidCredentials(creds) {
@@ -55,6 +58,10 @@ class UserForm extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
+        this.registerAndRefresh();
+    }
+
+    register() {
         console.log(this.state);
         if(UserForm.invalidCredentials(this.state)) {
             this.setState({errorMessages: ["All the fields are required"]});
@@ -72,11 +79,20 @@ class UserForm extends React.Component {
         userRegistration.then(res => {
             console.log(res.data);
             this.setState({registered: true});
-        }).catch(res => {
-            if(res.status != 200) {
-                this.setState({errorMessages: res.response.data.errors});
+        }).catch(err => {
+            if(err.response) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                } else if(err.response.status != 200) {
+                    console.log(err.response);
+                    this.setState({errorMessages: err.response.data.errors});
+                }
             }
         })
+    }
+    registerAndRefresh() {
+        this.register();
+        this.setState({tokenIsExpired: false});
     }
     handleClose(event) {
         this.setState({
@@ -92,10 +108,6 @@ class UserForm extends React.Component {
             roleList.splice(roleList.indexOf(event.target.value), 1);
         }
         this.setState({            
-            username: this.state.username,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            secondName: this.state.secondName,
             roleList: roleList
         });
 
@@ -104,12 +116,16 @@ class UserForm extends React.Component {
     }
 
     render() {
+        console.log(this.state);
         if(!localStorage.getItem("token")) {
             return <Redirect to="/login"/>
         }
         console.log(localStorage.getItem("token"))
         if(this.state.registered) {
             return <Redirect to="/home"/>
+        }
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.registerAndRefresh}/>
         }
         return (
             <div>
