@@ -69,39 +69,41 @@ class ViewUsers extends React.Component {
         return (
             <div className="main-div">
                 <BackgroundImage />
-                
-                <table>
-                    <tr>
-                        <th>Username</th>
-                        <th>First Name</th>
-                        <th>Second Name</th>
-                        <th>Roles</th>
-                    </tr>
-                {
-                    this.state.users.map(user => (
+                <div className="users-table-div">
+                    <table className='users-table'>
                         <tr>
-                            <td>{user.username}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.secondName}</td>
-                            <td>
-                                <div>
-                                    {
-                                        user.roles.map(role => 
-                                            <td>
-                                            {
-                                                <div className={role.toLowerCase() + "-image-sm"}></div>
-                                            }
-                                            </td>
-                                        )
-        
-                                    }
-                                </div>
-                            </td>
-
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Second Name</th>
+                            <th>Roles</th>
                         </tr>
-                    ))
-                }
-                </table>
+                    {
+                        this.state.users.map(user => (
+                            <tr>
+                                <td>{user.username}</td>
+                                <td>{user.firstName}</td>
+                                <td>{user.secondName}</td>
+                                <td>
+                                    <div>
+                                        {
+                                            user.roles.map(role => 
+                                                <td>
+                                                {
+                                                    <div className={role.toLowerCase() + "-image-sm"}></div>
+                                                }
+                                                </td>
+                                            )
+            
+                                        }
+                                    </div>
+                                </td>
+
+                            </tr>
+                        ))
+                    }
+                    </table>
+                </div>
+                
             </div>
 
         );

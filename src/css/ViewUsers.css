@@ -49,6 +49,7 @@ tr:hover {
     padding: 50px;
     bottom: 0;
     top: 0;
+    overflow: hidden;
 }
 
 .manager-image-sm {
@@ -70,4 +71,13 @@ tr:hover {
     z-index: -1;
     margin-left: 5%;
     margin-right: 5%;
+}
+
+.users-table-div {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+.users-table {
+    width: 100%;
 }
