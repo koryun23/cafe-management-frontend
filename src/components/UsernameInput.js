@@ -14,12 +14,11 @@ class UsernameInput extends React.Component {
     render() {
         return (
             <div className="form-group custom-form">
-                <label>Username</label>
                 <input type="text"
                     name="username"
                     placeholder="Username"
                     onChange={this.handleUsernameInput} 
-                    className="form-control"
+                    className="form-control custom-username-input"
                     value={this.props.value} />
             </div>
         );

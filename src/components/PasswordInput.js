@@ -13,12 +13,11 @@ class PasswordInput extends React.Component {
     render() {
         return (
             <div className="form-group custom-form">
-                <label>Password</label>
                 <input type="password"
                     name="password"
                     placeholder="Password"
                     onChange={this.handlePasswordInput}
-                    className="form-control" 
+                    className="form-control custom-password-input" 
                     value={this.props.value} />
             </div>
         );

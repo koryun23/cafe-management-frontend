@@ -4,12 +4,15 @@ import PasswordInput from './PasswordInput';
 import Submit from './Submit'; 
 import axios from 'axios';
 import { Redirect, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaUserAlt } from 'react-icons/fa';
 import HomePage from './HomePage';
 import { withRouter } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { toHaveFocus } from '@testing-library/jest-dom/dist/matchers';
 import ErrorMessage from './ErrorMessage';
 import ChooseRole from './ChooseRole';
+import { faLock, faUserAlt, faUserFriends, faUserLarge, faUserLock } from '@fortawesome/free-solid-svg-icons';
 
 const API_URL = "http://localhost:7000/";
 
@@ -95,9 +98,23 @@ class LoginBox extends React.Component {
                 <form className={this.state.showChooseRolePage ? "login-form blur" : "login-form"}>
                     {this.state.errorMessages.length > 0 && <label className="login-error">{this.state.errorMessages[0]}</label>}
                     <br></br>
-                    <UsernameInput onUsernameChange={this.handleUsernameInput} value={this.state.username}/>
-                    <PasswordInput onPasswordChange={this.handlePasswordInput} value={this.state.password}/>
-                    <Submit onSubmit={this.handleSubmit} value="Log in"/>
+                    <div className="username-div">
+                        <div className="icon">
+                            <FontAwesomeIcon icon={faUserLarge} size="lg"/>
+                        </div>
+                        <UsernameInput onUsernameChange={this.handleUsernameInput} value={this.state.username}/>
+                    </div>
+                    <div className="password-div">
+                        <div className="icon">
+                            <FontAwesomeIcon icon={faLock} size="lg"/>
+                        </div>
+                        <PasswordInput onPasswordChange={this.handlePasswordInput} value={this.state.password}/>
+
+                    </div>
+                    <button className="custom-button-login"
+                            onClick={this.handleSubmit}>
+                        Log in
+                    </button>
                 </form>
                 {this.state.showChooseRolePage &&
                 <ChooseRole availableRoles={this.state.roles} 
