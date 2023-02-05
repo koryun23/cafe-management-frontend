@@ -89,7 +89,7 @@ class ViewUsers extends React.Component {
                                         user.roles.map(role => 
                                             <td>
                                             {
-                                                <div className={role.toLowerCase() + "-image"}></div>
+                                                <div className={role.toLowerCase() + "-image-sm"}></div>
                                             }
                                             </td>
                                         )

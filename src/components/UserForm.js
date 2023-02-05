@@ -1,4 +1,5 @@
 import React from 'react';
+import "../css/UserForm.css";
 import Input from './Input.js';
 import OptionalSelection from './OptionalSelection.js';
 import Submit from './Submit.js';
@@ -32,7 +33,7 @@ class UserForm extends React.Component {
         this.handleRoleChange = this.handleRoleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.registerAndRefresh = this.registerAndRefresh.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     static invalidCredentials(creds) {
@@ -58,7 +59,7 @@ class UserForm extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        this.registerAndRefresh();
+        this.register();
     }
 
     register() {
@@ -90,8 +91,7 @@ class UserForm extends React.Component {
             }
         })
     }
-    registerAndRefresh() {
-        this.register();
+    refresh() {
         this.setState({tokenIsExpired: false});
     }
     handleClose(event) {
@@ -100,19 +100,40 @@ class UserForm extends React.Component {
         });
     }
     handleRoleChange(event) {
-        event.target.isSelected = !event.target.isSelected;
+        event.preventDefault();
         const roleList = this.state.roleList;
-        if(event.target.isSelected) {
-            roleList.push(event.target.value);
-        }else{
-            roleList.splice(roleList.indexOf(event.target.value), 1);
+        const target = event.target;
+        let selectedRole;
+        if(target.id == "") {
+            selectedRole = event.target.name;
+        } else {
+            selectedRole = event.target.id;
         }
-        this.setState({            
-            roleList: roleList
-        });
+        console.log(event);
+        console.log(selectedRole);
+        if(roleList.includes(selectedRole)) {
+            roleList.splice(roleList.indexOf(selectedRole), 1);
+            this.setState({roleList: roleList});
+        } else {
+            roleList.push(selectedRole);
+            this.setState({roleList: roleList});
+        }
+        
+        // if(event.target.isSelected) {
+        //     if(!roleList.includes(event.target.value)){
+        //         roleList.push(event.target.value);
+        //         this.setState({roleList: roleList});
+        //     }
+        // }else{
+        //     roleList.splice(roleList.indexOf(event.target.value), 1);
+        //     this.setState({roleList: roleList})
+        // }
+        // this.setState({            
+        //     roleList: roleList
+        // });
 
-        console.log(this.state.roleList);
-        console.log(event.target.value + " is selected - " + event.target.isSelected);
+        // console.log(this.state.roleList);
+        // console.log(event.target.value + " is selected - " + event.target.isSelected);
     }
 
     render() {
@@ -125,7 +146,7 @@ class UserForm extends React.Component {
             return <Redirect to="/home"/>
         }
         if(this.state.tokenIsExpired) {
-            return <RefreshTokenBox onRefresh={this.registerAndRefresh}/>
+            return <RefreshTokenBox onRefresh={this.refresh}/>
         }
         return (
             <div>
@@ -136,32 +157,54 @@ class UserForm extends React.Component {
                             placeholder="Username"
                             value={this.state.username}
                             onChange={this.handleUsernameChange} 
-                            label="*Username" />
+                            />
                         <Input type="password"
                             name="password"
                             placeholder="Password"
                             value={this.state.password}
                             onChange={this.handlePasswordChange} 
-                            label="*Password" />
+                            />
                         <Input type="text"
                             name="firstName"
                             placeholder="First name"
                             value={this.state.firstName}
                             onChange={this.handleFirstNameChange} 
-                            label="*First Name" />
+                            />
                         <Input type="text"
                             name="secondName"
                             placeholder="Second name" 
                             value={this.state.secondName}
                             onChange={this.handleSecondNameChange}
-                            label="*Second name" />
-                        <label style={{paddingLeft: '20px'}}>*Role</label>
-                        <OptionalSelection options={
+                            />
+                        <div className="role-selection">
+                            <button className={this.state.roleList.includes("MANAGER") ? "manager-image-button selected" : "manager-image-button non-selected"}
+                                    onClick={this.handleRoleChange}
+                                    name="MANAGER">
+                                <div className="manager-image" id="MANAGER">
+
+                                </div>
+                            </button>
+
+                            <button className={this.state.roleList.includes("WAITER") ? "waiter-image-button selected" : "waiter-image-button non-selected"}
+                                    onClick={this.handleRoleChange}
+                                    name="WAITER">
+                                <div className="waiter-image" id="WAITER">
+
+                                </div>
+                            </button>
+
+                        </div>
+
+                        {/* <OptionalSelection options={
                             [
-                                {value: "MANAGER", text: "Manager", selected: false, onChange: this.handleRoleChange, index: 0}, 
-                                {value: "WAITER", text: "Waiter", selected: false, onChange: this.handleRoleChange, index: 1}]
-                            } />
-                        <Submit onSubmit={this.handleSubmit} value="Add"/>
+                                {value: "MANAGER", text: "Manager", selected: true, onChange: this.handleRoleChange, index: 0}, 
+                                {value: "WAITER", text: "Waiter", selected: true, onChange: this.handleRoleChange, index: 1}]
+                            } /> */}
+                        {/* <Submit onSubmit={this.handleSubmit} value="Add"/> */}
+                        <button className='custom-button-registration'
+                                onClick={this.handleSubmit}>
+                            Register
+                        </button>
                     </form>
                     
                     {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleClose}/>}

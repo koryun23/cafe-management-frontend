@@ -51,7 +51,7 @@ tr:hover {
     top: 0;
 }
 
-.manager-image {
+.manager-image-sm {
     background-image: url("../img/manager-1.webp");
     background-size: cover;
     display: block;
@@ -61,7 +61,7 @@ tr:hover {
     margin-left: 5%;
     margin-right: 5%;
 }
-.waiter-image {
+.waiter-image-sm {
     background-image: url("../img/waiter-1.png");
     background-size: cover;
     display: block;
