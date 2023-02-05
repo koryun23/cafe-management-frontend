@@ -36,11 +36,11 @@ class LoginBox extends React.Component {
     }
 
     handleUsernameInput(username) {
-        this.setState({username : username});
+        this.setState({username : username, errorMessages: []});
     }
 
     handlePasswordInput(password) {
-        this.setState({password : password});
+        this.setState({password : password, errorMessages: []});
     }
 
     handleClose(event) {
@@ -96,7 +96,7 @@ class LoginBox extends React.Component {
         return (
             <div className="login-box align-items-center">
                 <form className={this.state.showChooseRolePage ? "login-form blur" : "login-form"}>
-                    {this.state.errorMessages.length > 0 && <label className='login-error'>{this.state.errorMessages[0]}</label>}
+                    <br></br>
                     <br></br>
                     <div className="username-div">
                         <div className="icon">
@@ -109,8 +109,9 @@ class LoginBox extends React.Component {
                             <FontAwesomeIcon icon={faLock} size="lg"/>
                         </div>
                         <PasswordInput onPasswordChange={this.handlePasswordInput} value={this.state.password}/>
-
-                    </div>
+                    </div>                        
+                    {(this.state.errorMessages.length > 0 && <p className='login-error'>{this.state.errorMessages[0]}</p>) || <p className="login-error"></p>}
+                    
                     <button className="custom-button-login"
                             onClick={this.handleSubmit}>
                         Log in
