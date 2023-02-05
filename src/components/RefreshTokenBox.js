@@ -44,7 +44,9 @@ class RefreshTokenBox extends React.Component {
             <div>
                 <BackgroundImage />
                 <div className="refresh-token-box">
-                    <h3 className="text">Session expired</h3>
+                    <br></br>
+                    <h1 className="text">Session expired</h1>
+                    <hr></hr>
                     <p className="text">Please confirm the session renewal.</p>
                     <button className="custom-button-refresh"
                             onClick={this.onFetchRefreshToken}>Confirm</button>
