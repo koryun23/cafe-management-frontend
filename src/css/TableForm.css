@@ -1,5 +1,5 @@
 .custom-button-register {
-    width: 60%;
+    width: 90%;
     height: 10%;
     border: 0ch;
     background-color: rgb(112, 90, 255);
@@ -7,11 +7,10 @@
     padding: 5px;
     color: white;
     font-size: 20px;
-    margin-left: 20%;
-    margin-right: 20%;
     position: absolute;
     overflow: hidden;
     bottom: 10px;
+    margin-left: 2%;
 }
 
 .table-add-form {
@@ -24,11 +23,11 @@
     right: 0;
     z-index: 2;
     padding: 10px;
-    height: 60%;
+    height: 80%;
     top: 90px;
-    width: 25%;
-    margin-left: 37.5%;
-    margin-right: 37.5%;
+    width: 26%;
+    margin-left: 37%;
+    margin-right: 37%;
 }
 
 .number-div {

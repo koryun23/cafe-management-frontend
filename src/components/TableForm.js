@@ -112,7 +112,7 @@ class TableForm extends React.Component {
                     </div>
                     
                     {/* <Submit onSubmit={this.handleSubmit} value="Add Table"/> */}
-                    <button className="custom-button-register"
+                    <button className="custom-button-registration"
                             onClick={this.handleSubmit}>
                         Register
                     </button>

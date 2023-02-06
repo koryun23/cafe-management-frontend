@@ -1,0 +1,24 @@
+.product-name-div {
+    display: flex;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.product-amount-div {
+    display: flex;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.product-price-div {
+    display: flex;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.product-icon {
+    float: left;
+    background-color: rgba(0,0,0,0);
+    border: 0ch;
+    margin-top: 50px;
+}
