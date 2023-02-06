@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CanceledError } from 'axios';
 import React from 'react';
 import '../css/ViewTables.css';
 import BackgroundImage from './BackgroundImage';
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaCheck } from 'react-icons/fa';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import RefreshTokenBox from './RefreshTokenBox';
 const API_URL = "http://localhost:7000/";
 
 class ViewTables extends React.Component {
@@ -16,8 +17,10 @@ class ViewTables extends React.Component {
                 {code: "qwerty", numberOfSeats: 5, status: "FREE", id: 1},
                 {code: "abcd", numberOfSeats: 3, status: "FREE", id: 2},
                 {code: "asdf123", numberOfSeats: 4, status: "FREE", id: 3}
-            ]
+            ],
+            tokenIsExpired: false
         };
+        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount() {
@@ -37,12 +40,23 @@ class ViewTables extends React.Component {
                 {id: table.id, code: table.code, numberOfSeats: table.seats, status: table.status}
             ))
             this.setState({tables: fetchedTables});
-        }).catch(res => {
-            console.log(res.data);
+        }).catch(err => {
+            if(err.response) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
+            console.log(err.data);
         })
     }
 
+    refresh() {
+        this.setState({tokenIsExpired: false});
+    } 
     render() {
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refresh}/>
+        }
         if(this.state.tables.length == 0) {
             return (
                 <div className='main-div'>
