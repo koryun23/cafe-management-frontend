@@ -36,6 +36,7 @@ class ViewProducts extends React.Component {
 
     refresh() {
         this.setState({tokenIsExpired: false});
+        this.fetch();
     }
     fetch() {
         const auth = "Bearer " + localStorage.getItem("token");
@@ -88,7 +89,6 @@ class ViewProducts extends React.Component {
         console.log(this.state.errorMessages);
         if(this.state.tokenIsExpired) {
             return <RefreshTokenBox onRefresh={this.refresh}/>
-
         }
         if(this.state.products.length == 0) {
             return (
