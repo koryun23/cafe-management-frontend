@@ -12,6 +12,7 @@ import ErrorMessage from './ErrorMessage';
 import { toHaveAccessibleDescription } from '@testing-library/jest-dom/dist/to-have-accessible-description';
 import ProductsUpdate from './ProductsUpdate';
 import DeleteConfirm from './DeleteConfirm';
+import RefreshTokenBox from './RefreshTokenBox';
 
 const API_URL = "http://localhost:7000/";
 class ViewProducts extends React.Component {
@@ -23,14 +24,19 @@ class ViewProducts extends React.Component {
             errorMessages: [],
             showUpdateForm: false,
             showDeleteConfirm: false,
-            selectedProduct: {}
+            selectedProduct: {},
+            tokenIsExpired: false
         }
         this.handleUpdateClick = this.handleUpdateClick.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.onUpdateFormClose = this.onUpdateFormClose.bind(this);
         this.onDeleteCancel = this.onDeleteCancel.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
+    refresh() {
+        this.setState({tokenIsExpired: false});
+    }
     fetch() {
         const auth = "Bearer " + localStorage.getItem("token");
         const getProducts = axios.get(API_URL + "products", {
@@ -47,14 +53,15 @@ class ViewProducts extends React.Component {
             ))
             this.setState({products: fetchedProducts});
         }).catch(error => {
+            if(error.response) {
+                if(error.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
             console.log(error);
         });
     }
     componentDidMount() {
-        this.fetch();
-    }
-
-    componentDidUpdate() {
         this.fetch();
     }
 
@@ -79,6 +86,10 @@ class ViewProducts extends React.Component {
 
     render() {
         console.log(this.state.errorMessages);
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refresh}/>
+
+        }
         if(this.state.products.length == 0) {
             return (
                 <div className='main-div'>

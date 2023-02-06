@@ -14,9 +14,7 @@ class ViewTables extends React.Component {
         super(props);
         this.state = {
             tables: [
-                {code: "qwerty", numberOfSeats: 5, status: "FREE", id: 1},
-                {code: "abcd", numberOfSeats: 3, status: "FREE", id: 2},
-                {code: "asdf123", numberOfSeats: 4, status: "FREE", id: 3}
+
             ],
             tokenIsExpired: false
         };
@@ -41,7 +39,7 @@ class ViewTables extends React.Component {
             ))
             this.setState({tables: fetchedTables});
         }).catch(err => {
-            if(err.response) {
+            if(err.response) { 
                 if(err.response.status == 401) {
                     this.setState({tokenIsExpired: true});
                 }
@@ -53,6 +51,7 @@ class ViewTables extends React.Component {
     refresh() {
         this.setState({tokenIsExpired: false});
     } 
+
     render() {
         if(this.state.tokenIsExpired) {
             return <RefreshTokenBox onRefresh={this.refresh}/>
