@@ -21,7 +21,7 @@ class ViewTables extends React.Component {
         this.refresh = this.refresh.bind(this);
     }
 
-    componentDidMount() {
+    fetch() {
         const auth = "Bearer " + localStorage.getItem("token");
         const getTables = axios.get(API_URL + "tables", {
             headers: {
@@ -47,9 +47,13 @@ class ViewTables extends React.Component {
             console.log(err.data);
         })
     }
+    componentDidMount() {
+        this.fetch();
+    }
 
     refresh() {
         this.setState({tokenIsExpired: false});
+        this.fetch();
     } 
 
     render() {
