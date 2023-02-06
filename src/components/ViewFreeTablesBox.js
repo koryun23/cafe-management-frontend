@@ -5,6 +5,7 @@ import axios from "axios";
 import "../css/ViewFreeTablesBox.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import RefreshTokenBox from "./RefreshTokenBox";
 const API_URL = "http://localhost:7000/";
 
 class ViewFreeTablesBox extends React.Component {
@@ -12,7 +13,8 @@ class ViewFreeTablesBox extends React.Component {
         super(props);
         this.state = {
             freeTables: [],
-            selectedTables: this.props.selectedTables
+            selectedTables: this.props.selectedTables,
+            tokenIsExpired: false
         };
         this.onSelectCafeTable = this.onSelectCafeTable.bind(this);
         this.onCloseTableChoice = this.onCloseTableChoice.bind(this);
@@ -34,6 +36,11 @@ class ViewFreeTablesBox extends React.Component {
                 )),
             });            
         }).catch(err => {
+            if(err.response) {
+                if(err.response.status == 401) {
+                    return <RefreshTokenBox onRefresh={this.setState({tokenIsExpired : false})} />
+                }
+            }
             console.log(err.data);
         });
     }
@@ -43,16 +50,16 @@ class ViewFreeTablesBox extends React.Component {
     }
 
     onSelectCafeTable(event, table) {
-        console.log(event);
-        let updatedSelectedTables = this.state.selectedTables.filter(t => t);
-        let index = this.state.selectedTables.indexOf(table)
-        console.log(index);
-        if(index != -1) {
-            this.setState({selectedTables: updatedSelectedTables.filter(t => t.code != table.code)});
+        console.log(table);
+        let updatedSelectedTables = this.state.selectedTables;
+        if(event.target.defaultChecked) {
+            this.setState({selectedTables: this.state.selectedTables.filter(t => t.code != table.code)});
         } else {
             updatedSelectedTables.push(table);
             this.setState({selectedTables: updatedSelectedTables});
         }
+        console.log(this.state.selectedTables);
+
     }
 
     onCloseTableChoice(event) {
@@ -87,14 +94,14 @@ class ViewFreeTablesBox extends React.Component {
                             </tr>
                             {
                                 this.state.freeTables.map(table => (
-                                    <tr onClick={() => this.onSelectCafeTable(table)}>
+                                    <tr>
                                         <td>{table.id}</td>
                                         <td>{table.code}</td>
                                         <td>{table.numberOfSeats}</td>
                                         <td>
                                             <input type="checkbox"
                                                 onChange={(event) => this.onSelectCafeTable(event, table) }
-                                                defaultChecked={this.state.selectedTables.filter(selectedTable => selectedTable.code).includes(table.code)}/>
+                                                defaultChecked={this.state.selectedTables.map(t => t.code).includes(table.code)}/>
                                         </td>
                                     </tr>
                                 ))
