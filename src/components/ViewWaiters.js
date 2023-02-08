@@ -3,6 +3,7 @@ import axios from "axios";
 import "../css/ViewWaiters.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import RefreshTokenBox from "./RefreshTokenBox";
 const API_URL = "http://localhost:7000/";
 
 class ViewWaiters extends React.Component {
@@ -34,7 +35,11 @@ class ViewWaiters extends React.Component {
                 ))
             });
         }).catch(err => {
-            console.log(err.data);
+            if(err.response) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
         });
     }
 
@@ -58,6 +63,9 @@ class ViewWaiters extends React.Component {
     }
 
     render() {
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={() => this.setState({tokenIsExpired: false})}/>
+        }
         return (
             <div className="waiters-box">
                 <button className="close-button" onClick={(event) => this.onCloseWaiterChoice(event)}>

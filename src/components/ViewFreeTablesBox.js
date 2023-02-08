@@ -38,7 +38,7 @@ class ViewFreeTablesBox extends React.Component {
         }).catch(err => {
             if(err.response) {
                 if(err.response.status == 401) {
-                    return <RefreshTokenBox onRefresh={this.setState({tokenIsExpired : false})} />
+                    this.setState({tokenIsExpired: true});
                 }
             }
             console.log(err.data);
@@ -75,6 +75,9 @@ class ViewFreeTablesBox extends React.Component {
 
     render() {
         console.log(this.state.selectedTables);
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={() => this.setState({tokenIsExpired: false})}/>
+        }
         return (
             <div className="tables-box">
                 <button className="close-button" onClick={(event) => this.onCloseTableChoice(event)}>
