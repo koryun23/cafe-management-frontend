@@ -11,6 +11,7 @@ import { FaHandPointUp } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 import { Redirect } from 'react-router-dom';
 import { faCalendar, faCalendarCheck, faEdit, faHandPointUp } from '@fortawesome/free-solid-svg-icons';
+import ViewWaiters from './ViewWaiters';
 const API_URL = "http://localhost:7000/";
 
 class AssignForm extends React.Component {
@@ -18,7 +19,7 @@ class AssignForm extends React.Component {
         super(props);
         this.state = {
             selectedTables: [],
-            waiter: {},
+            selectedWaiter: {},
             assigned: false,
             errorMessages: [],
             showFreeTables: false,
@@ -31,12 +32,14 @@ class AssignForm extends React.Component {
         this.handleCloseError = this.handleCloseError.bind(this);
         this.handleCloseTableChoice = this.handleCloseTableChoice.bind(this);
         this.saveSelectedTables = this.saveSelectedTables.bind(this);
+        this.saveSelectedWaiter = this.saveSelectedWaiter.bind(this);
+        this.handleCloseWaiterChoice = this.handleCloseWaiterChoice.bind(this);
     }
 
     static invalidCreds(creds) {
         return (
-            !creds.tableId ||
-            !creds.waiterUsername
+            creds.selectedTables.length == 0 || 
+            creds.selectedWaiter == {}
         );
     }
 
@@ -73,8 +76,8 @@ class AssignForm extends React.Component {
         this.state.selectedTables.forEach(table => {
             const assignment = axios.post(API_URL + "tables-to-waiters/assign", 
                    {
-                    cafeTableId: this.state.table.id,
-                    waiterUsername: this.state.waiter.username
+                    cafeTableId: table.id,
+                    waiterUsername: this.state.selectedWaiter.username
                    }, 
                    {
                     headers: {
@@ -103,6 +106,10 @@ class AssignForm extends React.Component {
     handleCloseTableChoice() {
         this.setState({showFreeTables: false});
     }
+
+    handleCloseWaiterChoice() {
+        this.setState({showWaiters: false});
+    }
     onTableIdClick(event) {
         event.preventDefault();
         this.setState({showFreeTables: true});
@@ -115,6 +122,10 @@ class AssignForm extends React.Component {
 
     saveSelectedTables(tables) {
         this.setState({selectedTables: tables});
+    }
+
+    saveSelectedWaiter(waiter) {
+        this.setState({selectedWaiter: waiter})
     }
 
     render() {
@@ -148,7 +159,7 @@ class AssignForm extends React.Component {
                         </button>
                         <input type="text" 
                             placeholder="Waiter Username"
-                            value={this.state.waiter.username}
+                            value={this.state.selectedWaiter.username}
                             className="form-control custom-input"
                             readOnly
                         />
@@ -163,6 +174,10 @@ class AssignForm extends React.Component {
                 <ViewFreeTablesBox onCloseTableChoice={this.handleCloseTableChoice} 
                                    onSaveSelectedTables={this.saveSelectedTables} 
                                    selectedTables={this.state.selectedTables} />}
+                {this.state.showWaiters &&
+                <ViewWaiters onCloseWaiterChoice={this.handleCloseWaiterChoice}
+                             onSaveSelectedWaiter={this.saveSelectedWaiter}
+                             selectedWaiter={this.state.selectedWaiter}/>}
                 {this.state.errorMessages.length > 0 && <ErrorMessage message={this.state.errorMessages[0]} onClose={this.handleCloseError}/>}
             </div>
         );
