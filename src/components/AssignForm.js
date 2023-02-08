@@ -133,6 +133,9 @@ class AssignForm extends React.Component {
         if(this.state.assigned) {
             return <Redirect to="/home"/>
         }
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={() => this.setState({tokenIsExpired: false})} />
+        }
         return (
             <div className={this.state.showFreeTables && this.state.showWaiters ? "assignment-box blur" : "assignment-box"}>
                 <h3 className="text">Assign Cafe Table to Waiter</h3>
