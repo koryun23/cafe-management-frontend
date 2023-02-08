@@ -7,6 +7,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import RefreshTokenBox from './RefreshTokenBox.js';
 
 const API_URL = "http://localhost:7000/";
 
@@ -15,6 +16,7 @@ class OrderUpdateForm extends React.Component {
         super(props);
         this.state = {
             status: 'OPEN',
+            tokenIsExpired: false
         }
     }
 
@@ -36,11 +38,19 @@ class OrderUpdateForm extends React.Component {
             console.log(res);
             this.props.onClose();
         }).catch(err => {
+            if(err.response) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
             console.log(err);
         })
     }
 
     render() {
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={() => this.setState({tokenIsExpired: false})}/>
+        }
         return (
             <div className='update-box'>
                 <button className="close-button" onClick={this.props.onClose}>

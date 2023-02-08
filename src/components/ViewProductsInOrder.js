@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import ErrorMessage from './ErrorMessage';
 import UpdateProductInOrder from './UpdateProductInOrder';
+import RefreshTokenBox from './RefreshTokenBox';
 const API_URL = "http://localhost:7000/";
 
 class ViewProductsInOrder extends React.Component {
@@ -16,10 +17,12 @@ class ViewProductsInOrder extends React.Component {
             showUpdateProductInOrderPage: false,
             selectedProduct: {}, 
             errorMessages: [],
+            tokenIsExpired: false
         };
+        this.refreshAndFetch = this.refreshAndFetch.bind(this);
     }
 
-    componentDidMount() {
+    fetchProductsInOrder() {
         const auth = "Bearer " + localStorage.getItem("token");
         console.log(API_URL + "products-in-order/" + this.state.orderId);
         axios.get(API_URL + "products-in-order/" + this.props.match.params.orderId, {
@@ -40,8 +43,21 @@ class ViewProductsInOrder extends React.Component {
                 }
             ))});
         }).catch(err => {
+            if(err.response) {
+                if(err.response.token == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
             console.log(err);
         }); 
+    }
+
+    refreshAndFetch() {
+        this.setState({tokenIsExpired: false});
+        this.fetchProductsInOrder();
+    }
+    componentDidMount() {
+        this.fetchProductsInOrder();
     }
 
     componentWillUnmount() {
@@ -61,6 +77,17 @@ class ViewProductsInOrder extends React.Component {
         // if(this.state.showUpdateProductInOrderPage) {
         //     return <Redirect to={"products-in-order/update/" + this.state.selectedProduct.id}/>
         // }
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refreshAndFetch}/>
+        }
+        if(this.state.productsInOrder.length == 0) {
+            return (
+                <div className="main-div">
+                    <h2 className="h2">Oops!</h2>
+                    <p className='p'>No Data found.</p>
+                </div>
+            );
+        }
         return (
             <div className="main-div">
                 <table className={this.state.errorMessages.length == 0 || this.state.showUpdateProductInOrderPage ? "" : "blur"}>

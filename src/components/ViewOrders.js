@@ -4,13 +4,15 @@ import React from 'react';
 import '../css/ViewOrders.css';
 import BackgroundImage from './BackgroundImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import OrderUpdateForm from './OrderUpdateForm';
 import { withRouter, Redirect } from 'react-router-dom';
 import ErrorMessage from './ErrorMessage';
+import RefreshTokenBox from './RefreshTokenBox';
 const API_URL = "http://localhost:7000/";
 
 class ViewOrders extends React.Component {
@@ -21,14 +23,16 @@ class ViewOrders extends React.Component {
             selectedOrder: {},
             errorMessages: [],
             redirectToAddProductPage: false,
-            redirectToViewProductsPage: false
+            redirectToViewProductsPage: false,
+            tokenIsExpired: false
         }
 
         this.handleAddProductInOrderClick = this.handleAddProductInOrderClick.bind(this);
         this.handleViewProductsInOrderClick = this.handleViewProductsInOrderClick.bind(this);
+        this.refreshAndFetch = this.refreshAndFetch.bind(this);
     }
 
-    componentDidMount() {
+    fetchOrders() {
         const auth = "Bearer " + localStorage.getItem("token");
         axios.get(API_URL + "orders", {
             headers: {
@@ -47,8 +51,21 @@ class ViewOrders extends React.Component {
                 }
             ))});
         }).catch(err => {
+            if(err.respone) {
+                if(err.response.status == 401) {
+                    this.setState({tokenIsExpired: true});
+                }
+            }
             console.log(err);
         });
+    }
+    componentDidMount() {
+        this.fetchOrders()
+    }
+
+    refreshAndFetch() {
+        this.setState({tokenIsExpired: false});
+        this.fetchOrders();
     }
 
     handleAddProductInOrderClick(order) {
@@ -79,43 +96,63 @@ class ViewOrders extends React.Component {
         if(this.state.redirectToViewProductsPage) {
             return <Redirect to={"products-in-order/" + this.state.selectedOrder.orderId}/>
         }
+        if(this.state.tokenIsExpired) {
+            return <RefreshTokenBox onRefresh={this.refreshAndFetch}/>
+        }
+        if(this.state.orders.length == 0) {
+            return (
+                <div className='main-div'>
+                    <h2 className="h2">Oops!</h2>
+                    <p className='p'>No Data found.</p>
+                </div>
+            );
+        }
         return (
             <div className='main-div'>
-                <table className={this.state.showUpdateBox ? "blur" : ""}>
-                    <tr>
-                        <th>Order Id</th>
-                        <th>Table Id</th>
-                        <th>Status</th>
-                        <th>Waiter</th>
-                        <th>Created At</th>
-                        <th></th>
-                    </tr>
-                {
-                    this.state.orders.map(order => (
-                            <tr>
-                                <td>{order.orderId}</td>
-                                <td>{order.tableId}</td>
-                                <td>{order.status}</td>
-                                <td>{order.waiterUsername}</td>
-                                <td>{order.date.toLocaleString()}</td>
-                                <td>
-                                    <a className="update-order"
-                                        onClick={() => this.handleUpdateOrderClick(order)}>
-                                        {<FontAwesomeIcon icon={faEdit} size="lg"/>}
-                                    </a>
-                                    <a className="add-product-in-order"
-                                    onClick={() => this.handleAddProductInOrderClick(order)}>
-                                        {<FontAwesomeIcon icon={faAdd} size="lg"/>}
-                                    </a>
-                                    <a className="products-in-order-view" 
-                                    onClick={() => this.handleViewProductsInOrderClick(order)}>
-                                        {<FontAwesomeIcon icon={faSearch} size="lg"/>}
-                                    </a>
-                                </td>
-                            </tr>
-                    ))
-                }
-                </table>
+                <div className="view-orders-div">
+                    <table className={this.state.showUpdateBox ? "blur" : ""}>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Table Id</th>
+                            <th>Status</th>
+                            <th>Waiter</th>
+                            <th>Created At</th>
+                            <th></th>
+                        </tr>
+                    {
+                        this.state.orders.map(order => (
+                                <tr>
+                                    <td>{order.orderId}</td>
+                                    <td>{order.tableId}</td>
+                                    <td>
+                                        {
+                                            order.status == 'OPEN' ? <FontAwesomeIcon icon={faCheck} size="lg"/> :
+                                            order.status == 'CANCELLED' ? <FontAwesomeIcon icon={faCancel} size="lg"/> :
+                                            <FontAwesomeIcon icon={faClose} size="lg"/>
+                                        }
+                                    </td>
+                                    <td>{order.waiterUsername}</td>
+                                    <td>{order.date.toLocaleString()}</td>
+                                    <td>
+                                        <a className="update-order"
+                                            onClick={() => this.handleUpdateOrderClick(order)}>
+                                            {<FontAwesomeIcon icon={faEdit} size="lg"/>}
+                                        </a>
+                                        <a className="add-product-in-order"
+                                        onClick={() => this.handleAddProductInOrderClick(order)}>
+                                            {<FontAwesomeIcon icon={faAdd} size="lg"/>}
+                                        </a>
+                                        <a className="products-in-order-view" 
+                                        onClick={() => this.handleViewProductsInOrderClick(order)}>
+                                            {<FontAwesomeIcon icon={faSearch} size="lg"/>}
+                                        </a>
+                                    </td>
+                                </tr>
+                        ))
+                    }
+                    </table>
+                </div>
+                
                 {
                     this.state.showUpdateBox && 
                     <OrderUpdateForm onClose={() => this.setState({showUpdateBox: false, selectedOrder: {}})} orderId={this.state.selectedOrder.orderId} tableId={this.state.selectedOrder.tableId} waiterUsername={this.state.waiterUsername} createdAt={this.state.createdAt}/>

@@ -144,3 +144,8 @@ tr:hover {
     font-size: 17px;
     border: 0ch;
 }
+
+.view-orders-div {
+    overflow-y: auto;
+    width: 100%;
+}
